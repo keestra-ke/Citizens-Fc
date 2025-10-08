@@ -1,36 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Team - Citizens FC</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C.C.F.C | Team Squad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #333; }
-    header { background: linear-gradient(90deg, #0047AB, #D32F2F); color: white; padding: 1.5rem; text-align: center; }
-    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
-    section { padding: 2rem; background: white; margin: 1rem auto; max-width: 900px; border-radius: 10px; }
-    footer { background: #0047AB; color: white; text-align: center; padding: 1rem; }
+    :root {
+      --blue:#0047AB;
+      --red:#D32F2F;
+      --muted:#9ca3af;
+    }
+    *{box-sizing:border-box}
+    body {
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:linear-gradient(180deg,#0f1724 0%,#091025 50%),#0b1220;
+      color:#e6eef8;
+      line-height:1.5;
+    }
+    header {
+      background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    header img {width:48px;height:48px;border-radius:50%;}
+    header h1 {margin:0;font-size:18px;font-weight:800;}
+    nav {margin-left:auto;display:flex;gap:10px;}
+    nav a {
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:10px;
+    }
+    nav a:hover {background:rgba(255,255,255,0.08);}
+    main {max-width:900px;margin:30px auto;padding:20px;background:rgba(255,255,255,0.02);border-radius:14px;}
+    h2 {margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
+    ul {list-style:none;padding:0;margin:10px 0 25px;}
+    li {padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+    li span.role {color:var(--red);font-weight:700;margin-left:8px;font-size:13px;}
+    footer {
+      text-align:center;
+      padding:20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    @media(max-width:600px){
+      nav{display:none}
+      header h1{font-size:16px}
+    }
   </style>
 </head>
 <body>
+
 <header>
-  <h1>Our Team</h1>
+  <img src="logo.png" alt="CCFC logo">
+  <h1>Citizens Concerting FC</h1>
   <nav>
     <a href="index.html">Home</a>
     <a href="team.html">Team</a>
-    <a href="fixtures.html">Fixtures & Results</a>
+    <a href="fixtures.html">Fixtures</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
-<section>
-  <h2>Leadership</h2>
-  <p><strong>Coach:</strong> Collins</p>
-  <p><strong>Captain:</strong> Brayo</p>
-</section>
-<section>
-  <h2>Player List</h2>
-  <p>Player list coming soon...</p>
-</section>
-<footer>© 2025 Citizens Concerting Football Club</footer>
+
+<main>
+  <h2>Team Squad 2025</h2>
+
+  <h3>Goalkeepers</h3>
+  <ul>
+    <li>Richie</li>
+    <li>Giddy</li>
+  </ul>
+
+  <h3>Defenders</h3>
+  <ul>
+    <li>Arthur <span class="role">(Treasurer)</span></li>
+    <li>Chaloh</li>
+    <li>Collo</li>
+    <li>Tom <span class="role">(Assistant Treasurer)</span></li>
+    <li>Ogola</li>
+    <li>Yobra</li>
+    <li>Timo</li>
+    <li>Amoh</li>
+    <li>Ogwaro</li>
+    <li>Edgar</li>
+    <li>Mlei</li>
+  </ul>
+
+  <h3>Midfielders</h3>
+  <ul>
+    <li>Gerry</li>
+    <li>Dickens</li>
+    <li>Hillary</li>
+    <li>Nico</li>
+    <li>Castro <span class="role">(Assistant Captain)</span></li>
+    <li>Jemmo</li>
+    <li>Malcom</li>
+    <li>Bella</li>
+    <li>Dominic</li>
+    <li>Kylloh</li>
+    <li>Rapho</li>
+  </ul>
+
+  <h3>Forwards</h3>
+  <ul>
+    <li>Felix</li>
+    <li>Davy</li>
+    <li>Rigan</li>
+    <li>Brayo <span class="role">(Captain)</span></li>
+    <li>Julius</li>
+    <li>Masinde</li>
+    <li>Franco</li>
+    <li>Ben</li>
+  </ul>
+
+</main>
+
+<footer>
+  © 2025 Citizens Concerting Football Club • Together as One
+</footer>
+
 </body>
 </html>
+
