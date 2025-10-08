@@ -1,57 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fixtures & Results - Citizens FC</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C.C.F.C | Fixtures & Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #333; }
-    header { background: linear-gradient(90deg, #0047AB, #D32F2F); color: white; padding: 1.5rem; text-align: center; }
-    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: center; }
-    th { background: #0047AB; color: white; }
-    section { padding: 2rem; background: white; margin: 1rem auto; max-width: 900px; border-radius: 10px; }
-    footer { background: #0047AB; color: white; text-align: center; padding: 1rem; }
+    :root{--blue:#0047AB;--red:#D32F2F;--muted:#9ca3af;}
+    body{margin:0;font-family:'Montserrat',sans-serif;background:linear-gradient(180deg,#0f1724,#091025);color:#e6eef8;}
+    header{background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));padding:14px 20px;display:flex;align-items:center;gap:12px;}
+    header img{width:48px;height:48px;border-radius:50%;}
+    header h1{margin:0;font-size:18px;font-weight:800;}
+    nav{margin-left:auto;display:flex;gap:10px;}
+    nav a{color:white;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px;}
+    nav a:hover{background:rgba(255,255,255,0.08);}
+    main{max-width:900px;margin:30px auto;padding:20px;background:rgba(255,255,255,0.02);border-radius:14px;}
+    h2{margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
+    .match{background:rgba(255,255,255,0.03);padding:12px;margin-bottom:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;}
+    .match span{color:var(--muted);font-size:14px;}
+    footer{text-align:center;padding:20px;color:var(--muted);font-size:14px;}
   </style>
 </head>
 <body>
+
 <header>
-  <h1>Fixtures & Results</h1>
+  <img src="logo.png" alt="CCFC logo">
+  <h1>Citizens Concerting FC</h1>
   <nav>
     <a href="index.html">Home</a>
     <a href="team.html">Team</a>
-    <a href="fixtures.html">Fixtures & Results</a>
+    <a href="fixtures.html">Fixtures</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
-<section>
-  <h2>Recent Results</h2>
-  <table>
-    <tr><th>Opponent</th><th>Score</th><th>Status</th></tr>
-    <tr><td>Transport FC</td><td>1 - 3</td><td>Lost</td></tr>
-    <tr><td>Ngomongo FC</td><td>1 - 4</td><td>Lost</td></tr>
-    <tr><td>Transport FC</td><td>1 - 0</td><td>Won</td></tr>
-    <tr><td>NYS Engineers</td><td>5 - 0</td><td>Won</td></tr>
-    <tr><td>Dispatch FC</td><td>6 - 4</td><td>Won</td></tr>
-    <tr><td>Chandaria Juniors</td><td>1 - 4</td><td>Lost</td></tr>
-    <tr><td>Catholic FC</td><td>1 - 6</td><td>Lost</td></tr>
-    <tr><td>NYS Engineers (2)</td><td>2 - 1</td><td>Won</td></tr>
-  </table>
-</section>
-<section>
+
+<main>
   <h2>Upcoming Fixtures</h2>
-  <table>
-    <tr><th>Opponent</th><th>Status</th></tr>
-    <tr><td>KMTC FC</td><td>Upcoming</td></tr>
-    <tr><td>Raiders FC</td><td>Upcoming</td></tr>
-    <tr><td>Lucky Summer FC</td><td>Upcoming</td></tr>
-    <tr><td>City Foxes</td><td>Upcoming</td></tr>
-    <tr><td>NYS HQ FC</td><td>Upcoming</td></tr>
-    <tr><td>Mr Green FC</td><td>Upcoming</td></tr>
-    <tr><td>GSU FC</td><td>Upcoming</td></tr>
-  </table>
-</section>
-<footer>© 2025 Citizens Concerting Football Club</footer>
+  <div class="match">
+    <div><strong>C.C.F.C vs Babadogo United</strong><br><span>Sat, Oct 18 • 3:00 PM • Babadogo Field</span></div>
+    <div><span>Friendly</span></div>
+  </div>
+  <div class="match">
+    <div><strong>Away vs Riverside FC</strong><br><span>Sun, Oct 26 • 10:00 AM</span></div>
+    <div><span>Cup</span></div>
+  </div>
+
+  <h2>Recent Results</h2>
+  <div class="match">
+    <div><strong>C.C.F.C 2 - 1 Umoja Stars</strong><br><span>Sat, Sept 28 • Babadogo Field</span></div>
+    <div><span>Win</span></div>
+  </div>
+  <div class="match">
+    <div><strong>C.C.F.C 1 - 1 Githurai FC</strong><br><span>Sun, Sept 21 • Githurai Grounds</span></div>
+    <div><span>Draw</span></div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Citizens Concerting Football Club • Together as One
+</footer>
 </body>
 </html>
+
