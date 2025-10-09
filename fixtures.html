@@ -1,64 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>C.C.F.C | Fixtures & Results</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--blue:#0047AB;--red:#D32F2F;--muted:#9ca3af;}
-    body{margin:0;font-family:'Montserrat',sans-serif;background:linear-gradient(180deg,#0f1724,#091025);color:#e6eef8;}
-    header{background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));padding:14px 20px;display:flex;align-items:center;gap:12px;}
-    header img{width:48px;height:48px;border-radius:50%;}
-    header h1{margin:0;font-size:18px;font-weight:800;}
-    nav{margin-left:auto;display:flex;gap:10px;}
-    nav a{color:white;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px;}
-    nav a:hover{background:rgba(255,255,255,0.08);}
-    main{max-width:900px;margin:30px auto;padding:20px;background:rgba(255,255,255,0.02);border-radius:14px;}
-    h2{margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
-    .match{background:rgba(255,255,255,0.03);padding:12px;margin-bottom:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;}
-    .match span{color:var(--muted);font-size:14px;}
-    footer{text-align:center;padding:20px;color:var(--muted);font-size:14px;}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Results & Fixtures Calendar</title>
+<style>
+  :root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --primary:#0047AB;
+    --win:#dff0d8; /* green background */
+    --loss:#f8d7da; /* red background */
+    --upcoming:#fff3cd;
+    --text:#222;
+  }
+  body{font-family:Inter,system-ui,Arial, sans-serif;margin:0;background:var(--bg);color:var(--text);}
+  header{background:linear-gradient(90deg,var(--primary),#D32F2F);color:#fff;padding:1.2rem;text-align:center}
+  .container{max-width:1100px;margin:1.2rem auto;padding:1rem}
+  .card{background:var(--card);border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(20,30,60,0.06)}
+  h1{margin:0 0 .25rem 0;font-size:1.4rem}
+  .calendar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:1rem}
+  .day{border-radius:8px;padding:8px;border:1px solid #e6eaf0;background:linear-gradient(180deg,#fff, #fbfdff);min-height:100px}
+  .day .cell-head{font-size:0.85rem;color:#666;margin-bottom:6px}
+  .match{display:block;padding:.45rem;border-radius:6px;margin-bottom:6px;font-size:0.9rem;font-weight:600}
+  .match small{display:block;font-weight:400;font-size:0.78rem;margin-top:3px}
+  .win{background:var(--win);border:1px solid #c6e2b3}
+  .loss{background:var(--loss);border:1px solid #e6a7ad}
+  .upcoming{background:var(--upcoming);border:1px solid #f1dca7}
+  footer{margin-top:1rem;text-align:center;color:#fff;background:var(--primary);padding:12px;border-radius:8px}
+  .legend{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+  .legend span{display:inline-flex;gap:6px;align-items:center;font-size:0.9rem}
+  .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .dot.win{background:#dff0d8;border:1px solid #c6e2b3}
+  .dot.loss{background:#f8d7da;border:1px solid #e6a7ad}
+  .dot.upcoming{background:#fff3cd;border:1px solid #f1dca7}
+</style>
 </head>
 <body>
-
 <header>
-  <img src="logo.png" alt="CCFC logo">
-  <h1>Citizens Concerting FC</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="team.html">Team</a>
-    <a href="fixtures.html">Fixtures</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <h1>Results & Fixtures Calendar</h1>
 </header>
+<div class="container">
+  <div class="card">
+    <div class="legend">
+      <span><i class="dot win"></i> Won</span>
+      <span><i class="dot loss"></i> Lost</span>
+      <span><i class="dot upcoming"></i> Upcoming</span>
+    </div>
 
-<main>
-  <h2>Upcoming Fixtures</h2>
-  <div class="match">
-    <div><strong>C.C.F.C vs Babadogo United</strong><br><span>Sat, Oct 18 • 3:00 PM • Babadogo Field</span></div>
-    <div><span>Friendly</span></div>
+    <div class="calendar" role="grid" aria-label="Fixtures calendar">
+<div class="day"><div class="cell-head">Match 1</div><div class="match win">Transport FC — 1 vs 3 converting<small>Win</small></div></div><div class="day"><div class="cell-head">Match 2</div><div class="match win">Ngomongo FC — 1 vs 4 converting<small>Win</small></div></div><div class="day"><div class="cell-head">Match 3</div><div class="match loss">Transport FC — 1 vs 0 converting<small>Loss</small></div></div><div class="day"><div class="cell-head">Match 4</div><div class="match loss">NYS Engineers — 5 vs 0 converting<small>Loss</small></div></div><div class="day"><div class="cell-head">Match 5</div><div class="match loss">Dispatch FC — 6 vs 4 converting<small>Loss</small></div></div><div class="day"><div class="cell-head">Match 6</div><div class="match win">Chandaria Juniors — 1 vs 4 converting<small>Win</small></div></div><div class="day"><div class="cell-head">Match 7</div><div class="match win">Catholic FC — 1 vs 6 converting<small>Win</small></div></div><div class="day"><div class="cell-head">Match 8</div><div class="match loss">NYS Engineers (2) — 2 vs 1 converting<small>Loss</small></div></div><div class="day"><div class="cell-head">Match 9</div><div class="match upcoming">KMTC FC — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 10</div><div class="match upcoming">Raiders FC — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 11</div><div class="match upcoming">Lucky Summer FC — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 12</div><div class="match upcoming">City Foxes — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 13</div><div class="match upcoming">NYS HQ FC — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 14</div><div class="match upcoming">Mr Green FC — vs converting<small>Upcoming</small></div></div><div class="day"><div class="cell-head">Match 15</div><div class="match upcoming">GSU FC — vs converting<small>Upcoming</small></div></div>
+    </div>
   </div>
-  <div class="match">
-    <div><strong>Away vs Riverside FC</strong><br><span>Sun, Oct 26 • 10:00 AM</span></div>
-    <div><span>Cup</span></div>
-  </div>
-
-  <h2>Recent Results</h2>
-  <div class="match">
-    <div><strong>C.C.F.C 2 - 1 Umoja Stars</strong><br><span>Sat, Sept 28 • Babadogo Field</span></div>
-    <div><span>Win</span></div>
-  </div>
-  <div class="match">
-    <div><strong>C.C.F.C 1 - 1 Githurai FC</strong><br><span>Sun, Sept 21 • Githurai Grounds</span></div>
-    <div><span>Draw</span></div>
-  </div>
-</main>
-
-<footer>
-  © 2025 Citizens Concerting Football Club • Together as One
-</footer>
+  <footer>© 2025 Citizens Concerting Football Club</footer>
+</div>
 </body>
 </html>
-
