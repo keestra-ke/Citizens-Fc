@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C.C.F.C | Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#0047AB;--red:#D32F2F;--muted:#9ca3af;}
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:linear-gradient(180deg,#0f1724,#091025);
+      color:#e6eef8;
+    }
+    header{
+      background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    header img{width:48px;height:48px;border-radius:50%;}
+    header h1{margin:0;font-size:18px;font-weight:800;}
+    nav{margin-left:auto;display:flex;gap:10px;}
+    nav a{
+      color:white;text-decoration:none;font-weight:600;
+      padding:8px 12px;border-radius:10px;
+    }
+    nav a:hover{background:rgba(255,255,255,0.08);}
+    main{
+      max-width:1000px;
+      margin:30px auto;
+      padding:20px;
+      background:rgba(255,255,255,0.02);
+      border-radius:14px;
+    }
+    h2{margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:12px;
+      margin-top:20px;
+    }
+    .gallery img{
+      width:100%;
+      border-radius:10px;
+      object-fit:cover;
+      height:200px;
+      border:2px solid rgba(255,255,255,0.05);
+      transition:transform .2s;
+    }
+    .gallery img:hover{
+      transform:scale(1.05);
+      border-color:var(--red);
+    }
+    footer{
+      text-align:center;
+      padding:20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="CCFC logo">
+  <h1>Citizens Concerting FC</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Gallery</h2>
+  <p>Automatically updated gallery — new uploads appear here! 📸</p>
+
+  <div class="gallery" id="gallery"></div>
+</main>
+
+<footer>
+  © 2025 Citizens Concerting Football Club • Unity in Action 💙❤️
+</footer>
+
+<script>
+// Replace with your actual GitHub username and repo
+const username = "keestra-ke";
+const repo = "Citizens-Fc";
+const gallery = document.getElementById("gallery");
+
+async function loadGallery() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
+    const files = await res.json();
+
+    files
+      .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+      .forEach(file => {
+        const img = document.createElement("img");
+        img.src = `https://raw.githubusercontent.com/${username}/${repo}/main/${file.name}`;
+        img.alt = file.name;
+        gallery.appendChild(img);
+      });
+  } catch (err) {
+    console.error("Error loading gallery:", err);
+    gallery.innerHTML = "<p>Could not load gallery. Please refresh later.</p>";
+  }
+}
+
+loadGallery();
+</script>
+
+</body>
+</html>
