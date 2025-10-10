@@ -78,19 +78,42 @@
 
 <main>
   <h2>Gallery</h2>
-  <p>Moments from training, matches, and team events.</p>
+  <p>Automatically updated gallery — new uploads appear here! 📸</p>
 
-  <div class="gallery">
-    <img src="Screenshot_20251010_005518_com.whatsapp.jpg" alt="Citizens FC Photo 1">
-    <img src="https://via.placeholder.com/400x250?text=Match+Day" alt="Citizens FC Photo 2">
-    <img src="https://via.placeholder.com/400x250?text=Training+Session" alt="Citizens FC Photo 3">
-    <img src="https://via.placeholder.com/400x250?text=Team+Group" alt="Citizens FC Photo 4">
-  </div>
+  <div class="gallery" id="gallery"></div>
 </main>
 
 <footer>
   © 2025 Citizens Concerting Football Club • Unity in Action 💙❤️
 </footer>
+
+<script>
+// Replace with your actual GitHub username and repo
+const username = "keestra-ke";
+const repo = "Citizens-Fc";
+const gallery = document.getElementById("gallery");
+
+async function loadGallery() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
+    const files = await res.json();
+
+    files
+      .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+      .forEach(file => {
+        const img = document.createElement("img");
+        img.src = `https://raw.githubusercontent.com/${username}/${repo}/main/${file.name}`;
+        img.alt = file.name;
+        gallery.appendChild(img);
+      });
+  } catch (err) {
+    console.error("Error loading gallery:", err);
+    gallery.innerHTML = "<p>Could not load gallery. Please refresh later.</p>";
+  }
+}
+
+loadGallery();
+</script>
 
 </body>
 </html>
