@@ -1,119 +1,621 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>C.C.F.C | Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chandaria Converting Football Club | Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{--blue:#0047AB;--red:#D32F2F;--muted:#9ca3af;}
-    body{
-      margin:0;
-      font-family:'Montserrat',sans-serif;
-      background:linear-gradient(180deg,#0f1724,#091025);
-      color:#e6eef8;
+    :root {
+      --primary-blue: #0047AB;
+      --primary-red: #D32F2F;
+      --accent-gold: #FFD700;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-dark: #1a1a1a;
+      --text-light: #6c757d;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
+      --border-radius: 24px;
+      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    header{
-      background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      gap:12px;
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    header img{width:48px;height:48px;border-radius:50%;}
-    header h1{margin:0;font-size:18px;font-weight:800;}
-    nav{margin-left:auto;display:flex;gap:10px;}
-    nav a{
-      color:white;text-decoration:none;font-weight:600;
-      padding:8px 12px;border-radius:10px;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--light-bg), #e9ecef);
+      color: var(--text-dark);
+      line-height: 1.7;
+      overflow-x: hidden;
     }
-    nav a:hover{background:rgba(255,255,255,0.08);}
-    main{
-      max-width:1000px;
-      margin:30px auto;
-      padding:20px;
-      background:rgba(255,255,255,0.02);
-      border-radius:14px;
+
+    /* Sticky Navigation with Mobile Menu */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      color: var(--white);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
     }
-    h2{margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
-    .gallery{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:12px;
-      margin-top:20px;
+
+    header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      transition: var(--transition);
     }
-    .gallery img{
-      width:100%;
-      border-radius:10px;
-      object-fit:cover;
-      height:200px;
-      border:2px solid rgba(255,255,255,0.05);
-      transition:transform .2s;
+
+    header img:hover {
+      transform: scale(1.1);
     }
-    .gallery img:hover{
-      transform:scale(1.05);
-      border-color:var(--red);
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
-    footer{
-      text-align:center;
-      padding:20px;
-      color:var(--muted);
-      font-size:14px;
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      min-width: 120px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before,
+    nav a:active::before {
+      left: 100%;
+    }
+
+    nav a:hover,
+    nav a:active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Mobile Hamburger Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      margin-left: auto;
+    }
+
+    /* Hero Section for Gallery */
+    .hero {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('gallery-hero-bg.jpg') center/cover no-repeat; /* Placeholder for gallery hero image/video */
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
+      font-weight: 300;
+      max-width: 80%;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Gallery Section */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .gallery-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .gallery-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+      border-radius: 2px;
+    }
+
+    .gallery-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    .gallery-grid {
+      column-count: 3; /* Masonry columns */
+      column-gap: 2rem;
+      margin-top: 2rem;
+      list-style: none;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 2rem; /* Space between items */
+      display: inline-block;
+      width: 100%;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px) scale(1.01); /* Softer hover transform */
+      box-shadow: var(--shadow-hover);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto; /* Dynamic height based on image */
+      min-height: 200px;
+      object-fit: cover; /* Cover for previews, but with height auto, it adjusts */
+      transition: var(--transition);
+      display: block;
+      border-radius: var(--border-radius);
+      filter: brightness(1) contrast(1.05); /* Subtle enhancement for smoother look */
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03); /* Gentler scale on hover */
+      filter: brightness(1.1) contrast(1.1);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); /* Softer gradient */
+      color: var(--white);
+      padding: 1.5rem;
+      transform: translateY(100%);
+      transition: var(--transition);
+      backdrop-filter: blur(10px); /* Enhanced blur for smoothness */
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+
+    .gallery-overlay p {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Softer text */
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95); /* Darker for focus */
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 95%;
+      max-height: 95%;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.05); /* Softer, larger glow */
+      transition: var(--transition);
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: var(--white);
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 2001;
+      transition: var(--transition);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .close:hover {
+      color: var(--primary-red);
+      background: rgba(211, 47, 47, 0.15);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      color: var(--white);
+      text-align: center;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      position: relative;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .gallery-grid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0.75rem 1rem;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a {
+        padding: 1rem;
+        width: 100%;
+        min-width: auto;
+        font-size: 1rem;
+      }
+
+      .hero {
+        height: 50vh;
+      }
+
+      main {
+        padding: 1rem;
+      }
+
+      .gallery-grid {
+        column-count: 2;
+        column-gap: 1rem;
+      }
+
+      .gallery-item {
+        margin-bottom: 1rem;
+      }
+
+      .gallery-item img {
+        min-height: 180px;
+      }
+
+      .close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: 40vh;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .gallery-grid {
+        column-count: 1;
+      }
+
+      .gallery-item img {
+        min-height: 200px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #121212;
+        color: #e0e0e0;
+      }
+
+      .hero {
+        background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('gallery-hero-bg-dark.jpg') center/cover no-repeat;
+      }
+
+      .gallery-item {
+        background: #333;
+      }
+
+      .gallery-overlay {
+        color: #e0e0e0;
+      }
+
+      .gallery-item img {
+        background: #222;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="CCFC Logo">
+    <h1>Chandaria Converting FC</h1>
+    <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="team.html">Team</a>
+      <a href="fixtures.html">Fixtures</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-<header>
-  <img src="logo.png" alt="CCFC logo">
-  <h1>Citizens Concerting FC</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="team.html">Team</a>
-    <a href="fixtures.html">Fixtures</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <div class="hero">
+    <h2>Gallery</h2>
+    <p>Capture the moments that define our journey — from epic goals to unbreakable bonds.</p>
+  </div>
 
-<main>
-  <h2>Gallery</h2>
-  <p>Automatically updated gallery — new uploads appear here! 📸</p>
+  <main>
+    <div class="gallery-title">
+      <h2>Matchday Memories</h2>
+      <p class="gallery-subtitle">Automatically updated gallery — new uploads appear here! 📸</p>
+    </div>
 
-  <div class="gallery" id="gallery"></div>
-</main>
+    <ul class="gallery-grid" id="gallery"></ul>
+  </main>
 
-<footer>
-  © 2025 Citizens Concerting Football Club • Unity in Action 💙❤️
-</footer>
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  </div>
 
-<script>
-// Replace with your actual GitHub username and repo
-const username = "keestra-ke";
-const repo = "Citizens-Fc";
-const gallery = document.getElementById("gallery");
+  <footer>
+    &copy; 2025 Chandaria Converting Football Club • Together as One
+  </footer>
 
-async function loadGallery() {
-  try {
-    const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
-    const files = await res.json();
+  <script>
+    // Replace with your actual GitHub username and repo
+    const username = "keestra-ke";
+    const repo = "Citizens-Fc"; // Update repo name if changed to match club
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.querySelector(".close");
 
-    files
-      .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
-      .forEach(file => {
-        const img = document.createElement("img");
-        img.src = `https://raw.githubusercontent.com/${username}/${repo}/main/${file.name}`;
-        img.alt = file.name;
-        gallery.appendChild(img);
-      });
-  } catch (err) {
-    console.error("Error loading gallery:", err);
-    gallery.innerHTML = "<p>Could not load gallery. Please refresh later.</p>";
-  }
-}
+    async function loadGallery() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
+        const files = await res.json();
 
-loadGallery();
-</script>
+        const imageFiles = files
+          .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+          .filter(file => !file.name.toLowerCase().includes('logo')) // Exclude logo photo
+          .slice(1); // Skip the first photo after filtering
 
+        if (imageFiles.length === 0) {
+          gallery.innerHTML = '<li class="error-message">No images found. Upload some to the repo!</li>';
+          return;
+        }
+
+        imageFiles.forEach(file => {
+          const li = document.createElement("li");
+          li.className = "gallery-item";
+          li.innerHTML = `
+            <img src="https://raw.githubusercontent.com/${username}/${repo}/main/${file.name}" alt="${file.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\"padding:2rem;text-align:center;color:var(--text-light);\">Image not available</div>';">
+            <div class="gallery-overlay">
+              <p>${file.name}</p>
+            </div>
+          `;
+          gallery.appendChild(li);
+        });
+
+        // Add click event to gallery items for lightbox
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+          img.addEventListener('click', (e) => {
+            lightbox.style.display = 'block';
+            lightboxImg.src = e.target.src;
+            lightboxImg.alt = e.target.alt;
+          });
+        });
+      } catch (err) {
+        console.error("Error loading gallery:", err);
+        gallery.innerHTML = '<li class="error-message">Could not load gallery. Please refresh later.</li>';
+      }
+    }
+
+    // Lightbox controls
+    closeBtn.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+      }
+    });
+
+    loadGallery();
+  </script>
 </body>
 </html>
