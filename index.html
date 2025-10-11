@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Navigation with Mobile Menu */
     header {
       position: sticky;
       top: 0;
@@ -77,7 +76,7 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
-      min-width: 120px; /* Touch-friendly minimum width */
+      min-width: 120px;
       text-align: center;
       font-size: 0.95rem;
     }
@@ -105,7 +104,6 @@
       box-shadow: var(--shadow-hover);
     }
 
-    /* Mobile Hamburger Menu Toggle (CSS-only) */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -116,67 +114,34 @@
       padding: 0.5rem;
     }
 
-    /* Hero with Responsive Height and Depth Scrolling - Scrolls out of view naturally */
     .hero {
       position: relative;
-      height: 100vh; /* Full viewport height for desktop, scrolls away on scroll */
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat; /* Placeholder for full-screen video or image */
+      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat;
       color: var(--white);
       overflow: hidden;
       padding: 2rem 1rem;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('pattern.svg') repeat; /* Subtle nostalgic pattern */
-      opacity: 0.1;
-      animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
     .hero img {
-      width: clamp(150px, 25vw, 250px); /* Adjusted for shield shape */
-      height: auto; /* Keep aspect ratio for shape */
+      width: clamp(150px, 25vw, 250px);
+      height: auto;
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       animation: pulse 2s infinite;
       transition: var(--transition);
-      border-radius: 0; /* No rounding to keep original shape */
+      border-radius: 0;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
-    }
-
-    .hero img:hover,
-    .hero img:active {
-      transform: scale(1.05); /* Gentle scale, no rotate to preserve shape */
     }
 
     .hero h2 {
@@ -186,31 +151,15 @@
       margin-bottom: 1rem;
       letter-spacing: 3px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
     }
 
     .hero p {
       font-size: clamp(1rem, 4vw, 1.3rem);
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
       font-weight: 300;
       max-width: 90%;
       margin: 0 auto;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Sections with Glassmorphism and Micro-Interactions */
     section {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
@@ -225,23 +174,6 @@
       width: 100%;
     }
 
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0, 71, 171, 0.05), rgba(211, 47, 47, 0.05));
-      border-radius: var(--border-radius);
-      z-index: -1;
-    }
-
-    section:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: var(--shadow-hover);
-    }
-
     section h2 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.8rem, 6vw, 2.8rem);
@@ -252,18 +184,6 @@
       position: relative;
     }
 
-    section h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-      border-radius: 2px;
-    }
-
     section p {
       font-size: clamp(1rem, 3vw, 1.15rem);
       text-align: justify;
@@ -271,55 +191,9 @@
       opacity: 0.9;
     }
 
-    /* About Us Sub-sections */
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .about-card {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      border: 1px solid rgba(0, 71, 171, 0.1);
-    }
-
-    .about-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .about-card .icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .about-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--primary-blue);
-      margin-bottom: 0.5rem;
-    }
-
-    .about-card p {
-      font-size: 1rem;
-      color: var(--text-dark);
-      text-align: center;
-    }
-
-    /* UGC Section for Community */
     .ugc-section {
       background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 71, 171, 0.05));
       text-align: center;
-    }
-
-    .ugc-section h2 {
-      color: var(--primary-red);
     }
 
     .ugc-grid {
@@ -340,35 +214,9 @@
       overflow: hidden;
     }
 
-    .ugc-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .ugc-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .ugc-card:hover,
-    .ugc-card:active {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: var(--shadow-hover);
-    }
-
     .ugc-card h3 {
       margin-bottom: 0.5rem;
       color: var(--primary-blue);
-    }
-
-    .ugc-card p {
-      color: var(--text-dark);
     }
 
     .ugc-card .expanded {
@@ -389,7 +237,6 @@
       to { opacity: 1; height: auto; }
     }
 
-    /* Footer */
     footer {
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
       color: var(--white);
@@ -417,7 +264,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Enhanced Responsive Design - Adjusted hero height for mobile to scroll better */
     @media (max-width: 1024px) {
       .hero {
         height: 90vh;
@@ -425,12 +271,6 @@
 
       section {
         margin: 2rem 1rem;
-      }
-
-      .about-grid,
-      .ugc-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
       }
     }
 
@@ -447,7 +287,7 @@
       }
 
       nav {
-        display: none; /* Hide nav on mobile, toggle with JS if added */
+        display: none;
         flex-direction: column;
         width: 100%;
         gap: 0.5rem;
@@ -458,30 +298,17 @@
       }
 
       nav.active {
-        display: flex; /* Shown when toggled */
-      }
-
-      nav a {
-        padding: 1rem;
-        width: 100%;
-        min-width: auto;
-        font-size: 1rem;
+        display: flex;
       }
 
       .hero {
-        height: 70vh; /* Adjusted for mobile - scrolls out of view quicker */
+        height: 70vh;
         padding: 1rem;
       }
 
       section {
         margin: 1.5rem 0.5rem;
         padding: 1.5rem 1rem;
-      }
-
-      .about-grid,
-      .ugc-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
       }
     }
 
@@ -492,13 +319,12 @@
       }
 
       .hero {
-        height: 60vh; /* Further adjusted for small screens */
+        height: 60vh;
         padding: 0.5rem;
       }
 
       .hero img {
-        width: 120px; /* Adjusted for mobile */
-        height: auto;
+        width: 120px;
         margin-bottom: 1rem;
       }
 
@@ -508,56 +334,12 @@
         margin-bottom: 0.5rem;
       }
 
-      .hero p {
-        font-size: 1rem;
-      }
-
       section h2 {
         font-size: 2rem;
       }
 
-      section p {
-        font-size: 1rem;
-      }
-
       footer {
         padding: 1.5rem 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Dark Mode Support */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #121212;
-        color: #e0e0e0;
-      }
-
-      section {
-        background: rgba(18, 18, 18, 0.8);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: #e0e0e0;
-      }
-
-      .hero {
-        background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('hero-bg-dark.jpg') center/cover no-repeat;
-      }
-
-      .about-card,
-      .ugc-card {
-        background: #333;
-        color: #e0e0e0;
-      }
-
-      .about-card {
-        border-color: rgba(255, 255, 255, 0.1);
       }
     }
   </style>
@@ -569,18 +351,14 @@
     <nav id="main-nav" class="nav">
       <a href="index.html">Home</a>
       <a href="team.html">Team</a>
-       <a href="Gallery.html">Gallery</a>
-       <a href="finance.html">Finance</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="finance.html">Finance</a>
       <a href="fixtures.html">Fixtures & Results</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <div class="hero">
-    <!-- Placeholder for full-screen video: Replace src with actual video -->
-    <!-- <video autoplay muted loop playsinline>
-      <source src="club-highlight.mp4" type="video/mp4">
-    </video> -->
     <img src="logo.png" alt="Club Logo">
     <h2>Together we are strong</h2>
     <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
@@ -589,28 +367,8 @@
   <section>
     <h2>About Us</h2>
     <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together as One”, we continue to build a culture of unity and excellence in the local football community.</p>
-
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="icon">⚽</div>
-        <h3>Our Mission</h3>
-        <p>To promote football excellence and friendship among our community.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">🤝</div>
-        <h3>Our Values</h3>
-        <p>Teamwork, respect, dedication, and sportsmanship in every game.
-        Always give a friend a second chance</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">🏆</div>
-        <h3>Our Goal</h3>
-        <p>To compete at the highest level while maintaining our community spirit.</p>
-      </div>
-    </div>
   </section>
 
-  <!-- New UGC Section for Community Features -->
   <section class="ugc-section">
     <h2>Fan Zone</h2>
     <p>Join the conversation! Share your matchday stories and photos.</p>
@@ -619,7 +377,12 @@
         <h3>Match Highlight</h3>
         <p>Amazing goal from last weekend!</p>
         <div class="expanded">
-          <p>Relive the moment: Watch the replay and share your reactions. <button onclick="shareHighlight(event)">Share Your Take</button></p>
+          <p>Relive the moment: Watch the replay and share your reactions.</p>
+          <video controls>
+            <source src="main Miss.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <button onclick="shareHighlight(event)">Share Your Take</button>
         </div>
       </div>
       <div class="ugc-card" onclick="toggleExpanded(this)">
@@ -642,7 +405,6 @@
   <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
 
   <script>
-    // Simple JS for mobile menu toggle (optional, enhances UX)
     const toggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.getElementById('main-nav');
     if (toggle && nav) {
@@ -651,7 +413,6 @@
       });
     }
 
-    // Interactive Fan Zone
     function toggleExpanded(card) {
       card.classList.toggle('expanded');
     }
@@ -697,3 +458,4 @@
   </script>
 </body>
 </html>
+
