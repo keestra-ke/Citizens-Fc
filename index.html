@@ -342,6 +342,19 @@
         padding: 1.5rem 1rem;
       }
     }
+
+    /* New CSS for Video Playback */
+    .video-container {
+      max-width: 100%; /* Ensure it fits within the card */
+      overflow: hidden; /* Hide overflow if necessary */
+      margin: 1rem 0; /* Add some spacing */
+    }
+
+    .video-container video {
+      width: 100%; /* Make video take full width of the container */
+      height: auto; /* Maintain the aspect ratio */
+      border-radius: 10px; /* Optional: add rounded corners */
+    }
   </style>
 </head>
 <body>
@@ -368,7 +381,6 @@
     <h2>About Us</h2>
     <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together we are strong”, we continue to build a culture of unity and excellence in the local football community.</p>
     
-    <!-- Added Image Section -->
     <img src="IMG-20250713-WA0161.jpg" alt="Team Photo" style="max-width: 100%; height: auto; margin-top: 1rem;">
     <p style="text-align: center; color: var(--text-dark);">Our team in action, showcasing the spirit of camaraderie and teamwork!</p>
   </section>
@@ -382,9 +394,12 @@
         <p>Amazing goal from last weekend!</p>
         <div class="expanded">
           <p>Relive the moment: Watch the replay and share your reactions.</p>
-          <video controls>
-            <source src="Miss.mp4" type="video/mp4">
-          </video>
+          <div class="video-container">
+            <video controls>
+              <source src="Miss.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
           <button onclick="shareHighlight(event)">Share Your Take</button>
         </div>
       </div>
