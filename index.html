@@ -22,11 +22,7 @@
       --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -36,7 +32,7 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Navigation with Mobile Menu */
+    /* HEADER + NAVIGATION */
     header {
       position: sticky;
       top: 0;
@@ -77,246 +73,152 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
-      min-width: 120px; /* Touch-friendly minimum width */
+      min-width: 120px;
       text-align: center;
-      font-size: 0.95rem;
     }
 
-    nav a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    nav a:hover::before,
-    nav a:active::before {
-      left: 100%;
-    }
-
-    nav a:hover,
-    nav a:active {
+    nav a:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-3px) scale(1.05);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
 
-    /* Mobile Navigation Enhancements */
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      z-index: 1001;
-      transition: var(--transition);
-    }
-
-    .mobile-menu-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    .mobile-menu-toggle span {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background: var(--white);
-      margin: 5px 0;
-      transition: 0.3s;
-      border-radius: 3px;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(1) {
-      transform: rotate(-45deg) translate(-5px, 6px);
-    }
-
-    .mobile-menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(3) {
-      transform: rotate(45deg) translate(-5px, -6px);
-    }
-
-    nav {
-      transition: var(--transition);
-    }
-
-    nav.active {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      transform: translateY(0);
-      opacity: 1;
-      z-index: 1000;
-      animation: slideIn 0.4s ease-out;
-    }
-
-    nav:not(.active) {
-      transform: translateY(-100%);
-      opacity: 0;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-      z-index: 999;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    nav a {
-      min-width: auto;
-      font-size: 1.5rem; /* Larger on mobile */
-      padding: 1rem 2rem;
-    }
-
-    /* Hero with Responsive Height and Depth Scrolling - Scrolls out of view naturally */
+    /* HERO SECTION */
     .hero {
       position: relative;
-      height: 100vh; /* Full viewport height for desktop, scrolls away on scroll */
+      height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat; /* Placeholder for full-screen video or image */
+      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat;
       color: var(--white);
-      overflow: hidden;
       padding: 2rem 1rem;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('pattern.svg') repeat; /* Subtle nostalgic pattern */
-      opacity: 0.1;
-      animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
     .hero img {
-      width: clamp(150px, 25vw, 250px); /* Adjusted for shield shape */
-      height: auto; /* Keep aspect ratio for shape */
+      width: clamp(150px, 25vw, 250px);
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       animation: pulse 2s infinite;
-      transition: var(--transition);
-      border-radius: 0; /* No rounding to keep original shape */
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
+      0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .hero img:hover,
-    .hero img:active {
-      transform: scale(1.05); /* Gentle scale, no rotate to preserve shape */
     }
 
     .hero h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 8vw, 4rem);
-      font-weight: 400;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
       margin-bottom: 1rem;
-      letter-spacing: 3px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
     }
 
     .hero p {
       font-size: clamp(1rem, 4vw, 1.3rem);
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
       font-weight: 300;
-      max-width: 90%;
-      margin: 0 auto;
+      max-width: 600px;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Sections with Glassmorphism and Micro-Interactions */
+    /* SECTIONS */
     section {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      margin: 3rem 1rem;
+      margin: 3rem auto;
       max-width: 1000px;
-      padding: clamp(2rem, 5vw, 3rem);
+      padding: 2rem;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      position: relative;
-      width: 100%;
+      text-align: center;
     }
 
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg
+    section h2 {
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    section p {
+      color: var(--text-light);
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    a.button {
+      display: inline-block;
+      background: var(--primary-blue);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      margin-top: 1.5rem;
+    }
+
+    a.button:hover {
+      background: var(--primary-red);
+      transform: translateY(-3px);
+    }
+
+    /* FOOTER */
+    footer {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Chandaria Converting Football Club</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="team.html">Team</a>
+      <a href="fixtures.html">Fixtures</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="finance.html">Finances</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <img src="logo.png" alt="Club Logo">
+    <h2>Unity in Action 💙❤️</h2>
+    <p>Welcome to the official website of Chandaria Converting FC — a team built on teamwork, passion, and resilience.</p>
+  </section>
+
+  <section>
+    <h2>About Us</h2>
+    <p>Chandaria Converting FC (C.C.F.C) is more than just a football team — it’s a family united by discipline, hard work, and the shared dream of excellence on and off the pitch.</p>
+    <a href="team.html" class="button">Meet the Team</a>
+  </section>
+
+  <section>
+    <h2>Our Gallery</h2>
+    <p>Relive our best moments from training sessions, friendly matches, and tournaments.</p>
+    <a href="gallery.html" class="button">View Photos</a>
+  </section>
+
+  <section>
+    <h2>Club Finances</h2>
+    <p>We are proud to be self-supported by our members. View our live contribution and financial statement here.</p>
+    <a href="finance.html" class="button">Open Finances</a>
+  </section>
+
+  <footer>
+    © 2025 Chandaria Converting Football Club • Unity in Action 💙❤️
+  </footer>
+
+</body>
+</html>
