@@ -105,7 +105,7 @@
       box-shadow: var(--shadow-hover);
     }
 
-    /* Mobile Hamburger Menu Toggle (CSS-only) */
+    /* Mobile Navigation Enhancements */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -114,6 +114,93 @@
       font-size: 1.5rem;
       cursor: pointer;
       padding: 0.5rem;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1001;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: var(--white);
+      margin: 5px 0;
+      transition: 0.3s;
+      border-radius: 3px;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    nav {
+      transition: var(--transition);
+    }
+
+    nav.active {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transform: translateY(0);
+      opacity: 1;
+      z-index: 1000;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    nav:not(.active) {
+      transform: translateY(-100%);
+      opacity: 0;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      z-index: 999;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    nav a {
+      min-width: auto;
+      font-size: 1.5rem; /* Larger on mobile */
+      padding: 1rem 2rem;
     }
 
     /* Hero with Responsive Height and Depth Scrolling - Scrolls out of view naturally */
@@ -159,14 +246,13 @@
     }
 
     .hero img {
-      width: clamp(100px, 20vw, 160px);
-      height: clamp(100px, 20vw, 160px);
-      border-radius: 50%;
-      border: 3px solid var(--accent-gold);
+      width: clamp(150px, 25vw, 250px); /* Adjusted for shield shape */
+      height: auto; /* Keep aspect ratio for shape */
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       animation: pulse 2s infinite;
       transition: var(--transition);
+      border-radius: 0; /* No rounding to keep original shape */
     }
 
     @keyframes pulse {
@@ -177,7 +263,7 @@
 
     .hero img:hover,
     .hero img:active {
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.05); /* Gentle scale, no rotate to preserve shape */
     }
 
     .hero h2 {
@@ -233,305 +319,4 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(0, 71, 171, 0.05), rgba(211, 47, 47, 0.05));
-      border-radius: var(--border-radius);
-      z-index: -1;
-    }
-
-    section:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: var(--shadow-hover);
-    }
-
-    section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 6vw, 2.8rem);
-      color: var(--primary-blue);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      position: relative;
-    }
-
-    section h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-      border-radius: 2px;
-    }
-
-    section p {
-      font-size: clamp(1rem, 3vw, 1.15rem);
-      text-align: justify;
-      color: var(--text-dark);
-      opacity: 0.9;
-    }
-
-    /* UGC Section for Community */
-    .ugc-section {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 71, 171, 0.05));
-      text-align: center;
-    }
-
-    .ugc-section h2 {
-      color: var(--primary-red);
-    }
-
-    .ugc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .ugc-card {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 15px;
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-    }
-
-    .ugc-card:hover,
-    .ugc-card:active {
-      transform: translateY(-5px);
-    }
-
-    .ugc-card h3 {
-      margin-bottom: 0.5rem;
-      color: var(--primary-blue);
-    }
-
-    /* Footer */
-    footer {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
-      text-align: center;
-      padding: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 300;
-      position: relative;
-      overflow: hidden;
-      margin-top: 2rem;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Enhanced Responsive Design - Adjusted hero height for mobile to scroll better */
-    @media (max-width: 1024px) {
-      .hero {
-        height: 90vh;
-      }
-
-      section {
-        margin: 2rem 1rem;
-      }
-
-      .ugc-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 0.75rem 1rem;
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-        position: absolute;
-        top: 0.75rem;
-        right: 1rem;
-      }
-
-      nav {
-        display: none; /* Hide nav on mobile, toggle with JS if added */
-        flex-direction: column;
-        width: 100%;
-        gap: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
-        border-radius: 10px;
-        margin-top: 1rem;
-      }
-
-      nav.active {
-        display: flex; /* Shown when toggled */
-      }
-
-      nav a {
-        padding: 1rem;
-        width: 100%;
-        min-width: auto;
-        font-size: 1rem;
-      }
-
-      .hero {
-        height: 70vh; /* Adjusted for mobile - scrolls out of view quicker */
-        padding: 1rem;
-      }
-
-      section {
-        margin: 1.5rem 0.5rem;
-        padding: 1.5rem 1rem;
-      }
-
-      .ugc-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.5rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .hero {
-        height: 60vh; /* Further adjusted for small screens */
-        padding: 0.5rem;
-      }
-
-      .hero img {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 1rem;
-      }
-
-      .hero h2 {
-        font-size: 2.5rem;
-        letter-spacing: 1px;
-        margin-bottom: 0.5rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      section h2 {
-        font-size: 2rem;
-      }
-
-      section p {
-        font-size: 1rem;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Dark Mode Support */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #121212;
-        color: #e0e0e0;
-      }
-
-      section {
-        background: rgba(18, 18, 18, 0.8);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: #e0e0e0;
-      }
-
-      .hero {
-        background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('hero-bg-dark.jpg') center/cover no-repeat;
-      }
-
-      .ugc-card {
-        background: #333;
-        color: #e0e0e0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
-    <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
-    <nav id="main-nav" class="nav">
-      <a href="index.html">Home</a>
-      <a href="team.html">Team</a>
-      <a href="fixtures.html">Fixtures & Results</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
-
-  <div class="hero">
-    <!-- Placeholder for full-screen video: Replace src with actual video -->
-    <!-- <video autoplay muted loop playsinline>
-      <source src="club-highlight.mp4" type="video/mp4">
-    </video> -->
-    <img src="logo.png" alt="Club Logo">
-    <h2>Together as One</h2>
-    <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
-  </div>
-
-  <section>
-    <h2>About Us</h2>
-    <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together as One”, we continue to build a culture of unity and excellence in the local football community.</p>
-  </section>
-
-  <!-- New UGC Section for Community Features -->
-  <section class="ugc-section">
-    <h2>Fan Zone</h2>
-    <p>Join the conversation! Share your matchday stories and photos.</p>
-    <div class="ugc-grid">
-      <div class="ugc-card">
-        <h3>Match Highlight</h3>
-        <p>Amazing goal from last weekend!</p>
-        <!-- Placeholder for fan image -->
-      </div>
-      <div class="ugc-card">
-        <h3>Player Spotlight</h3>
-        <p>Shoutout to our MVP!</p>
-      </div>
-      <div class="ugc-card">
-        <h3>Upcoming Fixture</h3>
-        <p>Who's ready for the next game?</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
-
-  <script>
-    // Simple JS for mobile menu toggle (optional, enhances UX)
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.getElementById('main-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        nav.classList.toggle('active');
-      });
-    }
-  </script>
-</body>
-</html>
+      background: linear-gradient(135deg
