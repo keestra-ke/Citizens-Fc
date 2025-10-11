@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Citizens Concerting Football Club</title>
+  <title>Chandaria Converting Football Club</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,7 +36,7 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Navigation */
+    /* Sticky Navigation with Mobile Menu */
     header {
       position: sticky;
       top: 0;
@@ -51,7 +51,7 @@
 
     header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
       font-weight: 700;
       margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
@@ -62,7 +62,7 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     nav a {
@@ -77,6 +77,9 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      min-width: 120px; /* Touch-friendly minimum width */
+      text-align: center;
+      font-size: 0.95rem;
     }
 
     nav a::before {
@@ -90,20 +93,33 @@
       transition: left 0.5s;
     }
 
-    nav a:hover::before {
+    nav a:hover::before,
+    nav a:active::before {
       left: 100%;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav a:active {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-3px) scale(1.05);
       box-shadow: var(--shadow-hover);
     }
 
-    /* Hero with Full-Screen Video Placeholder and Depth Scrolling */
+    /* Mobile Hamburger Menu Toggle (CSS-only) */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Hero with Responsive Height and Depth Scrolling - Scrolls out of view naturally */
     .hero {
       position: relative;
-      height: 100vh;
+      height: 100vh; /* Full viewport height for desktop, scrolls away on scroll */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -112,6 +128,7 @@
       background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat; /* Placeholder for full-screen video or image */
       color: var(--white);
       overflow: hidden;
+      padding: 2rem 1rem;
     }
 
     .hero::before {
@@ -142,11 +159,11 @@
     }
 
     .hero img {
-      width: 160px;
-      height: 160px;
+      width: clamp(100px, 20vw, 160px);
+      height: clamp(100px, 20vw, 160px);
       border-radius: 50%;
       border: 3px solid var(--accent-gold);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       animation: pulse 2s infinite;
       transition: var(--transition);
@@ -158,13 +175,14 @@
       100% { transform: scale(1); }
     }
 
-    .hero img:hover {
+    .hero img:hover,
+    .hero img:active {
       transform: scale(1.1) rotate(5deg);
     }
 
     .hero h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 4rem;
+      font-size: clamp(2rem, 8vw, 4rem);
       font-weight: 400;
       margin-bottom: 1rem;
       letter-spacing: 3px;
@@ -174,10 +192,12 @@
     }
 
     .hero p {
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 4vw, 1.3rem);
       opacity: 0;
       animation: fadeInUp 1s ease-out 0.5s forwards;
       font-weight: 300;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
     @keyframes fadeInUp {
@@ -196,13 +216,14 @@
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      margin: 4rem auto;
+      margin: 3rem 1rem;
       max-width: 1000px;
-      padding: 3rem;
+      padding: clamp(2rem, 5vw, 3rem);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
       position: relative;
+      width: 100%;
     }
 
     section::before {
@@ -224,9 +245,9 @@
 
     section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
       color: var(--primary-blue);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
       font-weight: 700;
       position: relative;
@@ -245,13 +266,13 @@
     }
 
     section p {
-      font-size: 1.15rem;
+      font-size: clamp(1rem, 3vw, 1.15rem);
       text-align: justify;
       color: var(--text-dark);
       opacity: 0.9;
     }
 
-    /* Add UGC Section for Community */
+    /* UGC Section for Community */
     .ugc-section {
       background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 71, 171, 0.05));
       text-align: center;
@@ -264,7 +285,7 @@
     .ugc-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
       margin-top: 2rem;
     }
 
@@ -276,8 +297,14 @@
       transition: var(--transition);
     }
 
-    .ugc-card:hover {
+    .ugc-card:hover,
+    .ugc-card:active {
       transform: translateY(-5px);
+    }
+
+    .ugc-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary-blue);
     }
 
     /* Footer */
@@ -285,10 +312,11 @@
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
       color: var(--white);
       text-align: center;
-      padding: 2.5rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
       font-weight: 300;
       position: relative;
       overflow: hidden;
+      margin-top: 2rem;
     }
 
     footer::before {
@@ -307,45 +335,109 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Responsive and Inclusive Design */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8rem;
-      }
-
-      nav {
-        gap: 1rem;
-      }
-
-      nav a {
-        padding: 0.5rem 1rem;
-        font-size: 0.95rem;
-      }
-
+    /* Enhanced Responsive Design - Adjusted hero height for mobile to scroll better */
+    @media (max-width: 1024px) {
       .hero {
-        height: 80vh;
-        padding: 0 1rem;
-      }
-
-      .hero h2 {
-        font-size: 3rem;
-      }
-
-      .hero p {
-        font-size: 1.1rem;
+        height: 90vh;
       }
 
       section {
         margin: 2rem 1rem;
-        padding: 2rem 1.5rem;
       }
 
-      section h2 {
-        font-size: 2.2rem;
+      .ugc-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0.75rem 1rem;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
+      }
+
+      nav {
+        display: none; /* Hide nav on mobile, toggle with JS if added */
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+      }
+
+      nav.active {
+        display: flex; /* Shown when toggled */
+      }
+
+      nav a {
+        padding: 1rem;
+        width: 100%;
+        min-width: auto;
+        font-size: 1rem;
+      }
+
+      .hero {
+        height: 70vh; /* Adjusted for mobile - scrolls out of view quicker */
+        padding: 1rem;
+      }
+
+      section {
+        margin: 1.5rem 0.5rem;
+        padding: 1.5rem 1rem;
       }
 
       .ugc-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .hero {
+        height: 60vh; /* Further adjusted for small screens */
+        padding: 0.5rem;
+      }
+
+      .hero img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      section h2 {
+        font-size: 2rem;
+      }
+
+      section p {
+        font-size: 1rem;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
       }
     }
 
@@ -373,17 +465,21 @@
       .hero {
         background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('hero-bg-dark.jpg') center/cover no-repeat;
       }
+
+      .ugc-card {
+        background: #333;
+        color: #e0e0e0;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Citizens Concerting Football Club (C.C.F.C)</h1>
-    <nav>
+    <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+    <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
+    <nav id="main-nav" class="nav">
       <a href="index.html">Home</a>
       <a href="team.html">Team</a>
-      <a href="Gallery.html">Gallery</a>
-      <a href="finance.html">Finances</a>
       <a href="fixtures.html">Fixtures & Results</a>
       <a href="contact.html">Contact</a>
     </nav>
@@ -401,7 +497,7 @@
 
   <section>
     <h2>About Us</h2>
-    <p>Founded in 2025 and based in Babadogo, Citizens Concerting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together as One”, we continue to build a culture of unity and excellence in the local football community.</p>
+    <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together as One”, we continue to build a culture of unity and excellence in the local football community.</p>
   </section>
 
   <!-- New UGC Section for Community Features -->
@@ -425,6 +521,17 @@
     </div>
   </section>
 
-  <footer>&copy; 2025 Citizens Concerting Football Club. All rights reserved.</footer>
+  <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
+
+  <script>
+    // Simple JS for mobile menu toggle (optional, enhances UX)
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.getElementById('main-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    }
+  </script>
 </body>
 </html>
