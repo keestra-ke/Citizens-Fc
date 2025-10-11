@@ -16,9 +16,9 @@
       --glass-border: rgba(255, 255, 255, 0.2);
       --text-dark: #1a1a1a;
       --text-light: #6c757d;
-      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
-      --border-radius: 24px;
+      --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+      --border-radius: 20px;
       --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -214,14 +214,14 @@
     }
 
     .gallery-grid {
-      column-count: 3; /* Masonry columns */
-      column-gap: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
       margin-top: 2rem;
       list-style: none;
     }
 
     .gallery-item {
-      break-inside: avoid;
       background: var(--white);
       border-radius: var(--border-radius);
       overflow: hidden;
@@ -229,30 +229,26 @@
       transition: var(--transition);
       position: relative;
       cursor: pointer;
-      margin-bottom: 2rem; /* Space between items */
-      display: inline-block;
-      width: 100%;
     }
 
     .gallery-item:hover {
-      transform: translateY(-8px) scale(1.01); /* Softer hover transform */
+      transform: translateY(-10px) scale(1.02);
       box-shadow: var(--shadow-hover);
     }
 
     .gallery-item img {
       width: 100%;
-      height: auto; /* Dynamic height based on image */
-      min-height: 200px;
-      object-fit: cover; /* Cover for previews, but with height auto, it adjusts */
+      height: auto;
+      aspect-ratio: 16/9; /* Landscape aspect ratio for thumbs */
+      object-fit: cover;
       transition: var(--transition);
-      display: block;
+      filter: blur(0.5px); /* Subtle blur for smoother feel */
       border-radius: var(--border-radius);
-      filter: brightness(1) contrast(1.05); /* Subtle enhancement for smoother look */
     }
 
     .gallery-item:hover img {
-      transform: scale(1.03); /* Gentler scale on hover */
-      filter: brightness(1.1) contrast(1.1);
+      transform: scale(1.05);
+      filter: blur(0px);
     }
 
     .gallery-item::after {
@@ -270,12 +266,12 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); /* Softer gradient */
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
       color: var(--white);
-      padding: 1.5rem;
+      padding: 1rem;
       transform: translateY(100%);
       transition: var(--transition);
-      backdrop-filter: blur(10px); /* Enhanced blur for smoothness */
+      backdrop-filter: blur(5px); /* Smoother overlay */
       border-radius: 0 0 var(--border-radius) var(--border-radius);
     }
 
@@ -285,9 +281,8 @@
 
     .gallery-overlay p {
       margin: 0;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Softer text */
     }
 
     /* Lightbox Modal */
@@ -299,29 +294,28 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95); /* Darker for focus */
-      animation: fadeIn 0.4s ease-in-out;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease-in-out;
     }
 
     .lightbox-content {
       position: relative;
-      max-width: 95%;
-      max-height: 95%;
+      max-width: 90%;
+      max-height: 90%;
       margin: auto;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
     }
 
     .lightbox img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      border-radius: 16px;
-      box-shadow: 0 0 60px rgba(255, 255, 255, 0.05); /* Softer, larger glow */
+      border-radius: 10px;
+      box-shadow: 0 0 50px rgba(255, 255, 255, 0.1); /* Softer glow */
       transition: var(--transition);
     }
 
@@ -341,14 +335,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
     }
 
     .close:hover {
       color: var(--primary-red);
-      background: rgba(211, 47, 47, 0.15);
-      transform: scale(1.05);
+      background: rgba(211, 47, 47, 0.2);
+      transform: scale(1.1);
     }
 
     @keyframes fadeIn {
@@ -392,12 +386,6 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 1024px) {
-      .gallery-grid {
-        column-count: 2;
-      }
-    }
-
     @media (max-width: 768px) {
       header {
         padding: 0.75rem 1rem;
@@ -442,16 +430,12 @@
       }
 
       .gallery-grid {
-        column-count: 2;
-        column-gap: 1rem;
-      }
-
-      .gallery-item {
-        margin-bottom: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
       }
 
       .gallery-item img {
-        min-height: 180px;
+        aspect-ratio: 16/9;
       }
 
       .close {
@@ -473,11 +457,7 @@
       }
 
       .gallery-grid {
-        column-count: 1;
-      }
-
-      .gallery-item img {
-        min-height: 200px;
+        grid-template-columns: 1fr;
       }
     }
 
