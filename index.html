@@ -1,478 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chandaria Converting Football Club</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-blue: #0047AB;
-      --primary-red: #D32F2F;
-      --accent-gold: #FFD700;
-      --light-bg: #f8f9fa;
-      --white: #ffffff;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --text-dark: #1a1a1a;
-      --text-light: #6c757d;
-      --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
-      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
-      --border-radius: 20px;
-      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--light-bg), #e9ecef);
-      color: var(--text-dark);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
-      padding: 1rem 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(10px);
-    }
-
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.75rem 1.5rem;
-      border-radius: 50px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      min-width: 120px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    nav a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    nav a:hover::before,
-    nav a:active::before {
-      left: 100%;
-    }
-
-    nav a:hover,
-    nav a:active {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .hero {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('hero-bg.jpg') center/cover no-repeat;
-      color: var(--white);
-      overflow: hidden;
-      padding: 2rem 1rem;
-    }
-
-    .hero img {
-      width: clamp(150px, 25vw, 250px);
-      height: auto;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-      animation: pulse 2s infinite;
-      transition: var(--transition);
-      border-radius: 0;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .hero h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 8vw, 4rem);
-      font-weight: 400;
-      margin-bottom: 1rem;
-      letter-spacing: 3px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero p {
-      font-size: clamp(1rem, 4vw, 1.3rem);
-      font-weight: 300;
-      max-width: 90%;
-      margin: 0 auto;
-    }
-
-    section {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      margin: 3rem 1rem;
-      max-width: 1000px;
-      padding: clamp(2rem, 5vw, 3rem);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      position: relative;
-      width: 100%;
-    }
-
-    section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 6vw, 2.8rem);
-      color: var(--primary-blue);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      position: relative;
-    }
-
-    section p {
-      font-size: clamp(1rem, 3vw, 1.15rem);
-      text-align: justify;
-      color: var(--text-dark);
-      opacity: 0.9;
-    }
-
-    .ugc-section {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 71, 171, 0.05));
-      text-align: center;
-    }
-
-    .ugc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .ugc-card {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 15px;
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ugc-card h3 {
-      margin-bottom: 0.5rem;
-      color: var(--primary-blue);
-    }
-
-    .ugc-card .expanded {
-      display: none;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      text-align: left;
-    }
-
-    .ugc-card.expanded .expanded {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; height: 0; }
-      to { opacity: 1; height: auto; }
-    }
-
-    footer {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
-      text-align: center;
-      padding: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 300;
-      position: relative;
-      overflow: hidden;
-      margin-top: 2rem;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 1024px) {
-      .hero {
-        height: 90vh;
-      }
-
-      section {
-        margin: 2rem 1rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 0.75rem 1rem;
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-        position: absolute;
-        top: 0.75rem;
-        right: 1rem;
-      }
-
-      nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        gap: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
-        border-radius: 10px;
-        margin-top: 1rem;
-      }
-
-      nav.active {
-        display: flex;
-      }
-
-      .hero {
-        height: 70vh;
-        padding: 1rem;
-      }
-
-      section {
-        margin: 1.5rem 0.5rem;
-        padding: 1.5rem 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.5rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .hero {
-        height: 60vh;
-        padding: 0.5rem;
-      }
-
-      .hero img {
-        width: 120px;
-        margin-bottom: 1rem;
-      }
-
-      .hero h2 {
-        font-size: 2.5rem;
-        letter-spacing: 1px;
-        margin-bottom: 0.5rem;
-      }
-
-      section h2 {
-        font-size: 2rem;
-      }
-
-      footer {
-        padding: 1.5rem 1rem;
-      }
-    }
-
-    /* New CSS for Video Playback */
-    .video-container {
-      max-width: 100%; /* Ensure it fits within the card */
-      overflow: hidden; /* Hide overflow if necessary */
-      margin: 1rem 0; /* Add some spacing */
-    }
-
-    .video-container video {
-      width: 100%; /* Make video take full width of the container */
-      height: auto; /* Maintain the aspect ratio */
-      border-radius: 10px; /* Optional: add rounded corners */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandaria Converting Football Club</title>
+    <link href="https:                                                                                                                                  
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
-    <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
-    <nav id="main-nav" class="nav">
-      <a href="index.html">Home</a>
-      <a href="team.html">Team</a>
-      <a href="Gallery.html">Gallery</a>
-      <a href="finance.html">Finance</a>
-      <a href="fixtures.html">Fixtures & Results</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
-
-  <div class="hero">
-    <img src="logo.png" alt="Club Logo">
-    <h2>Together we are strong</h2>
-    <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
-  </div>
-
-  <section>
-    <h2>About Us</h2>
-    <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto “Together we are strong”, we continue to build a culture of unity and excellence in the local football community.</p>
-    
-    <img src="IMG-20250713-WA0161.jpg" alt="Team Photo" style="max-width: 100%; height: auto; margin-top: 1rem;">
-    <p style="text-align: center; color: var(--text-dark);">Our team in action, showcasing the spirit of camaraderie and teamwork!</p>
-  </section>
-
-  <section class="ugc-section">
-    <h2>Fan Zone</h2>
-    <p>Join the conversation! Share your matchday stories and photos.</p>
-    <div class="ugc-grid">
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Match Highlight</h3>
-        <p>Amazing goal from last weekend!</p>
-        <div class="expanded">
-          <p>Relive the moment: Watch the replay and share your reactions.</p>
-          <div class="video-container">
-            <video controls>
-              <source src="Miss.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <button onclick="shareHighlight(event)">Share Your Take</button>
-        </div>
-      </div>
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Player Spotlight</h3>
-        <p>Shoutout to our MVP!</p>
-        <div class="expanded">
-          <p>Meet the star: Bio, stats, and fan messages. <button onclick="shareSpotlight(event)">Nominate Next</button></p>
-        </div>
-      </div>
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Upcoming Fixture</h3>
-        <p>Who's ready for the next game?</p>
-        <div class="expanded">
-          <p>Game details: Time, venue, and predictions. <button onclick="shareFixture(event)">RSVP Here</button></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
-
-  <script>
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.getElementById('main-nav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        nav.classList.toggle('active');
-      });
-    }
-
-    function toggleExpanded(card) {
-      card.classList.toggle('expanded');
-    }
-
-    function shareHighlight(event) {
-      event.stopPropagation();
-      if (navigator.share) {
-        navigator.share({
-          title: 'CCFC Match Highlight',
-          text: 'Check out this amazing goal from our last match!',
-          url: window.location.href
-        });
-      } else {
-        alert('Share this highlight with your friends!');
-      }
-    }
-
-    function shareSpotlight(event) {
-      event.stopPropagation();
-      if (navigator.share) {
-        navigator.share({
-          title: 'CCFC Player Spotlight',
-          text: 'Shoutout to our MVP! Who should be next?',
-          url: window.location.href
-        });
-      } else {
-        alert('Nominate the next spotlight player!');
-      }
-    }
-
-    function shareFixture(event) {
-      event.stopPropagation();
-      if (navigator.share) {
-        navigator.share({
-          title: 'CCFC Upcoming Fixture',
-          text: "Don't miss our next game! RSVP and get ready.",
-          url: window.location.href
-        });
-      } else {
-        alert('RSVP for the upcoming fixture!');
-      }
-    }
-  </script>
+    <header>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+        <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
+        <nav id="main-nav" class="nav">
+            <a href="index.html">Home</a>
+            <a href="team.html">Team</a>
+            <a href="Gallery.html">Gallery</a>
+            <a href="finance.html">Finance</a>
+            <a href="fixtures.html">Fixtures & Results</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <img src="logo.png" alt="Club Logo" loading="lazy">
+            <h2>Together we are strong</h2>
+            <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
+        </section>
+        <section>
+            <h2>About Us</h2>
+            <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football.</p>
+            <img src="IMG-20250713-WA0161.jpg" alt="Team Photo" loading="lazy">
+            <p style="text-align: center; color: var(--text-dark);">Our team in action, showcasing the spirit of camaraderie and teamwork!</p>
+        </section>
+        <section class="ugc-section">
+            <h2>Fan Zone</h2>
+            <p>Join the conversation! Share your matchday stories and photos.</p>
+            <div class="ugc-grid">
+                <div class="ugc-card" onclick="toggleExpanded(this)">
+                    <h3>Match Highlight</h3>
+                    <p>Amazing goal from last weekend!</p>
+                    <div class="expanded">
+                        <p>Relive the moment: Watch the replay and share your reactions.</p>
+                        <div class="video-container">
+                            <video controls preload="metadata">
+                                <source src="Miss.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <button onclick="shareHighlight(event)">Share Your Take</button>
+                    </div>
+                </div>
+                <!-- Other UGC cards -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
