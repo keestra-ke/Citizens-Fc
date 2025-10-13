@@ -667,7 +667,6 @@
         </video>
         <div class="expanded">
           <p>Relive the moment: Watch the replay and share your reactions. (Expanded view for full immersion!)</p>
-          <!-- Video reappears here if needed, but since it's above, we can reference or duplicate for clarity -->
           <button onclick="shareHighlight(event)">Share Your Take</button>
           <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">Caption: Epic strike by our captain – what a finish!</p>
         </div>
@@ -676,4 +675,100 @@
         <h3>Player Spotlight</h3>
         <p>Shoutout to our MVP!</p>
         <div class="expanded">
-          <p>Meet the star: Bio, stats, and fan messages.
+          <p>Meet the star: Bio, stats, and fan messages. <button onclick="shareSpotlight(event)">Nominate Next</button></p>
+        </div>
+      </div>
+      <div class="ugc-card" onclick="toggleExpanded(this)">
+        <h3>Upcoming Fixture</h3>
+        <p>Next up: vs. Babadogo United – Oct 19, 2025 @ 3PM, Local Pitch</p>
+        <div class="expanded">
+          <p><strong>Details:</strong> Kickoff 3:00 PM, Venue: Babadogo Community Field. Bring your blue & red! Predictions: CCFC win 2-1? <button onclick="shareFixture(event)">RSVP Here</button></p>
+          <div id="countdown" style="margin-top: 1rem; font-weight: bold; color: var(--primary-red);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
+
+  <script>
+    // Simple JS for mobile menu toggle (optional, enhances UX)
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.getElementById('main-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    }
+
+    // Interactive Fan Zone
+    function toggleExpanded(card) {
+      card.classList.toggle('expanded');
+      // Optional: Pause/resume video on expand for better UX
+      const video = card.querySelector('video');
+      if (video) {
+        if (card.classList.contains('expanded')) {
+          video.play(); // Auto-play on expand (muted if needed)
+        } else {
+          video.pause();
+        }
+      }
+    }
+
+    function shareHighlight(event) {
+      event.stopPropagation();
+      if (navigator.share) {
+        navigator.share({
+          title: 'CCFC Match Highlight',
+          text: 'Check out this amazing goal from our last match!',
+          url: window.location.href
+        });
+      } else {
+        alert('Share this highlight with your friends!');
+      }
+    }
+
+    function shareSpotlight(event) {
+      event.stopPropagation();
+      if (navigator.share) {
+        navigator.share({
+          title: 'CCFC Player Spotlight',
+          text: 'Shoutout to our MVP! Who should be next?',
+          url: window.location.href
+        });
+      } else {
+        alert('Nominate the next spotlight player!');
+      }
+    }
+
+    function shareFixture(event) {
+      event.stopPropagation();
+      if (navigator.share) {
+        navigator.share({
+          title: 'CCFC Upcoming Fixture',
+          text: "Don't miss our next game! RSVP and get ready.",
+          url: window.location.href
+        });
+      } else {
+        alert('RSVP for the upcoming fixture!');
+      }
+    }
+
+    // Simple countdown for upcoming fixture
+    function updateCountdown() {
+      const matchDate = new Date('2025-10-19T15:00:00'); // Adjust to your real fixture
+      const now = new Date();
+      const diff = matchDate - now;
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('countdown').textContent = `Match in ${days}d ${hours}h!`;
+      } else {
+        document.getElementById('countdown').textContent = 'Match day is here!';
+      }
+    }
+    setInterval(updateCountdown, 3600000); // Update hourly
+    updateCountdown(); // Initial load
+  </script>
+</body>
+</html>
