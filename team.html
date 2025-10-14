@@ -38,49 +38,30 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Navigation with Logo */
+    /* Sticky Navigation with Mobile Menu */
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
       color: var(--white);
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 1rem;
+      text-align: center;
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(10px);
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    header img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      transition: var(--transition);
-    }
-
-    header img:hover {
-      transform: scale(1.1);
+      width: 100%;
     }
 
     header h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.5rem, 5vw, 2.2rem);
       font-weight: 700;
-      margin: 0;
+      margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     nav {
-      margin-left: auto;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -127,7 +108,7 @@
       box-shadow: var(--shadow-hover);
     }
 
-    /* Mobile Hamburger Menu Toggle */
+    /* Mobile Hamburger Menu Toggle (CSS-only) */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -136,7 +117,6 @@
       font-size: 1.5rem;
       cursor: pointer;
       padding: 0.5rem;
-      margin-left: auto;
     }
 
     /* Hero Section for Team */
@@ -213,6 +193,110 @@
       height: 4px;
       background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
       border-radius: 2px;
+    }
+
+    /* Player Columns Section */
+    .player-columns-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .player-column {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .player-column:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .player-column h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      color: var(--primary-red);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 700;
+      position: relative;
+    }
+
+    .player-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+      border-radius: 2px;
+    }
+
+    .player-list {
+      list-style: none;
+    }
+
+    .player-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .player-item:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .player-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent-gold);
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    .player-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .player-info {
+      flex-grow: 1;
+    }
+
+    .player-info h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .player-info .role {
+      color: var(--primary-red);
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: rgba(211, 47, 47, 0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 15px;
+      display: inline-block;
     }
 
     /* Formation Section */
@@ -370,24 +454,16 @@
       text-overflow: ellipsis;
     }
 
-    /* Position Sections */
-    .position-section {
+    /* First Eleven Section */
+    .first-eleven-section {
       margin-bottom: 4rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
+      background: var(--white);
       border-radius: var(--border-radius);
       padding: 2rem;
       box-shadow: var(--shadow-soft);
-      transition: var(--transition);
     }
 
-    .position-section:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .position-section h3 {
+    .first-eleven-section h3 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.5rem, 5vw, 2.5rem);
       color: var(--primary-red);
@@ -396,103 +472,49 @@
       font-weight: 700;
     }
 
-    .players-grid {
+    .first-eleven-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1.5rem;
       list-style: none;
     }
 
-    .player-card {
-      background: var(--white);
+    .first-eleven-card {
+      background: var(--glass-bg);
       padding: 1.5rem;
       border-radius: 15px;
+      text-align: center;
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      border: 1px solid var(--glass-border);
       cursor: pointer;
     }
 
-    .player-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-    }
-
-    .player-card:hover {
-      transform: translateY(-10px) scale(1.02);
+    .first-eleven-card:hover {
+      transform: translateY(-5px);
       box-shadow: var(--shadow-hover);
     }
 
-    .player-avatar {
-      width: 80px;
-      height: 80px;
+    .first-eleven-avatar {
+      width: 70px;
+      height: 70px;
       margin: 0 auto 1rem;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent-gold);
-      transition: var(--transition);
-      cursor: pointer;
     }
 
-    .player-avatar img {
+    .first-eleven-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    .player-card:hover .player-avatar {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .player-card h4 {
-      font-size: 1.2rem;
+    .first-eleven-card h4 {
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--text-dark);
       margin-bottom: 0.5rem;
-    }
-
-    .player-card .role {
-      color: var(--primary-red);
-      font-weight: 700;
-      font-size: 0.9rem;
-      background: rgba(211, 47, 47, 0.1);
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 0.5rem;
-    }
-
-    .player-stats {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      font-size: 0.85rem;
-    }
-
-    .stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .stat-value {
-      font-weight: 700;
-      color: var(--primary-blue);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--text-light);
     }
 
     /* Modal Styles */
@@ -554,7 +576,6 @@
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent-gold);
-      cursor: pointer;
     }
 
     .modal-avatar img {
@@ -623,109 +644,6 @@
       color: var(--text-light);
     }
 
-    /* Lightbox for expanded player photo */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 3000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .lightbox-content {
-      display: block;
-      margin: auto;
-      max-width: 90%;
-      max-height: 90%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .close-lightbox {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .close-lightbox:hover {
-      color: var(--accent-gold);
-    }
-
-    /* First Eleven Section */
-    .first-eleven-section {
-      margin-top: 4rem;
-      background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 2rem;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .first-eleven-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      color: var(--primary-red);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .first-eleven-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .first-eleven-card {
-      background: var(--glass-bg);
-      padding: 1.5rem;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      border: 1px solid var(--glass-border);
-    }
-
-    .first-eleven-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .first-eleven-avatar {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 1rem;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid var(--accent-gold);
-    }
-
-    .first-eleven-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .first-eleven-card h4 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.5rem;
-    }
-
     /* Footer */
     footer {
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
@@ -762,6 +680,9 @@
 
       .mobile-menu-toggle {
         display: block;
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
       }
 
       nav {
@@ -773,10 +694,6 @@
         padding: 1rem;
         border-radius: 10px;
         margin-top: 1rem;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
       }
 
       nav.active {
@@ -796,6 +713,15 @@
 
       main {
         padding: 1rem;
+      }
+
+      .player-columns-section {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .player-column {
+        padding: 1.5rem;
       }
 
       .formation-header {
@@ -824,21 +750,6 @@
         max-width: 60px;
       }
 
-      .position-section {
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .players-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .player-avatar {
-        width: 70px;
-        height: 70px;
-      }
-
       .modal-content {
         width: 95%;
         margin: 10% auto;
@@ -863,6 +774,20 @@
         font-size: 2rem;
       }
 
+      .player-item {
+        padding: 0.75rem;
+      }
+
+      .player-avatar {
+        width: 50px;
+        height: 50px;
+        margin-right: 0.75rem;
+      }
+
+      .player-info h4 {
+        font-size: 1rem;
+      }
+
       .formation-pitch {
         min-height: 350px;
       }
@@ -876,15 +801,6 @@
       .player-name {
         font-size: 0.7rem;
         max-width: 50px;
-      }
-
-      .position-section h3 {
-        font-size: 1.8rem;
-      }
-
-      .player-avatar {
-        width: 60px;
-        height: 60px;
       }
 
       .first-eleven-grid {
@@ -907,14 +823,14 @@
         color: #e0e0e0;
       }
 
+      .player-column,
       .formation-section,
-      .position-section,
       .first-eleven-section {
         background: rgba(18, 18, 18, 0.8);
         border-color: rgba(255, 255, 255, 0.1);
       }
 
-      .player-card,
+      .player-item,
       .first-eleven-card {
         background: #333;
         color: #e0e0e0;
@@ -937,16 +853,14 @@
 </head>
 <body>
   <header>
-    <div class="logo-container">
-      <img src="logo.png" alt="CCFC Logo">
-      <h1>Chandaria Converting FC</h1>
-    </div>
     <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
-    <nav id="main-nav">
+    <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
+    <nav id="main-nav" class="nav">
       <a href="index.html">Home</a>
-      <a href="team.html" class="active">Team</a>
-      <a href="fixtures.html">Fixtures</a>
-      <a href="gallery.html">Gallery</a>
+      <a href="team.html">Team</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="finance.html">Finance</a>
+      <a href="fixtures.html">Fixtures & Results</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
@@ -960,6 +874,293 @@
     <div class="squad-title">
       <h2>Team Squad 2025</h2>
     </div>
+
+    <!-- Player Columns Section -->
+    <section class="player-columns-section">
+      <div class="player-column">
+        <h3>Goalkeepers</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('richie')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
+            </div>
+            <div class="player-info">
+              <h4>Richie</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('giddy')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Giddy Photo">
+            </div>
+            <div class="player-info">
+              <h4>Giddy</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Defenders</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('arthur')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
+            </div>
+            <div class="player-info">
+              <h4>Arthur</h4>
+              <span class="role">Treasurer</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('chaloh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Chaloh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Chaloh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('collo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Collo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('tom')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Tom Photo">
+            </div>
+            <div class="player-info">
+              <h4>Tom</h4>
+              <span class="role">Assistant Treasurer</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ogola')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ogola Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ogola</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('yobra')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
+            </div>
+            <div class="player-info">
+              <h4>Yobra</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('timo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Timo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('amoh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Amoh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ogwaro')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ogwaro</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('edgar')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
+            </div>
+            <div class="player-info">
+              <h4>Edgar</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('mlei')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
+            </div>
+            <div class="player-info">
+              <h4>Mlei</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Midfielders</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('gerry')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
+            </div>
+            <div class="player-info">
+              <h4>Gerry</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('dickens')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
+            </div>
+            <div class="player-info">
+              <h4>Dickens</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('hillary')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
+            </div>
+            <div class="player-info">
+              <h4>Hillary</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('nico')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
+            </div>
+            <div class="player-info">
+              <h4>Nico</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('castro')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
+            </div>
+            <div class="player-info">
+              <h4>Castro</h4>
+              <span class="role">Assistant Captain</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('jemmo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Jemmo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('malcom')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
+            </div>
+            <div class="player-info">
+              <h4>Malcom</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('bella')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
+            </div>
+            <div class="player-info">
+              <h4>Bella</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('dominic')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
+            </div>
+            <div class="player-info">
+              <h4>Dominic</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('kylloh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Kylloh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('rapho')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
+            </div>
+            <div class="player-info">
+              <h4>Rapho</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Forwards</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('felix')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
+            </div>
+            <div class="player-info">
+              <h4>Felix</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('davy')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
+            </div>
+            <div class="player-info">
+              <h4>Davy</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('rigan')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
+            </div>
+            <div class="player-info">
+              <h4>Rigan</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('brayo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Brayo</h4>
+              <span class="role">Captain</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('julius')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
+            </div>
+            <div class="player-info">
+              <h4>Julius</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('masinde')">
+            <div class="player-avatar">
+              <img src="masinde.png" alt="Masinde Photo">
+            </div>
+            <div class="player-info">
+              <h4>Masinde</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('franco')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
+            </div>
+            <div class="player-info">
+              <h4>Franco</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ben')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ben</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
 
     <!-- Formation Section -->
     <section class="formation-section">
@@ -1167,547 +1368,6 @@
       </div>
     </section>
 
-    <!-- Position Sections with All Players -->
-    <section class="position-section">
-      <h3>Goalkeepers</h3>
-      <ul class="players-grid">
-        <li class="player-card" onclick="openModal('richie')">
-          <div class="player-avatar" onclick="expandPhoto('richie', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
-          </div>
-          <h4>Richie</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">12</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">4</span>
-              <span class="stat-label">Clean Sheets</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('giddy')">
-          <div class="player-avatar" onclick="expandPhoto('giddy', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Giddy Photo">
-          </div>
-          <h4>Giddy</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">5</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Clean Sheets</span>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Defenders</h3>
-      <ul class="players-grid">
-        <li class="player-card" onclick="openModal('arthur')">
-          <div class="player-avatar" onclick="expandPhoto('arthur', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
-          </div>
-          <h4>Arthur</h4>
-          <span class="role">Treasurer</span>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">15</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('chaloh')">
-          <div class="player-avatar" onclick="expandPhoto('chaloh', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Chaloh Photo">
-          </div>
-          <h4>Chaloh</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">10</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('collo')">
-          <div class="player-avatar" onclick="expandPhoto('collo', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
-          </div>
-          <h4>Collo</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">14</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('tom')">
-          <div class="player-avatar" onclick="expandPhoto('tom', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Tom Photo">
-          </div>
-          <h4>Tom</h4>
-          <span class="role">Assistant Treasurer</span>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">12</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('ogola')">
-          <div class="player-avatar" onclick="expandPhoto('ogola', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ogola Photo">
-          </div>
-          <h4>Ogola</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">8</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('yobra')">
-          <div class="player-avatar" onclick="expandPhoto('yobra', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
-          </div>
-          <h4>Yobra</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">9</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('timo')">
-          <div class="player-avatar" onclick="expandPhoto('timo', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
-          </div>
-          <h4>Timo</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">11</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('amoh')">
-          <div class="player-avatar" onclick="expandPhoto('amoh', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
-          </div>
-          <h4>Amoh</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">12</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('ogwaro')">
-          <div class="player-avatar" onclick="expandPhoto('ogwaro', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
-          </div>
-          <h4>Ogwaro</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">7</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('edgar')">
-          <div class="player-avatar" onclick="expandPhoto('edgar', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
-          </div>
-          <h4>Edgar</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">10</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('mlei')">
-          <div class="player-avatar" onclick="expandPhoto('mlei', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
-          </div>
-          <h4>Mlei</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">13</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Midfielders</h3>
-      <ul class="players-grid">
-        <li class="player-card" onclick="openModal('gerry')">
-          <div class="player-avatar" onclick="expandPhoto('gerry', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
-          </div>
-          <h4>Gerry</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">14</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">3</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('dickens')">
-          <div class="player-avatar" onclick="expandPhoto('dickens', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
-          </div>
-          <h4>Dickens</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">9</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('hillary')">
-          <div class="player-avatar" onclick="expandPhoto('hillary', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
-          </div>
-          <h4>Hillary</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">11</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('nico')">
-          <div class="player-avatar" onclick="expandPhoto('nico', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
-          </div>
-          <h4>Nico</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">13</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">4</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('castro')">
-          <div class="player-avatar" onclick="expandPhoto('castro', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
-          </div>
-          <h4>Castro</h4>
-          <span class="role">Assistant Captain</span>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">16</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">5</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('jemmo')">
-          <div class="player-avatar" onclick="expandPhoto('jemmo', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
-          </div>
-          <h4>Jemmo</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">8</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('malcom')">
-          <div class="player-avatar" onclick="expandPhoto('malcom', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
-          </div>
-          <h4>Malcom</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">10</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('bella')">
-          <div class="player-avatar" onclick="expandPhoto('bella', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
-          </div>
-          <h4>Bella</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">7</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('dominic')">
-          <div class="player-avatar" onclick="expandPhoto('dominic', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
-          </div>
-          <h4>Dominic</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">9</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('kylloh')">
-          <div class="player-avatar" onclick="expandPhoto('kylloh', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
-          </div>
-          <h4>Kylloh</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">6</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('rapho')">
-          <div class="player-avatar" onclick="expandPhoto('rapho', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
-          </div>
-          <h4>Rapho</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">8</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Forwards</h3>
-      <ul class="players-grid">
-        <li class="player-card" onclick="openModal('felix')">
-          <div class="player-avatar" onclick="expandPhoto('felix', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
-          </div>
-          <h4>Felix</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">14</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">7</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('davy')">
-          <div class="player-avatar" onclick="expandPhoto('davy', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
-          </div>
-          <h4>Davy</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">15</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">6</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('rigan')">
-          <div class="player-avatar" onclick="expandPhoto('rigan', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
-          </div>
-          <h4>Rigan</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">11</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">4</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('brayo')">
-          <div class="player-avatar" onclick="expandPhoto('brayo', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
-          </div>
-          <h4>Brayo</h4>
-          <span class="role">Captain</span>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">18</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">12</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('julius')">
-          <div class="player-avatar" onclick="expandPhoto('julius', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
-          </div>
-          <h4>Julius</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">10</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">3</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('masinde')">
-          <div class="player-avatar" onclick="expandPhoto('masinde', event)">
-            <img src="masinde.png" alt="Masinde Photo">
-          </div>
-          <h4>Masinde</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">14</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">8</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('franco')">
-          <div class="player-avatar" onclick="expandPhoto('franco', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
-          </div>
-          <h4>Franco</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">9</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-        <li class="player-card" onclick="openModal('ben')">
-          <div class="player-avatar" onclick="expandPhoto('ben', event)">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
-          </div>
-          <h4>Ben</h4>
-          <div class="player-stats">
-            <div class="stat">
-              <span class="stat-value">7</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Goals</span>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
-
     <!-- First Eleven Section -->
     <section class="first-eleven-section">
       <h3>First Eleven</h3>
@@ -1798,7 +1458,7 @@
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
       <div class="modal-header">
-        <div class="modal-avatar" onclick="expandPhotoFromModal()">
+        <div class="modal-avatar">
           <img id="modalAvatar" src="" alt="Player Photo">
         </div>
         <div class="modal-info">
@@ -1818,12 +1478,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Lightbox for expanded player photo -->
-  <div id="lightbox" class="lightbox">
-    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
   </div>
 
   <footer>
@@ -2217,12 +1871,9 @@
     };
 
     // Modal functions
-    let currentPlayerId = '';
-    
     function openModal(playerId) {
       const modal = document.getElementById('playerModal');
       const player = playerBios[playerId];
-      currentPlayerId = playerId;
       
       if (player) {
         document.getElementById('modalName').textContent = player.name;
@@ -2251,38 +1902,11 @@
       document.getElementById('playerModal').style.display = 'none';
     }
 
-    // Lightbox functions
-    function expandPhoto(playerId, event) {
-      event.stopPropagation(); // Prevent opening modal when clicking avatar
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      
-      lightboxImg.src = playerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/400?text=?';
-      lightbox.style.display = 'block';
-    }
-    
-    function expandPhotoFromModal() {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      
-      lightboxImg.src = currentPlayerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/400?text=?';
-      lightbox.style.display = 'block';
-    }
-    
-    function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
-
     // Close modal on outside click
     window.onclick = function(event) {
       const modal = document.getElementById('playerModal');
       if (event.target == modal) {
         closeModal();
-      }
-      
-      const lightbox = document.getElementById('lightbox');
-      if (event.target == lightbox) {
-        closeLightbox();
       }
     }
   </script>
