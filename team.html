@@ -438,6 +438,7 @@
       overflow: hidden;
       border: 3px solid var(--accent-gold);
       transition: var(--transition);
+      cursor: pointer;
     }
 
     .player-avatar img {
@@ -553,6 +554,7 @@
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent-gold);
+      cursor: pointer;
     }
 
     .modal-avatar img {
@@ -619,6 +621,109 @@
     .stat-label-large {
       font-size: 0.85rem;
       color: var(--text-light);
+    }
+
+    /* Lightbox for expanded player photo */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox-content {
+      display: block;
+      margin: auto;
+      max-width: 90%;
+      max-height: 90%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .close-lightbox:hover {
+      color: var(--accent-gold);
+    }
+
+    /* First Eleven Section */
+    .first-eleven-section {
+      margin-top: 4rem;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .first-eleven-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: var(--primary-red);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .first-eleven-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .first-eleven-card {
+      background: var(--glass-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      border: 1px solid var(--glass-border);
+    }
+
+    .first-eleven-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .first-eleven-avatar {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent-gold);
+    }
+
+    .first-eleven-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .first-eleven-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
     }
 
     /* Footer */
@@ -743,6 +848,10 @@
       .modal-body {
         grid-template-columns: 1fr;
       }
+
+      .first-eleven-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
     }
 
     @media (max-width: 480px) {
@@ -777,6 +886,10 @@
         width: 60px;
         height: 60px;
       }
+
+      .first-eleven-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -795,12 +908,14 @@
       }
 
       .formation-section,
-      .position-section {
+      .position-section,
+      .first-eleven-section {
         background: rgba(18, 18, 18, 0.8);
         border-color: rgba(255, 255, 255, 0.1);
       }
 
-      .player-card {
+      .player-card,
+      .first-eleven-card {
         background: #333;
         color: #e0e0e0;
       }
@@ -924,16 +1039,140 @@
           </div>
         </div>
         
-        <!-- Other formations would be added here with similar structure -->
+        <!-- 4-4-2 Formation -->
+        <div class="formation" id="formation-4-4-2" style="display: none;">
+          <!-- Goalkeeper -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('richie')">
+              <div class="player-circle">1</div>
+              <div class="player-name">Richie</div>
+            </div>
+          </div>
+          
+          <!-- Defenders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('amoh')">
+              <div class="player-circle">2</div>
+              <div class="player-name">Amoh</div>
+            </div>
+            <div class="player-position" onclick="openModal('collo')">
+              <div class="player-circle">5</div>
+              <div class="player-name">Collo</div>
+            </div>
+            <div class="player-position" onclick="openModal('arthur')">
+              <div class="player-circle">6</div>
+              <div class="player-name">Arthur</div>
+            </div>
+            <div class="player-position" onclick="openModal('mlei')">
+              <div class="player-circle">3</div>
+              <div class="player-name">Mlei</div>
+            </div>
+          </div>
+          
+          <!-- Midfielders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('davy')">
+              <div class="player-circle">7</div>
+              <div class="player-name">Davy</div>
+            </div>
+            <div class="player-position" onclick="openModal('castro')">
+              <div class="player-circle">8</div>
+              <div class="player-name">Castro</div>
+            </div>
+            <div class="player-position" onclick="openModal('gerry')">
+              <div class="player-circle">4</div>
+              <div class="player-name">Gerry</div>
+            </div>
+            <div class="player-position" onclick="openModal('felix')">
+              <div class="player-circle">11</div>
+              <div class="player-name">Felix</div>
+            </div>
+          </div>
+          
+          <!-- Forwards -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('brayo')">
+              <div class="player-circle">9</div>
+              <div class="player-name">Brayo</div>
+            </div>
+            <div class="player-position" onclick="openModal('masinde')">
+              <div class="player-circle">10</div>
+              <div class="player-name">Masinde</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 3-5-2 Formation -->
+        <div class="formation" id="formation-3-5-2" style="display: none;">
+          <!-- Goalkeeper -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('richie')">
+              <div class="player-circle">1</div>
+              <div class="player-name">Richie</div>
+            </div>
+          </div>
+          
+          <!-- Defenders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('collo')">
+              <div class="player-circle">5</div>
+              <div class="player-name">Collo</div>
+            </div>
+            <div class="player-position" onclick="openModal('arthur')">
+              <div class="player-circle">6</div>
+              <div class="player-name">Arthur</div>
+            </div>
+            <div class="player-position" onclick="openModal('amoh')">
+              <div class="player-circle">2</div>
+              <div class="player-name">Amoh</div>
+            </div>
+          </div>
+          
+          <!-- Midfielders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('davy')">
+              <div class="player-circle">7</div>
+              <div class="player-name">Davy</div>
+            </div>
+            <div class="player-position" onclick="openModal('castro')">
+              <div class="player-circle">8</div>
+              <div class="player-name">Castro</div>
+            </div>
+            <div class="player-position" onclick="openModal('gerry')">
+              <div class="player-circle">4</div>
+              <div class="player-name">Gerry</div>
+            </div>
+            <div class="player-position" onclick="openModal('nico')">
+              <div class="player-circle">10</div>
+              <div class="player-name">Nico</div>
+            </div>
+            <div class="player-position" onclick="openModal('mlei')">
+              <div class="player-circle">3</div>
+              <div class="player-name">Mlei</div>
+            </div>
+          </div>
+          
+          <!-- Forwards -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('brayo')">
+              <div class="player-circle">9</div>
+              <div class="player-name">Brayo</div>
+            </div>
+            <div class="player-position" onclick="openModal('masinde')">
+              <div class="player-circle">11</div>
+              <div class="player-name">Masinde</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Position Sections -->
+    <!-- Position Sections with All Players -->
     <section class="position-section">
       <h3>Goalkeepers</h3>
       <ul class="players-grid">
         <li class="player-card" onclick="openModal('richie')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('richie', event)">
             <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
           </div>
           <h4>Richie</h4>
@@ -949,7 +1188,7 @@
           </div>
         </li>
         <li class="player-card" onclick="openModal('giddy')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('giddy', event)">
             <img src="https://via.placeholder.com/80?text=?" alt="Giddy Photo">
           </div>
           <h4>Giddy</h4>
@@ -967,14 +1206,11 @@
       </ul>
     </section>
 
-    <!-- Other position sections would follow the same pattern -->
-    <!-- For brevity, I'm only showing the goalkeepers section -->
-
     <section class="position-section">
       <h3>Defenders</h3>
       <ul class="players-grid">
         <li class="player-card" onclick="openModal('arthur')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('arthur', event)">
             <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
           </div>
           <h4>Arthur</h4>
@@ -990,15 +1226,239 @@
             </div>
           </div>
         </li>
-        <!-- Other defenders would follow -->
+        <li class="player-card" onclick="openModal('chaloh')">
+          <div class="player-avatar" onclick="expandPhoto('chaloh', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Chaloh Photo">
+          </div>
+          <h4>Chaloh</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">10</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('collo')">
+          <div class="player-avatar" onclick="expandPhoto('collo', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
+          </div>
+          <h4>Collo</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">14</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('tom')">
+          <div class="player-avatar" onclick="expandPhoto('tom', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Tom Photo">
+          </div>
+          <h4>Tom</h4>
+          <span class="role">Assistant Treasurer</span>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">12</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('ogola')">
+          <div class="player-avatar" onclick="expandPhoto('ogola', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Ogola Photo">
+          </div>
+          <h4>Ogola</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">8</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('yobra')">
+          <div class="player-avatar" onclick="expandPhoto('yobra', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
+          </div>
+          <h4>Yobra</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">9</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('timo')">
+          <div class="player-avatar" onclick="expandPhoto('timo', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
+          </div>
+          <h4>Timo</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">11</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('amoh')">
+          <div class="player-avatar" onclick="expandPhoto('amoh', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
+          </div>
+          <h4>Amoh</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">12</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('ogwaro')">
+          <div class="player-avatar" onclick="expandPhoto('ogwaro', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
+          </div>
+          <h4>Ogwaro</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('edgar')">
+          <div class="player-avatar" onclick="expandPhoto('edgar', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
+          </div>
+          <h4>Edgar</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">10</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('mlei')">
+          <div class="player-avatar" onclick="expandPhoto('mlei', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
+          </div>
+          <h4>Mlei</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">13</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
     <section class="position-section">
       <h3>Midfielders</h3>
       <ul class="players-grid">
+        <li class="player-card" onclick="openModal('gerry')">
+          <div class="player-avatar" onclick="expandPhoto('gerry', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
+          </div>
+          <h4>Gerry</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">14</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">3</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('dickens')">
+          <div class="player-avatar" onclick="expandPhoto('dickens', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
+          </div>
+          <h4>Dickens</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">9</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">2</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('hillary')">
+          <div class="player-avatar" onclick="expandPhoto('hillary', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
+          </div>
+          <h4>Hillary</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">11</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('nico')">
+          <div class="player-avatar" onclick="expandPhoto('nico', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
+          </div>
+          <h4>Nico</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">13</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">4</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
         <li class="player-card" onclick="openModal('castro')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('castro', event)">
             <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
           </div>
           <h4>Castro</h4>
@@ -1014,15 +1474,158 @@
             </div>
           </div>
         </li>
-        <!-- Other midfielders would follow -->
+        <li class="player-card" onclick="openModal('jemmo')">
+          <div class="player-avatar" onclick="expandPhoto('jemmo', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
+          </div>
+          <h4>Jemmo</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">8</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('malcom')">
+          <div class="player-avatar" onclick="expandPhoto('malcom', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
+          </div>
+          <h4>Malcom</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">10</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">2</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('bella')">
+          <div class="player-avatar" onclick="expandPhoto('bella', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
+          </div>
+          <h4>Bella</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('dominic')">
+          <div class="player-avatar" onclick="expandPhoto('dominic', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
+          </div>
+          <h4>Dominic</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">9</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('kylloh')">
+          <div class="player-avatar" onclick="expandPhoto('kylloh', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
+          </div>
+          <h4>Kylloh</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">6</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('rapho')">
+          <div class="player-avatar" onclick="expandPhoto('rapho', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
+          </div>
+          <h4>Rapho</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">8</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
     <section class="position-section">
       <h3>Forwards</h3>
       <ul class="players-grid">
+        <li class="player-card" onclick="openModal('felix')">
+          <div class="player-avatar" onclick="expandPhoto('felix', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
+          </div>
+          <h4>Felix</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">14</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('davy')">
+          <div class="player-avatar" onclick="expandPhoto('davy', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
+          </div>
+          <h4>Davy</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">15</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">6</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('rigan')">
+          <div class="player-avatar" onclick="expandPhoto('rigan', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
+          </div>
+          <h4>Rigan</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">11</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">4</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
         <li class="player-card" onclick="openModal('brayo')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('brayo', event)">
             <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
           </div>
           <h4>Brayo</h4>
@@ -1038,8 +1641,24 @@
             </div>
           </div>
         </li>
+        <li class="player-card" onclick="openModal('julius')">
+          <div class="player-avatar" onclick="expandPhoto('julius', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
+          </div>
+          <h4>Julius</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">10</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">3</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
         <li class="player-card" onclick="openModal('masinde')">
-          <div class="player-avatar">
+          <div class="player-avatar" onclick="expandPhoto('masinde', event)">
             <img src="masinde.png" alt="Masinde Photo">
           </div>
           <h4>Masinde</h4>
@@ -1054,7 +1673,122 @@
             </div>
           </div>
         </li>
-        <!-- Other forwards would follow -->
+        <li class="player-card" onclick="openModal('franco')">
+          <div class="player-avatar" onclick="expandPhoto('franco', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
+          </div>
+          <h4>Franco</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">9</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">2</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+        <li class="player-card" onclick="openModal('ben')">
+          <div class="player-avatar" onclick="expandPhoto('ben', event)">
+            <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
+          </div>
+          <h4>Ben</h4>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Games</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Goals</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- First Eleven Section -->
+    <section class="first-eleven-section">
+      <h3>First Eleven</h3>
+      <ul class="first-eleven-grid">
+        <li class="first-eleven-card" onclick="openModal('richie')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
+          </div>
+          <h4>Richie</h4>
+          <span class="role">Goalkeeper</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('amoh')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
+          </div>
+          <h4>Amoh</h4>
+          <span class="role">Defender</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('collo')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
+          </div>
+          <h4>Collo</h4>
+          <span class="role">Defender</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('arthur')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
+          </div>
+          <h4>Arthur</h4>
+          <span class="role">Defender</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('mlei')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
+          </div>
+          <h4>Mlei</h4>
+          <span class="role">Defender</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('castro')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
+          </div>
+          <h4>Castro</h4>
+          <span class="role">Midfielder</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('gerry')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
+          </div>
+          <h4>Gerry</h4>
+          <span class="role">Midfielder</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('nico')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
+          </div>
+          <h4>Nico</h4>
+          <span class="role">Midfielder</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('davy')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
+          </div>
+          <h4>Davy</h4>
+          <span class="role">Forward</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('brayo')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
+          </div>
+          <h4>Brayo</h4>
+          <span class="role">Forward</span>
+        </li>
+        <li class="first-eleven-card" onclick="openModal('felix')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
+          </div>
+          <h4>Felix</h4>
+          <span class="role">Forward</span>
+        </li>
       </ul>
     </section>
   </main>
@@ -1064,7 +1798,7 @@
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
       <div class="modal-header">
-        <div class="modal-avatar">
+        <div class="modal-avatar" onclick="expandPhotoFromModal()">
           <img id="modalAvatar" src="" alt="Player Photo">
         </div>
         <div class="modal-info">
@@ -1086,6 +1820,12 @@
     </div>
   </div>
 
+  <!-- Lightbox for expanded player photo -->
+  <div id="lightbox" class="lightbox">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
   <footer>
     &copy; 2025 Chandaria Converting Football Club • Together as One
   </footer>
@@ -1102,13 +1842,21 @@
 
     // Formation selector
     const formationBtns = document.querySelectorAll('.formation-btn');
+    const formations = document.querySelectorAll('.formation');
+    
     formationBtns.forEach(btn => {
       btn.addEventListener('click', () => {
+        const formationId = btn.dataset.formation;
+        
+        // Update active button
         formationBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        // In a full implementation, this would switch formations
-        // For now, we'll just show a message
-        alert(`Formation changed to ${btn.dataset.formation}`);
+        
+        // Show selected formation
+        formations.forEach(formation => {
+          formation.style.display = 'none';
+        });
+        document.getElementById(`formation-${formationId}`).style.display = 'block';
       });
     });
 
@@ -1147,6 +1895,17 @@
           { label: 'Tackles', value: '42' }
         ]
       },
+      chaloh: { 
+        name: 'Chaloh', 
+        bio: 'Tough tackler with heart. Babadogo local, always first to training.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Tackles', value: '25' }
+        ]
+      },
       collo: { 
         name: 'Collo', 
         bio: 'Wall of steel in backline. Motto: "No way through!"', 
@@ -1156,6 +1915,50 @@
           { label: 'Goals', value: '1' },
           { label: 'Assists', value: '2' },
           { label: 'Tackles', value: '38' }
+        ]
+      },
+      tom: { 
+        name: 'Tom', 
+        bio: 'Versatile full-back, assistant treasurer. Balances books and clearances perfectly.', 
+        role: 'Defender / Assistant Treasurer',
+        stats: [
+          { label: 'Games Played', value: '12' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '4' },
+          { label: 'Tackles', value: '30' }
+        ]
+      },
+      ogola: { 
+        name: 'Ogola', 
+        bio: 'Speedy wing-back. Scored from his own half last season!', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Tackles', value: '18' }
+        ]
+      },
+      yobra: { 
+        name: 'Yobra', 
+        bio: 'Aerial beast. Headers win games—his do too.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '0' },
+          { label: 'Tackles', value: '22' }
+        ]
+      },
+      timo: { 
+        name: 'Timo', 
+        bio: 'Calm under pressure. Reads the game like a book.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '2' },
+          { label: 'Tackles', value: '27' }
         ]
       },
       amoh: { 
@@ -1169,6 +1972,28 @@
           { label: 'Tackles', value: '35' }
         ]
       },
+      ogwaro: { 
+        name: 'Ogwaro', 
+        bio: 'Club veteran. Mentors the young guns on and off pitch.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '0' },
+          { label: 'Tackles', value: '15' }
+        ]
+      },
+      edgar: { 
+        name: 'Edgar', 
+        bio: 'Quick recovery defender. Fitness fanatic—runs marathons post-match.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Tackles', value: '24' }
+        ]
+      },
       mlei: { 
         name: 'Mlei', 
         bio: 'Left-back dynamo. Crosses are pure gold.', 
@@ -1178,17 +2003,6 @@
           { label: 'Goals', value: '1' },
           { label: 'Assists', value: '4' },
           { label: 'Tackles', value: '29' }
-        ]
-      },
-      castro: { 
-        name: 'Castro', 
-        bio: 'Dynamic leader, assistant captain. Rallies the team in crunch time.', 
-        role: 'Midfielder / Assistant Captain',
-        stats: [
-          { label: 'Games Played', value: '16' },
-          { label: 'Goals', value: '5' },
-          { label: 'Assists', value: '7' },
-          { label: 'Pass Accuracy', value: '82%' }
         ]
       },
       gerry: { 
@@ -1202,6 +2016,28 @@
           { label: 'Pass Accuracy', value: '85%' }
         ]
       },
+      dickens: { 
+        name: 'Dickens', 
+        bio: 'Visionary passer. Assists are his art form.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '4' },
+          { label: 'Pass Accuracy', value: '82%' }
+        ]
+      },
+      hillary: { 
+        name: 'Hillary', 
+        bio: 'Box-to-box warrior. Covers every blade of grass.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '78%' }
+        ]
+      },
       nico: { 
         name: 'Nico', 
         bio: 'Creative spark. Free-kick specialist.', 
@@ -1213,26 +2049,81 @@
           { label: 'Pass Accuracy', value: '79%' }
         ]
       },
-      davy: { 
-        name: 'Davy', 
-        bio: 'Pacey winger. Burns full-backs for breakfast.', 
-        role: 'Forward',
+      castro: { 
+        name: 'Castro', 
+        bio: 'Dynamic leader, assistant captain. Rallies the team in crunch time.', 
+        role: 'Midfielder / Assistant Captain',
         stats: [
-          { label: 'Games Played', value: '15' },
-          { label: 'Goals', value: '6' },
-          { label: 'Assists', value: '8' },
-          { label: 'Shots on Target', value: '22' }
+          { label: 'Games Played', value: '16' },
+          { label: 'Goals', value: '5' },
+          { label: 'Assists', value: '7' },
+          { label: 'Pass Accuracy', value: '82%' }
         ]
       },
-      brayo: { 
-        name: 'Brayo', 
-        bio: 'Club captain, goal machine. Leads by example on the pitch.', 
-        role: 'Forward / Captain',
+      jemmo: { 
+        name: 'Jemmo', 
+        bio: 'Tough tackler with silky touches.', 
+        role: 'Midfielder',
         stats: [
-          { label: 'Games Played', value: '18' },
-          { label: 'Goals', value: '12' },
-          { label: 'Assists', value: '5' },
-          { label: 'Shots on Target', value: '35' }
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Pass Accuracy', value: '76%' }
+        ]
+      },
+      malcom: { 
+        name: 'Malcom', 
+        bio: 'Ball-winning mid. Turns defense to attack in seconds.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '80%' }
+        ]
+      },
+      bella: { 
+        name: 'Bella', 
+        bio: 'Graceful controller. Keeps possession like glue.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Pass Accuracy', value: '84%' }
+        ]
+      },
+      dominic: { 
+        name: 'Dominic', 
+        bio: 'Long-range threat from deep. Set-piece wizard.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Pass Accuracy', value: '77%' }
+        ]
+      },
+      kylloh: { 
+        name: 'Kylloh', 
+        bio: 'Energetic runner. Covers for everyone.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '6' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Pass Accuracy', value: '75%' }
+        ]
+      },
+      rapho: { 
+        name: 'Rapho', 
+        bio: 'Technical gem. Dribbles past defenders for fun.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '81%' }
         ]
       },
       felix: { 
@@ -1246,6 +2137,50 @@
           { label: 'Shots on Target', value: '18' }
         ]
       },
+      davy: { 
+        name: 'Davy', 
+        bio: 'Pacey winger. Burns full-backs for breakfast.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '15' },
+          { label: 'Goals', value: '6' },
+          { label: 'Assists', value: '8' },
+          { label: 'Shots on Target', value: '22' }
+        ]
+      },
+      rigan: { 
+        name: 'Rigan', 
+        bio: 'Clinical finisher. One-touch wonders.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '4' },
+          { label: 'Assists', value: '2' },
+          { label: 'Shots on Target', value: '15' }
+        ]
+      },
+      brayo: { 
+        name: 'Brayo', 
+        bio: 'Club captain, goal machine. Leads by example on the pitch.', 
+        role: 'Forward / Captain',
+        stats: [
+          { label: 'Games Played', value: '18' },
+          { label: 'Goals', value: '12' },
+          { label: 'Assists', value: '5' },
+          { label: 'Shots on Target', value: '35' }
+        ]
+      },
+      julius: { 
+        name: 'Julius', 
+        bio: 'Target man. Holds up play, brings others in.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '3' },
+          { label: 'Assists', value: '4' },
+          { label: 'Shots on Target', value: '12' }
+        ]
+      },
       masinde: { 
         name: 'Masinde', 
         bio: 'Lightning forward, founding member. Scored CCFC\'s first ever goal—pure fire!', 
@@ -1256,13 +2191,39 @@
           { label: 'Assists', value: '4' },
           { label: 'Shots on Target', value: '26' }
         ]
+      },
+      franco: { 
+        name: 'Franco', 
+        bio: 'Tricky dribbler. Loves a nutmeg.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '3' },
+          { label: 'Shots on Target', value: '10' }
+        ]
+      },
+      ben: { 
+        name: 'Ben', 
+        bio: 'Super sub. Changes games off the bench.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Shots on Target', value: '8' }
+        ]
       }
     };
 
     // Modal functions
+    let currentPlayerId = '';
+    
     function openModal(playerId) {
       const modal = document.getElementById('playerModal');
       const player = playerBios[playerId];
+      currentPlayerId = playerId;
+      
       if (player) {
         document.getElementById('modalName').textContent = player.name;
         document.getElementById('modalBio').textContent = player.bio;
@@ -1290,11 +2251,38 @@
       document.getElementById('playerModal').style.display = 'none';
     }
 
+    // Lightbox functions
+    function expandPhoto(playerId, event) {
+      event.stopPropagation(); // Prevent opening modal when clicking avatar
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      
+      lightboxImg.src = playerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/400?text=?';
+      lightbox.style.display = 'block';
+    }
+    
+    function expandPhotoFromModal() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      
+      lightboxImg.src = currentPlayerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/400?text=?';
+      lightbox.style.display = 'block';
+    }
+    
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+
     // Close modal on outside click
     window.onclick = function(event) {
       const modal = document.getElementById('playerModal');
       if (event.target == modal) {
         closeModal();
+      }
+      
+      const lightbox = document.getElementById('lightbox');
+      if (event.target == lightbox) {
+        closeLightbox();
       }
     }
   </script>
