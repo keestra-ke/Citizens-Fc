@@ -248,7 +248,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      cursor: pointer;
+      cursor: pointer; /* Indicates clickable */
     }
 
     .player-card::before {
@@ -358,24 +358,6 @@
       margin-bottom: 1rem;
     }
 
-    .stats-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .stats-table th, .stats-table td {
-      padding: 0.5rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .stats-table th {
-      color: var(--primary-blue);
-      font-weight: 600;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -473,10 +455,6 @@
         margin: 10% auto;
         padding: 1.5rem;
       }
-
-      .stats-table {
-        font-size: 0.8rem;
-      }
     }
 
     @media (max-width: 480px) {
@@ -530,14 +508,6 @@
       .modal-content {
         background: #333;
         color: #e0e0e0;
-      }
-
-      .stats-table th, .stats-table td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .stats-table th {
-        color: var(--primary-blue);
       }
     }
   </style>
@@ -620,4 +590,257 @@
         </li>
         <li class="player-card" onclick="openModal('yobra')">
           <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?
+            <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
+          </div>
+          <h4>Yobra</h4>
+        </li>
+        <li class="player-card" onclick="openModal('timo')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
+          </div>
+          <h4>Timo</h4>
+        </li>
+        <li class="player-card" onclick="openModal('amoh')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
+          </div>
+          <h4>Amoh</h4>
+        </li>
+        <li class="player-card" onclick="openModal('ogwaro')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
+          </div>
+          <h4>Ogwaro</h4>
+        </li>
+        <li class="player-card" onclick="openModal('edgar')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
+          </div>
+          <h4>Edgar</h4>
+        </li>
+        <li class="player-card" onclick="openModal('mlei')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
+          </div>
+          <h4>Mlei</h4>
+        </li>
+      </ul>
+    </section>
+
+    <section class="position-section">
+      <h3>Midfielders</h3>
+      <ul class="players-grid">
+        <li class="player-card" onclick="openModal('gerry')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
+          </div>
+          <h4>Gerry</h4>
+        </li>
+        <li class="player-card" onclick="openModal('dickens')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
+          </div>
+          <h4>Dickens</h4>
+        </li>
+        <li class="player-card" onclick="openModal('hillary')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
+          </div>
+          <h4>Hillary</h4>
+        </li>
+        <li class="player-card" onclick="openModal('nico')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
+          </div>
+          <h4>Nico</h4>
+        </li>
+        <li class="player-card" onclick="openModal('castro')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
+          </div>
+          <h4>Castro</h4>
+          <span class="role">Assistant Captain</span>
+        </li>
+        <li class="player-card" onclick="openModal('jemmo')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
+          </div>
+          <h4>Jemmo</h4>
+        </li>
+        <li class="player-card" onclick="openModal('malcom')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
+          </div>
+          <h4>Malcom</h4>
+        </li>
+        <li class="player-card" onclick="openModal('bella')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
+          </div>
+          <h4>Bella</h4>
+        </li>
+        <li class="player-card" onclick="openModal('dominic')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
+          </div>
+          <h4>Dominic</h4>
+        </li>
+        <li class="player-card" onclick="openModal('kylloh')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
+          </div>
+          <h4>Kylloh</h4>
+        </li>
+        <li class="player-card" onclick="openModal('rapho')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
+          </div>
+          <h4>Rapho</h4>
+        </li>
+      </ul>
+    </section>
+
+    <section class="position-section">
+      <h3>Forwards</h3>
+      <ul class="players-grid">
+        <li class="player-card" onclick="openModal('felix')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
+          </div>
+          <h4>Felix</h4>
+        </li>
+        <li class="player-card" onclick="openModal('davy')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
+          </div>
+          <h4>Davy</h4>
+        </li>
+        <li class="player-card" onclick="openModal('rigan')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
+          </div>
+          <h4>Rigan</h4>
+        </li>
+        <li class="player-card" onclick="openModal('brayo')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
+          </div>
+          <h4>Brayo</h4>
+          <span class="role">Captain</span>
+        </li>
+        <li class="player-card" onclick="openModal('julius')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
+          </div>
+          <h4>Julius</h4>
+        </li>
+        <li class="player-card" onclick="openModal('masinde')">
+          <div class="player-avatar">
+            <img src="masinde.png" alt="Masinde Photo">
+          </div>
+          <h4>Masinde</h4>
+        </li>
+        <li class="player-card" onclick="openModal('franco')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
+          </div>
+          <h4>Franco</h4>
+        </li>
+        <li class="player-card" onclick="openModal('ben')">
+          <div class="player-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
+          </div>
+          <h4>Ben</h4>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Player Bio Modal -->
+  <div id="playerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalAvatar" src="" alt="Player Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-gold); margin-bottom: 1rem;">
+      <h3 id="modalName"></h3>
+      <p id="modalBio"></p>
+      <p id="modalRole" style="font-style: italic; color: var(--text-light);"></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Chandaria Converting Football Club • Together as One
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.getElementById('main-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    }
+
+    // Player bios data (edit with real info)
+    const playerBios = {
+      richie: { name: 'Richie', bio: 'Veteran GK with lightning reflexes. Joined founding year—saved us in debut match!', role: 'Goalkeeper' },
+      giddy: { name: 'Giddy', bio: 'Rising star between the posts. Fun fact: Collects vintage gloves from 80s legends.', role: 'Goalkeeper' },
+      arthur: { name: 'Arthur', bio: 'Solid defender, club treasurer. Off-pitch: Manages finances like he shuts down attacks.', role: 'Defender / Treasurer' },
+      chaloh: { name: 'Chaloh', bio: 'Tough tackler with heart. Babadogo local, always first to training.', role: 'Defender' },
+      collo: { name: 'Collo', bio: 'Wall of steel in backline. Motto: "No way through!"', role: 'Defender' },
+      tom: { name: 'Tom', bio: 'Versatile full-back, assistant treasurer. Balances books and clearances perfectly.', role: 'Defender / Assistant Treasurer' },
+      ogola: { name: 'Ogola', bio: 'Speedy wing-back. Scored from his own half last season!', role: 'Defender' },
+      yobra: { name: 'Yobra', bio: 'Aerial beast. Headers win games—his do too.', role: 'Defender' },
+      timo: { name: 'Timo', bio: 'Calm under pressure. Reads the game like a book.', role: 'Defender' },
+      amoh: { name: 'Amoh', bio: 'Aggressive marker. Passionate about youth development.', role: 'Defender' },
+      ogwaro: { name: 'Ogwaro', bio: 'Club veteran. Mentors the young guns on and off pitch.', role: 'Defender' },
+      edgar: { name: 'Edgar', bio: 'Quick recovery defender. Fitness fanatic—runs marathons post-match.', role: 'Defender' },
+      mlei: { name: 'Mlei', bio: 'Left-back dynamo. Crosses are pure gold.', role: 'Defender' },
+      gerry: { name: 'Gerry', bio: 'Engine in midfield. Dictates tempo like a maestro.', role: 'Midfielder' },
+      dickens: { name: 'Dickens', bio: 'Visionary passer. Assists are his art form.', role: 'Midfielder' },
+      hillary: { name: 'Hillary', bio: 'Box-to-box warrior. Covers every blade of grass.', role: 'Midfielder' },
+      nico: { name: 'Nico', bio: 'Creative spark. Free-kick specialist.', role: 'Midfielder' },
+      castro: { name: 'Castro', bio: 'Dynamic leader, assistant captain. Rallies the team in crunch time.', role: 'Midfielder / Assistant Captain' },
+      jemmo: { name: 'Jemmo', bio: 'Tough tackler with silky touches.', role: 'Midfielder' },
+      malcom: { name: 'Malcom', bio: 'Ball-winning mid. Turns defense to attack in seconds.', role: 'Midfielder' },
+      bella: { name: 'Bella', bio: 'Graceful controller. Keeps possession like glue.', role: 'Midfielder' },
+      dominic: { name: 'Dominic', bio: 'Long-range threat from deep. Set-piece wizard.', role: 'Midfielder' },
+      kylloh: { name: 'Kylloh', bio: 'Energetic runner. Covers for everyone.', role: 'Midfielder' },
+      rapho: { name: 'Rapho', bio: 'Technical gem. Dribbles past defenders for fun.', role: 'Midfielder' },
+      felix: { name: 'Felix', bio: 'Poacher supreme. Sniffs out goals like a pro.', role: 'Forward' },
+      davy: { name: 'Davy', bio: 'Pacey winger. Burns full-backs for breakfast.', role: 'Forward' },
+      rigan: { name: 'Rigan', bio: 'Clinical finisher. One-touch wonders.', role: 'Forward' },
+      brayo: { name: 'Brayo', bio: 'Club captain, goal machine. Leads by example on the pitch.', role: 'Forward / Captain' },
+      julius: { name: 'Julius', bio: 'Target man. Holds up play, brings others in.', role: 'Forward' },
+      masinde: { name: 'Masinde', bio: 'Lightning forward, founding member. Scored CCFC's first ever goal—pure fire!', role: 'Forward' },
+      franco: { name: 'Franco', bio: 'Tricky dribbler. Loves a nutmeg.', role: 'Forward' },
+      ben: { name: 'Ben', bio: 'Super sub. Changes games off the bench.', role: 'Forward' }
+    };
+
+    // Modal functions
+    function openModal(playerId) {
+      const modal = document.getElementById('playerModal');
+      const player = playerBios[playerId];
+      if (player) {
+        document.getElementById('modalName').textContent = player.name;
+        document.getElementById('modalBio').textContent = player.bio;
+        document.getElementById('modalRole').textContent = player.role;
+        document.getElementById('modalAvatar').src = playerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/100?text=?'; // Custom for Masinde
+        modal.style.display = 'block';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('playerModal').style.display = 'none';
+    }
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('playerModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
