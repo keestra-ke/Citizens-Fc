@@ -2,107 +2,178 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recovery-Only Martingale — Profit Only on First Win</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Betting Strategy — Martingale-once, Recover-after</title>
   <style>
-    :root{--bg:#0f172a;--card:#0b1220;--muted:#9aa7bf;--accent:#22c55e}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#07102a 0%, #071829 100%);color:#e6eef8;margin:0;padding:24px}
-    .menu{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-    .brand{font-weight:700;font-size:18px}
-    .subtitle{color:var(--muted);font-size:13px}
-    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-    input[type=number]{width:140px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
-    button{margin-left:8px;padding:9px 12px;border-radius:8px;border:none;background:var(--accent);color:#042018;font-weight:600;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
-    th,td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:right}
-    th{color:var(--muted);text-align:left}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace}
-    .hint{color:var(--muted);font-size:13px;margin-top:8px}
-    @media (max-width:700px){.menu{flex-direction:column;align-items:flex-start}table td,th{font-size:12px;padding:8px}}
+    :root{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;text-rendering:optimizeLegibility}
+    body{margin:20px;background:#f7f8fb;color:#111}
+    .card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(20,30,60,0.08);max-width:980px;margin:12px auto}
+    h1{font-size:20px;margin:0 0 8px}
+    label{display:block;font-size:13px;margin:8px 0 4px}
+    input[type=number]{padding:8px;border-radius:8px;border:1px solid #ddd;width:140px}
+    button{padding:8px 12px;border-radius:8px;border:none;background:#0b62f6;color:#fff;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:right;font-size:13px}
+    th{text-align:left;background:#fafafa}
+    .muted{color:#666;font-size:13px}
+    .notice{background:#fff8e6;padding:10px;border-radius:8px;margin-top:12px;border:1px solid #ffe7b5}
+    .advice{background:#eef6ff;border-left:4px solid #0b62f6;padding:12px;border-radius:8px;margin-top:12px}
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+    .stat{background:#fff;padding:10px;border-radius:8px;border:1px solid #f0f3ff}
+    .download{background:#0b62f6;color:#fff;padding:8px 10px;border-radius:8px;text-decoration:none}
+    @media (max-width:640px){th,td{font-size:12px}}
   </style>
 </head>
 <body>
-  <div class="menu">
-    <div>
-      <div class="brand">Recovery-Only Martingale</div>
-      <div class="subtitle">Profit only on first or second win — rest are recovery to break even</div>
-    </div>
-    <div style="margin-left:auto" class="card">
-      <div style="display:flex;gap:8px;align-items:center">
-        <div>
-          <label for="base">Base stake (Ksh)</label>
-          <input id="base" type="number" min="1" value="100" />
-        </div>
-        <div>
-          <label for="rounds">Rounds (max 20)</label>
-          <input id="rounds" type="number" min="1" max="20" value="20" />
-        </div>
-        <div style="align-self:end">
-          <button id="gen">Generate</button>
-        </div>
+  <div class="card">
+    <h1>Betting strategy: Martingale only on bet 1 — then "recover" stakes</h1>
+    <p class="muted">Odds assumed: <strong>decimal 2.0</strong> (win pays 2× stake). This tool computes the stake progression where only a win on bet 1 gives a net profit; wins on bets 2+ recover the money used so far (net 0).</p>
+
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div>
+        <label>Base stake (KES)</label>
+        <input id="base" type="number" min="1" value="100" step="1">
+      </div>
+      <div>
+        <label>Number of legs (max bets)</label>
+        <input id="legs" type="number" min="1" value="8" step="1">
+      </div>
+      <div>
+        <label>Win probability per bet</label>
+        <input id="pwin" type="number" min="0" max="1" step="0.01" value="0.5">
+      </div>
+      <div style="align-self:end">
+        <button id="run">Generate table</button>
       </div>
     </div>
-  </div>
 
-  <div class="card" id="output">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <strong>Stake schedule</strong>
-      <div class="hint">Odds assumed: <span class="mono">2.0</span>. Win on bet 1 or 2 → profit = base stake. Win on bet ≥3 → recovery only (net 0).</div>
+    <div class="summary-grid" id="summary">
+      <!-- populated by JS -->
     </div>
 
     <table id="table">
       <thead>
         <tr>
           <th>Bet #</th>
-          <th>Stake (× base)</th>
-          <th>Stake (Ksh)</th>
-          <th>Cumulative invested (Ksh)</th>
+          <th>Stake (KES)</th>
+          <th>Cumulative before (KES)</th>
+          <th>Cumulative after S_k (KES)</th>
+          <th>Prob reach</th>
+          <th>Prob win on this bet</th>
+          <th>Net if win on this bet</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
 
-    <div class="hint">Change the base stake and number of rounds, then click "Generate". This version only profits if you win early — after that, wins just recover losses.</div>
+    <div class="notice" id="evnote"></div>
+
+    <div class="advice">
+      <h3 style="margin-top:0">Advice & strategy</h3>
+      <ul>
+        <li><strong>Long-run EV</strong>: With fair odds (2.0) and constant win probability, the scheme has <strong>0 expected value</strong> if you could run infinite bets without limits. Practically, house limits and finite bankroll create negative expected value if you cap legs.</li>
+        <li><strong>Only bet 1 yields profit</strong>: As configured, a win on bet 1 yields +base stake (e.g. +KES 100). Any win after that simply returns your cumulative spent (net 0).</li>
+        <li><strong>Tail risk (ruin)</strong>: The scheme trades many small runs with 0 outcome for rare but potentially large loss when you lose every leg up to your stop. Decide a hard stop (max legs) and accept worst-case loss S_max.</li>
+        <li><strong>Practical suggestions</strong>: reduce base stake, set a conservative max legs, or consider fractional staking (e.g. fixed fraction of bankroll) or Kelly-style staking if you have an edge. If you dislike rare large losses, this scheme is not recommended.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:12px;font-size:13px" class="muted">Want the table exported as a CSV? Click <a id="downloadLink" class="download">Download CSV</a></p>
   </div>
 
-<script>
-  function generate(base, rounds){
-    const stakes = [];
-    for(let k=1;k<=rounds;k++){
-      if(k===1) stakes.push(1);
-      else if(k===2) stakes.push(2);
-      else{
-        const sumPrev = stakes.reduce((a,b)=>a+b,0);
-        stakes.push(sumPrev);
+  <script>
+    function computeSequence(b, K, pWin){
+      // recurrence: s1 = b; for k>=2: s_k = sum_{i=1}^{k-1} s_i
+      const stakes = [];
+      const cumulative = [];
+      for(let k=1;k<=K;k++){
+        if(k===1){
+          stakes.push(b);
+          cumulative.push(b);
+        } else {
+          const sumPrev = stakes.reduce((a,c)=>a+c,0);
+          const s = sumPrev;
+          stakes.push(s);
+          cumulative.push(sumPrev + s);
+        }
       }
+      // Note cumulative[k-1] currently equals S_k
+      return {stakes, cumulative};
     }
 
-    const tbody = document.querySelector('#table tbody');
-    tbody.innerHTML = '';
-    let cum = 0;
-    for(let i=0;i<stakes.length;i++){
-      const mult = stakes[i];
-      const stakeAmt = mult * base;
-      cum += stakeAmt;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="text-align:left">${i+1}</td>
-        <td class="mono">${mult}×</td>
-        <td class="mono">${stakeAmt.toLocaleString('en-US')}</td>
-        <td class="mono">${cum.toLocaleString('en-US')}</td>
-      `;
-      tbody.appendChild(tr);
+    function format(n){
+      return Number(n).toLocaleString(undefined,{maximumFractionDigits:2});
     }
-  }
 
-  document.getElementById('gen').addEventListener('click', ()=>{
-    const base = Math.max(1, Number(document.getElementById('base').value) || 100);
-    let rounds = Math.min(20, Math.max(1, Number(document.getElementById('rounds').value) || 20));
-    generate(base, rounds);
-  });
+    function render(){
+      const b = Number(document.getElementById('base').value)||100;
+      const K = Math.max(1,Math.floor(Number(document.getElementById('legs').value)||8));
+      const pWin = Number(document.getElementById('pwin').value) || 0.5;
+      const tbody = document.querySelector('#table tbody'); tbody.innerHTML='';
+      const {stakes,cumulative} = computeSequence(b,K,pWin);
+      // compute additional stats
+      const rows = [];
+      for(let k=1;k<=K;k++){
+        const s = stakes[k-1];
+        const cumBefore = stakes.slice(0,k-1).reduce((a,c)=>a+c,0) || 0;
+        const S_k = stakes.slice(0,k).reduce((a,c)=>a+c,0);
+        const probReach = Math.pow(1-pWin,k-1);
+        const probWinHere = probReach * pWin;
+        let netIfWin;
+        if(k===1) netIfWin = (pWin>0 ? (pWin>0 ? b : 0) : 0); // net +b
+        else netIfWin = 0; // by design
+        rows.push({k,s,cumBefore,S_k,probReach,probWinHere,netIfWin});
+      }
 
-  generate(100, 20);
-</script>
+      // populate table
+      for(const r of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:left">${r.k}</td>
+          <td>${format(r.s)}</td>
+          <td>${format(r.cumBefore)}</td>
+          <td>${format(r.S_k)}</td>
+          <td>${(r.probReach*100).toFixed(4)}%</td>
+          <td>${(r.probWinHere*100).toFixed(4)}%</td>
+          <td>${r.netIfWin===0? '0' : ('+'+format(r.netIfWin))}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      // summary cards
+      const totalCommittedIfLoseAll = rows[rows.length-1].S_k;
+      const probLoseAll = Math.pow(1-pWin,K);
+      const probAtLeastOneWin = 1 - probLoseAll;
+      const expectedNet = (pWin * b) - (probLoseAll * totalCommittedIfLoseAll); // truncated EV
+      // But mathematically for this recurrence expectedNet==0 (within rounding) for K>=2
+
+      const summary = document.getElementById('summary'); summary.innerHTML='';
+      const makeStat = (title,val) => `<div class="stat"><div class="muted">${title}</div><div style="font-weight:700;margin-top:6px">${val}</div></div>`;
+      summary.innerHTML = makeStat('Total worst-case loss (S_max)', 'KES ' + format(totalCommittedIfLoseAll)) +
+                          makeStat('Probability lose all ' + K + ' legs', (probLoseAll*100).toFixed(6)+'%') +
+                          makeStat('Prob at least one win (within '+K+' legs)', (probAtLeastOneWin*100).toFixed(6)+'%') +
+                          makeStat('Expected net (truncated at K)', 'KES ' + format(expectedNet));
+
+      // EV note
+      const evnote = document.getElementById('evnote');
+      evnote.innerHTML = `<strong>Interpretation:</strong> With base KES ${b}, ${K} legs, and per-bet win probability ${pWin}, the worst-case loss if you lose all legs is <strong>KES ${format(totalCommittedIfLoseAll)}</strong>. The chance of losing every leg is ${(probLoseAll*100).toFixed(6)}%. If you allow arbitrarily many legs (no cap) and odds are fair, the theoretical long-run EV is 0 but only with infinite bankroll and no limits.`;
+
+      // prepare CSV for download
+      const csvRows = [['bet','stake','cum_before','cum_after','prob_reach','prob_win_here','net_if_win']];
+      for(const r of rows) csvRows.push([r.k,r.s,r.cumBefore,r.S_k,r.probReach,r.probWinHere,r.netIfWin]);
+      const csv = csvRows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv],{type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const link = document.getElementById('downloadLink');
+      link.href = url; link.download = `betting_table_b${b}_legs${K}.csv`;
+    }
+
+    document.getElementById('run').addEventListener('click', ()=>{
+      render();
+    });
+
+    // initial render
+    render();
+  </script>
 </body>
 </html>
