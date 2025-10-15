@@ -4,176 +4,282 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Betting Strategy — Martingale-once, Recover-after</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;text-rendering:optimizeLegibility}
-    body{margin:20px;background:#f7f8fb;color:#111}
-    .card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(20,30,60,0.08);max-width:980px;margin:12px auto}
-    h1{font-size:20px;margin:0 0 8px}
-    label{display:block;font-size:13px;margin:8px 0 4px}
-    input[type=number]{padding:8px;border-radius:8px;border:1px solid #ddd;width:140px}
-    button{padding:8px 12px;border-radius:8px;border:none;background:#0b62f6;color:#fff;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:12px}
-    th,td{padding:8px;border-bottom:1px solid #eee;text-align:right;font-size:13px}
-    th{text-align:left;background:#fafafa}
-    .muted{color:#666;font-size:13px}
-    .notice{background:#fff8e6;padding:10px;border-radius:8px;margin-top:12px;border:1px solid #ffe7b5}
-    .advice{background:#eef6ff;border-left:4px solid #0b62f6;padding:12px;border-radius:8px;margin-top:12px}
-    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
-    .stat{background:#fff;padding:10px;border-radius:8px;border:1px solid #f0f3ff}
-    .download{background:#0b62f6;color:#fff;padding:8px 10px;border-radius:8px;text-decoration:none}
-    @media (max-width:640px){th,td{font-size:12px}}
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Betting strategy: Martingale only on bet 1 — then "recover" stakes</h1>
-    <p class="muted">Odds assumed: <strong>decimal 2.0</strong> (win pays 2× stake). This tool computes the stake progression where only a win on bet 1 gives a net profit; wins on bets 2+ recover the money used so far (net 0).</p>
-
-    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-      <div>
-        <label>Base stake (KES)</label>
-        <input id="base" type="number" min="1" value="100" step="1">
-      </div>
-      <div>
-        <label>Number of legs (max bets)</label>
-        <input id="legs" type="number" min="1" value="8" step="1">
-      </div>
-      <div>
-        <label>Win probability per bet</label>
-        <input id="pwin" type="number" min="0" max="1" step="0.01" value="0.5">
-      </div>
-      <div style="align-self:end">
-        <button id="run">Generate table</button>
-      </div>
-    </div>
-
-    <div class="summary-grid" id="summary">
-      <!-- populated by JS -->
-    </div>
-
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Bet #</th>
-          <th>Stake (KES)</th>
-          <th>Cumulative before (KES)</th>
-          <th>Cumulative after S_k (KES)</th>
-          <th>Prob reach</th>
-          <th>Prob win on this bet</th>
-          <th>Net if win on this bet</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <div class="notice" id="evnote"></div>
-
-    <div class="advice">
-      <h3 style="margin-top:0">Advice & strategy</h3>
-      <ul>
-        <li><strong>Long-run EV</strong>: With fair odds (2.0) and constant win probability, the scheme has <strong>0 expected value</strong> if you could run infinite bets without limits. Practically, house limits and finite bankroll create negative expected value if you cap legs.</li>
-        <li><strong>Only bet 1 yields profit</strong>: As configured, a win on bet 1 yields +base stake (e.g. +KES 100). Any win after that simply returns your cumulative spent (net 0).</li>
-        <li><strong>Tail risk (ruin)</strong>: The scheme trades many small runs with 0 outcome for rare but potentially large loss when you lose every leg up to your stop. Decide a hard stop (max legs) and accept worst-case loss S_max.</li>
-        <li><strong>Practical suggestions</strong>: reduce base stake, set a conservative max legs, or consider fractional staking (e.g. fixed fraction of bankroll) or Kelly-style staking if you have an edge. If you dislike rare large losses, this scheme is not recommended.</li>
-      </ul>
-    </div>
-
-    <p style="margin-top:12px;font-size:13px" class="muted">Want the table exported as a CSV? Click <a id="downloadLink" class="download">Download CSV</a></p>
-  </div>
-
-  <script>
-    function computeSequence(b, K, pWin){
-      // recurrence: s1 = b; for k>=2: s_k = sum_{i=1}^{k-1} s_i
-      const stakes = [];
-      const cumulative = [];
-      for(let k=1;k<=K;k++){
-        if(k===1){
-          stakes.push(b);
-          cumulative.push(b);
-        } else {
-          const sumPrev = stakes.reduce((a,c)=>a+c,0);
-          const s = sumPrev;
-          stakes.push(s);
-          cumulative.push(sumPrev + s);
-        }
-      }
-      // Note cumulative[k-1] currently equals S_k
-      return {stakes, cumulative};
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #7209b7;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --warning: #f8961e;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --card-bg: #ffffff;
+      --body-bg: #f0f2f5;
+      --border: #e0e0e0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+      --transition: all 0.3s ease;
     }
 
-    function format(n){
-      return Number(n).toLocaleString(undefined,{maximumFractionDigits:2});
+    .dark-mode {
+      --body-bg: #121212;
+      --card-bg: #1e1e1e;
+      --light: #2d2d2d;
+      --dark: #f8f9fa;
+      --border: #333333;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    function render(){
-      const b = Number(document.getElementById('base').value)||100;
-      const K = Math.max(1,Math.floor(Number(document.getElementById('legs').value)||8));
-      const pWin = Number(document.getElementById('pwin').value) || 0.5;
-      const tbody = document.querySelector('#table tbody'); tbody.innerHTML='';
-      const {stakes,cumulative} = computeSequence(b,K,pWin);
-      // compute additional stats
-      const rows = [];
-      for(let k=1;k<=K;k++){
-        const s = stakes[k-1];
-        const cumBefore = stakes.slice(0,k-1).reduce((a,c)=>a+c,0) || 0;
-        const S_k = stakes.slice(0,k).reduce((a,c)=>a+c,0);
-        const probReach = Math.pow(1-pWin,k-1);
-        const probWinHere = probReach * pWin;
-        let netIfWin;
-        if(k===1) netIfWin = (pWin>0 ? (pWin>0 ? b : 0) : 0); // net +b
-        else netIfWin = 0; // by design
-        rows.push({k,s,cumBefore,S_k,probReach,probWinHere,netIfWin});
-      }
-
-      // populate table
-      for(const r of rows){
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="text-align:left">${r.k}</td>
-          <td>${format(r.s)}</td>
-          <td>${format(r.cumBefore)}</td>
-          <td>${format(r.S_k)}</td>
-          <td>${(r.probReach*100).toFixed(4)}%</td>
-          <td>${(r.probWinHere*100).toFixed(4)}%</td>
-          <td>${r.netIfWin===0? '0' : ('+'+format(r.netIfWin))}</td>
-        `;
-        tbody.appendChild(tr);
-      }
-
-      // summary cards
-      const totalCommittedIfLoseAll = rows[rows.length-1].S_k;
-      const probLoseAll = Math.pow(1-pWin,K);
-      const probAtLeastOneWin = 1 - probLoseAll;
-      const expectedNet = (pWin * b) - (probLoseAll * totalCommittedIfLoseAll); // truncated EV
-      // But mathematically for this recurrence expectedNet==0 (within rounding) for K>=2
-
-      const summary = document.getElementById('summary'); summary.innerHTML='';
-      const makeStat = (title,val) => `<div class="stat"><div class="muted">${title}</div><div style="font-weight:700;margin-top:6px">${val}</div></div>`;
-      summary.innerHTML = makeStat('Total worst-case loss (S_max)', 'KES ' + format(totalCommittedIfLoseAll)) +
-                          makeStat('Probability lose all ' + K + ' legs', (probLoseAll*100).toFixed(6)+'%') +
-                          makeStat('Prob at least one win (within '+K+' legs)', (probAtLeastOneWin*100).toFixed(6)+'%') +
-                          makeStat('Expected net (truncated at K)', 'KES ' + format(expectedNet));
-
-      // EV note
-      const evnote = document.getElementById('evnote');
-      evnote.innerHTML = `<strong>Interpretation:</strong> With base KES ${b}, ${K} legs, and per-bet win probability ${pWin}, the worst-case loss if you lose all legs is <strong>KES ${format(totalCommittedIfLoseAll)}</strong>. The chance of losing every leg is ${(probLoseAll*100).toFixed(6)}%. If you allow arbitrarily many legs (no cap) and odds are fair, the theoretical long-run EV is 0 but only with infinite bankroll and no limits.`;
-
-      // prepare CSV for download
-      const csvRows = [['bet','stake','cum_before','cum_after','prob_reach','prob_win_here','net_if_win']];
-      for(const r of rows) csvRows.push([r.k,r.s,r.cumBefore,r.S_k,r.probReach,r.probWinHere,r.netIfWin]);
-      const csv = csvRows.map(r => r.join(',')).join('\n');
-      const blob = new Blob([csv],{type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const link = document.getElementById('downloadLink');
-      link.href = url; link.download = `betting_table_b${b}_legs${K}.csv`;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    document.getElementById('run').addEventListener('click', ()=>{
-      render();
-    });
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--body-bg);
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 20px;
+      transition: var(--transition);
+    }
 
-    // initial render
-    render();
-  </script>
-</body>
-</html>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo i {
+      font-size: 28px;
+      color: var(--primary);
+    }
+
+    .logo h1 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+
+    .theme-toggle:hover {
+      background: var(--light);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card-subtitle {
+      color: var(--gray);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    label i {
+      color: var(--primary);
+    }
+
+    input[type="number"] {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--dark);
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    button.secondary {
+      background: var(--secondary);
+    }
+
+    button.secondary:hover {
+      background: #6511a0;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      background: var(--light);
+      padding: 16px;
+      border-radius: var(--radius);
+      border-left: 4px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-title {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .stat.danger {
+      border-left-color: var(--danger);
+    }
+
+    .stat.success {
+      border-left-color: var(--success);
+    }
+
+    .stat.warning {
+      border-left-color: var(--warning);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      min-width: 800px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--light);
+      font-weight: 600;
+      text-align: left;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background: rgba(67, 97, 238, 0.05);
+    }
+
+    .positive {
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    .negative {
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .notice {
+      background: rgba(248, 150, 30, 0.1);
+      padding: 16px;
+      border-radius: var(--radius);
+      margin-top: 20px;
+      border-left:
