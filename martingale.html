@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Martingale Recovery Pattern — Stakes Table</title>
+  <title>Betting Progression Calculator</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -16,6 +16,7 @@
       --secondary: #3b82f6;
       --warning: #f59e0b;
       --danger: #ef4444;
+      --kelly: #8b5cf6;
       --border: rgba(255, 255, 255, 0.06);
       --shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
       --shadow-hover: 0 8px 24px rgba(2, 6, 23, 0.8);
@@ -170,14 +171,17 @@
     button:hover i {
       transform: scale(1.1);
     }
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 16px;
       font-size: 13px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      min-width: 600px;
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -187,7 +191,7 @@
       transform: translateY(0);
     }
     th, td {
-      padding: 14px 12px;
+      padding: 14px 8px;
       border-bottom: 1px solid var(--border);
       text-align: right;
       transition: background 0.2s ease;
@@ -197,6 +201,9 @@
       text-align: left;
       font-weight: 500;
       background: rgba(255, 255, 255, 0.02);
+      position: sticky;
+      left: 0;
+      z-index: 1;
     }
     tr {
       opacity: 0;
@@ -312,7 +319,7 @@
     .risk-card li:hover::before {
       transform: translateX(5px);
     }
-    .bankroll-highlight, .ev-highlight, .ruin-highlight {
+    .bankroll-highlight, .ev-highlight, .ruin-highlight, .kelly-highlight {
       padding: 12px;
       border-radius: 8px;
       text-align: center;
@@ -334,7 +341,11 @@
       background: linear-gradient(135deg, var(--danger), #dc2626);
       color: white;
     }
-    .bankroll-highlight.animate, .ev-highlight.animate, .ruin-highlight.animate {
+    .kelly-highlight {
+      background: linear-gradient(135deg, var(--kelly), #7c3aed);
+      color: white;
+    }
+    .bankroll-highlight.animate, .ev-highlight.animate, .ruin-highlight.animate, .kelly-highlight.animate {
       transform: scale(1.05);
     }
     @keyframes slideInDown {
@@ -352,13 +363,16 @@
     @media (max-width: 768px) {
       body { padding: 16px; }
       .menu { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .controls { flex-direction: column; gap: 12px; }
+      .controls { flex-direction: column; gap: 12px; align-items: stretch; }
       input[type=number], select { max-width: none; }
-      button { width: 100%; }
-      table td, th { font-size: 12px; padding: 10px 8px; }
+      button { width: 100%; min-width: auto; }
+      .table-wrapper { margin-top: 8px; }
+      table td, th { font-size: 11px; padding: 8px 4px; min-width: 60px; }
+      th { padding: 8px 4px; }
       #chart-container { height: 280px; }
       .risk-section { grid-template-columns: 1fr; }
-      .header { flex-direction: column; align-items: flex-start; }
+      .header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .header strong { font-size: 16px; }
     }
     .text-success { color: var(--accent); }
     .text-danger { color: var(--danger); }
@@ -369,7 +383,7 @@
   <div class="menu">
     <div>
       <div class="brand"><i class="fas fa-chart-line"></i> Betting Progression Calculator</div>
-      <div class="subtitle">Martingale Recovery or Fibonacci — with probability calculations up to 20 rounds</div>
+      <div class="subtitle">Martingale Recovery, Fibonacci, D'Alembert, Paroli, Labouchere — with probability calculations & Kelly Criterion up to 20 rounds</div>
     </div>
     <div style="margin-left: auto;">
       <div class="card">
@@ -379,6 +393,9 @@
             <select id="strategy">
               <option value="martingale">Martingale Recovery (1-2-sum)</option>
               <option value="fibonacci">Fibonacci (1-1-2-3-5...)</option>
+              <option value="dalembert">D'Alembert (1-2-3-4...)</option>
+              <option value="paroli">Paroli (1-2-4 reset)</option>
+              <option value="labouchere">Labouchere (1-2-3-4 cancellation)</option>
             </select>
           </div>
           <div class="control-group">
@@ -392,6 +409,10 @@
           <div class="control-group">
             <label for="p"><i class="fas fa-chart-pie"></i> Win Prob (p)</label>
             <input id="p" type="number" min="0" max="1" step="0.01" value="0.5" />
+          </div>
+          <div class="control-group">
+            <label for="bankroll"><i class="fas fa-wallet"></i> Total Bankroll (Ksh)</label>
+            <input id="bankroll" type="number" min="1" value="10000" />
           </div>
           <div class="control-group">
             <label for="rounds"><i class="fas fa-sync-alt"></i> Rounds (max 20)</label>
@@ -408,25 +429,27 @@
   <div class="card" id="output">
     <div class="header">
       <strong><i class="fas fa-table"></i> Stake & Probability Schedule</strong>
-      <div class="hint">Probabilities based on win prob p. Net assumes recovery + base profit where applicable. EV = Expected Value per cycle.</div>
+      <div class="hint">Probabilities based on win prob p. Net assumes recovery + base profit where applicable. EV = Expected Value per cycle. For Paroli/Labouchere, see strategy notes.</div>
     </div>
 
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Bet #</th>
-          <th>Stake (× base)</th>
-          <th>Stake (Ksh)</th>
-          <th>Cumulative Invested (Ksh)</th>
-          <th>Net if Win Here (Ksh)</th>
-          <th>Prob Win Here (%)</th>
-          <th>Cum. Prob Reach Here (%)</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Bet #</th>
+            <th>Stake (× base)</th>
+            <th>Stake (Ksh)</th>
+            <th>Cumulative Invested (Ksh)</th>
+            <th>Net if Win Here (Ksh)</th>
+            <th>Prob Win Here (%)</th>
+            <th>Cum. Prob Reach Here (%)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
-    <div class="hint"><i class="fas fa-lightbulb"></i> Tip: For fair odds, set p = 1/odds. Use probabilities to assess risk of long losing streaks.</div>
+    <div class="hint"><i class="fas fa-lightbulb"></i> Tip: For fair odds, set p = 1/odds. Use probabilities to assess risk of long losing streaks. Labouchere starts with [1,2,3,4] line (grows on losses).</div>
 
     <div id="chart-container">
       <canvas id="chart"></canvas>
@@ -442,10 +465,17 @@
       </div>
     </div>
     <div class="card">
+      <div class="risk-card" id="kelly-card">
+        <h3><i class="fas fa-balance-scale"></i> Kelly Criterion</h3>
+        <div id="kelly" class="kelly-highlight">Ksh 0 (Generate to see)</div>
+        <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0;">Recommended bet size: f * bankroll, where f = (p*odds - 1)/(odds-1). Use as base stake.</p>
+      </div>
+    </div>
+    <div class="card">
       <div class="risk-card" id="ev-card">
         <h3><i class="fas fa-calculator"></i> Expected Value (EV)</h3>
         <div id="ev" class="ev-highlight">Ksh 0 (Generate to see)</div>
-        <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0;">EV per full cycle: ∑ [P(win on k) × Net on k]. Positive EV indicates edge.</p>
+        <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0;">EV per full cycle including ruin case. Positive EV indicates edge.</p>
       </div>
     </div>
     <div class="card">
@@ -463,7 +493,7 @@
           <li>Set stop-loss: Quit after 3 consecutive losses (risk ~12.5% if p=0.5).</li>
           <li>Risk no more than 1-2% of total bankroll per cycle start.</li>
           <li>Track win rate: If below 48% for odds=2.0, reconsider strategy.</li>
-          <li>Diversify: Don't put all bankroll into one progression. Monitor EV.</li>
+          <li>Diversify: Don't put all bankroll into one progression. Monitor EV & Kelly.</li>
         </ul>
       </div>
     </div>
@@ -499,7 +529,7 @@
     });
   }
 
-  function generate(base, odds, p, rounds, strategy) {
+  function generate(base, odds, p, totalBank, rounds, strategy) {
     const q = 1 - p;
     // stakes as multiples of base
     const stakes = [];
@@ -509,6 +539,10 @@
     const cumReachHere = []; // Prob of reaching this bet (q^{k-1})
     let cum = 0;
     let ev = 0;
+    let line = []; // For Labouchere
+    if (strategy === 'labouchere') {
+      line = [1, 2, 3, 4]; // Initial line (sum=10 units target)
+    }
     for (let k = 1; k <= rounds; k++) {
       let stake;
       if (strategy === 'martingale') {
@@ -518,9 +552,21 @@
           const sumPrev = stakes.reduce((a, b) => a + b, 0);
           stake = sumPrev;
         }
-      } else { // fibonacci
+      } else if (strategy === 'fibonacci') {
         if (k === 1 || k === 2) stake = 1;
-        else stake = stakes[k-2] + stakes[k-3]; // 0-indexed: stakes[0]=1, [1]=1, [2]=2, etc.
+        else stake = stakes[k-3] + stakes[k-2];
+      } else if (strategy === 'dalembert') {
+        stake = k;
+      } else if (strategy === 'paroli') {
+        const level = (k - 1) % 3;
+        stake = Math.pow(2, level);
+      } else if (strategy === 'labouchere') {
+        if (line.length === 0) {
+          stake = 1; // Fallback if line empty
+        } else {
+          stake = line[0] + line[line.length - 1];
+        }
+        line.push(stake); // Simulate loss: add to end
       }
       stakes.push(stake);
       const stakeAmt = stake * base;
@@ -538,7 +584,18 @@
       cumReachHere.push(cr);
       ev += pw * net;
     }
-    const ruinProb = Math.pow(q, rounds) * 100; // % chance of losing all
+    // Add ruin case to EV
+    const ruinProb = Math.pow(q, rounds);
+    ev += ruinProb * (-cumulatives[cumulatives.length - 1]);
+    const ruinProbPct = ruinProb * 100;
+
+    // Kelly Criterion
+    let f = 0;
+    if (odds > 1) {
+      f = (p * odds - 1) / (odds - 1);
+    }
+    if (f < 0) f = 0;
+    const kellyStake = totalBank * f;
 
     // Update highlights
     const bankrollEl = document.getElementById('bankroll');
@@ -546,13 +603,18 @@
     bankrollEl.classList.add('animate');
     setTimeout(() => bankrollEl.classList.remove('animate'), 400);
 
+    const kellyEl = document.getElementById('kelly');
+    kellyEl.textContent = `Ksh ${kellyStake.toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+    kellyEl.classList.add('animate');
+    setTimeout(() => kellyEl.classList.remove('animate'), 400);
+
     const evEl = document.getElementById('ev');
     evEl.textContent = `Ksh ${ev.toFixed(2)}`;
     evEl.classList.add('animate');
     setTimeout(() => evEl.classList.remove('animate'), 400);
 
     const ruinEl = document.getElementById('ruin');
-    ruinEl.textContent = `${ruinProb.toFixed(2)}%`;
+    ruinEl.textContent = `${ruinProbPct.toFixed(2)}%`;
     ruinEl.classList.add('animate');
     setTimeout(() => ruinEl.classList.remove('animate'), 400);
 
@@ -704,14 +766,15 @@
     const base = Math.max(1, Number(document.getElementById('base').value) || 100);
     const odds = Math.max(1.01, parseFloat(document.getElementById('odds').value) || 2.0);
     const p = Math.max(0, Math.min(1, parseFloat(document.getElementById('p').value) || 0.5));
+    const totalBank = Math.max(1, Number(document.getElementById('bankroll').value) || 10000);
     let rounds = Math.min(20, Math.max(1, Number(document.getElementById('rounds').value) || 20));
-    generate(base, odds, p, rounds, strategy);
+    generate(base, odds, p, totalBank, rounds, strategy);
   });
 
   // Initial animations
   document.addEventListener('DOMContentLoaded', () => {
     animateElements();
-    generate(100, 2.0, 0.5, 20, 'martingale');
+    generate(100, 2.0, 0.5, 10000, 20, 'martingale');
   });
 </script>
 </body>
