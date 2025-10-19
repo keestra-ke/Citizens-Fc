@@ -34,7 +34,7 @@
       color: var(--text-dark);
       line-height: 1.7;
       overflow-x: hidden;
-      width: 100vw;
+      width: 100%;
       margin: 0;
     }
 
@@ -119,7 +119,7 @@
       padding: 0.5rem;
     }
 
-    /* Hero with Responsive Height and Depth Scrolling */
+    /* Hero Section */
     .hero {
       position: relative;
       height: 100vh;
@@ -214,19 +214,19 @@
       }
     }
 
-    /* Sections with Glassmorphism and Micro-Interactions */
+    /* Sections */
     section {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       margin: 3rem auto;
-      max-width: 1000px;
+      max-width: 1200px;
       padding: clamp(2rem, 5vw, 3rem);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
       position: relative;
-      width: 100%;
+      width: 90%;
     }
 
     section::before {
@@ -436,6 +436,17 @@
       to { opacity: 1; height: auto; }
     }
 
+    /* Announcement Section */
+    .announcement {
+      background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(0, 71, 171, 0.1));
+      border-left: 5px solid var(--primary-red);
+      padding: 2rem;
+      margin: 3rem auto;
+      max-width: 1000px;
+      border-radius: var(--border-radius);
+      text-align: center;
+    }
+
     /* Footer */
     footer {
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
@@ -634,94 +645,108 @@
   <header>
     <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
     <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
-    <nav id="main-nav" class="nav">
-      <a href="index.html">Home</a>
-      <a href="team.html">Team</a>
-      <a href="Gallery.html">Gallery</a>
-      <a href="finance.html">Finance</a>
-      <a href="fixtures.html">Fixtures & Results</a>
-      <a href="contact.html">Contact</a>
-      <a href="martingale.html">Sure bet</a>
-      <a href="recovery.html">no loss</a>
+    <nav id="main-nav">
+      <a href="#home">Home</a>
+      <a href="#team">Team</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#finance">Finance</a>
+      <a href="#fixtures">Fixtures & Results</a>
+      <a href="#contact">Contact</a>
+      <a href="#martingale">Sure Bet</a>
+      <a href="#recovery">No Loss</a>
     </nav>
   </header>
 
-  <div class="hero">
-    <!-- Placeholder for full-screen video: Replace src with actual video -->
-    <!-- <video autoplay muted loop playsinline>
-      <source src="club-highlight.mp4" type="video/mp4">
-    </video> -->
-    <img src="logo.png" alt="Chandaria Converting Football Club Logo">
-    <h2>Together we are strong</h2>
-    <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
-  </div>
+  <main>
+    <section id="home" class="hero">
+      <img src="logo.png" alt="Chandaria Converting Football Club Logo">
+      <h2>Together we are strong</h2>
+      <p><strong>Founded:</strong> 2025 | <strong>Location:</strong> Babadogo | <strong>Colors:</strong> Blue & Red</p>
+    </section>
 
-  <section>
-    <h2>About Us</h2>
-    <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto "Together as One", we continue to build a culture of unity and excellence in the local football community.</p>
+    <section>
+      <h2>About Us</h2>
+      <p>Founded in 2025 and based in Babadogo, Chandaria Converting Football Club (C.C.F.C.) is a passionate team of workmates and friends united by the love of football. The club plays every weekend for leisure, competition, and camaraderie, promoting sportsmanship, teamwork, and growth among colleagues — both on and off the pitch. Guided by our motto "Together as One", we continue to build a culture of unity and excellence in the local football community.</p>
 
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="icon">⚽</div>
-        <h3>Our Mission</h3>
-        <p>To promote football excellence and friendship among our community.</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">🤝</div>
-        <h3>Our Values</h3>
-        <p>Teamwork, respect, dedication, and sportsmanship in every game. Always give a friend a second chance</p>
-      </div>
-      <div class="about-card">
-        <div class="icon">🏆</div>
-        <h3>Our Goal</h3>
-        <p>To compete at the highest level while maintaining our community spirit.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team Photo Section -->
-  <section class="team-photo-section">
-    <h2>Our Team in Action</h2>
-    <p>Capturing the spirit and dedication of C.C.F.C. players during training and matches.</p>
-    <img src="IMG-20250713-WA0161.jpg" alt="Chandaria Converting Football Club team photo showing players in action">
-    <p>Our team showcasing skill, determination, and teamwork during a recent training session. Every player contributes to our collective success both on and off the pitch.</p>
-  </section>
-
-  <!-- Fan Zone Section -->
-  <section class="ugc-section">
-    <h2>Fan Zone</h2>
-    <p>Join the conversation! Share your matchday stories and photos.</p>
-    <div class="ugc-grid">
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Match Highlight</h3>
-        <p>Amazing goal from last weekend!</p>
-        <video controls poster="highlight-thumbnail.jpg">
-          <source src="Miss.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <div class="expanded">
-          <p>Relive the moment: Watch the replay and share your reactions. (Expanded view for full immersion!)</p>
-          <button onclick="shareHighlight(event)">Share Your Take</button>
-          <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">Caption: Epic strike by our captain – what a finish!</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="icon">⚽</div>
+          <h3>Our Mission</h3>
+          <p>To promote football excellence and friendship among our community.</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🤝</div>
+          <h3>Our Values</h3>
+          <p>Teamwork, respect, dedication, and sportsmanship in every game. Always give a friend a second chance</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🏆</div>
+          <h3>Our Goal</h3>
+          <p>To compete at the highest level while maintaining our community spirit.</p>
         </div>
       </div>
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Player Spotlight</h3>
-        <p>Shoutout to our MVP!</p>
-        <div class="expanded">
-          <p>Meet the star: Bio, stats, and fan messages. <button onclick="shareSpotlight(event)">Nominate Next</button></p>
+    </section>
+
+    <!-- Team Photo Section -->
+    <section class="team-photo-section">
+      <h2>Our Team in Action</h2>
+      <p>Capturing the spirit and dedication of C.C.F.C. players during training and matches.</p>
+      <img src="IMG-20250713-WA0161.jpg" alt="Chandaria Converting Football Club team photo showing players in action">
+      <p>Our team showcasing skill, determination, and teamwork during a recent training session. Every player contributes to our collective success both on and off the pitch.</p>
+    </section>
+
+    <!-- Coach's Message Section -->
+    <section class="announcement">
+      <h2>📢 Message from the Coach</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8; text-align: center;">
+        <strong>Welcome to our new team!</strong> 🎉<br><br>
+
+        We're excited to have each and every one of you on board as we build something special together. As discussed, our team currently has three balls, and one of them needs repair. To support our growth and keep everything in top shape, we kindly ask <strong>each player to contribute KSh 30 per week</strong> — whether we have a game or not. This small but consistent contribution will help us in many ways: ball maintenance, first aid supplies, transport, and other team needs.<br><br>
+
+        All contributions will be sent to <strong>Athur Musiomi</strong>, who will manage the team fund transparently.<br><br>
+
+        Additionally, we strongly encourage <strong>every player to attend all scheduled training sessions</strong>. Consistency, discipline, and unity are the foundations of a winning team. Let's show up for each other, train hard, and grow stronger — <em>together as one</em>.<br><br>
+
+        Thank you for your commitment and support. Let's make this season unforgettable! 🙏💙❤️
+      </p>
+    </section>
+
+    <!-- Fan Zone Section -->
+    <section class="ugc-section">
+      <h2>Fan Zone</h2>
+      <p>Join the conversation! Share your matchday stories and photos.</p>
+      <div class="ugc-grid">
+        <div class="ugc-card" onclick="toggleExpanded(this)">
+          <h3>Match Highlight</h3>
+          <p>Amazing goal from last weekend!</p>
+          <video controls poster="highlight-thumbnail.jpg">
+            <source src="Miss.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="expanded">
+            <p>Relive the moment: Watch the replay and share your reactions. (Expanded view for full immersion!)</p>
+            <button onclick="shareHighlight(event)">Share Your Take</button>
+            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">Caption: Epic strike by our captain – what a finish!</p>
+          </div>
+        </div>
+        <div class="ugc-card" onclick="toggleExpanded(this)">
+          <h3>Player Spotlight</h3>
+          <p>Shoutout to our MVP!</p>
+          <div class="expanded">
+            <p>Meet the star: Bio, stats, and fan messages. <button onclick="shareSpotlight(event)">Nominate Next</button></p>
+          </div>
+        </div>
+        <div class="ugc-card" onclick="toggleExpanded(this)">
+          <h3>Upcoming Fixture</h3>
+          <p>Next up: vs. Babadogo United – Oct 19, 2025 @ 3PM, Local Pitch</p>
+          <div class="expanded">
+            <p><strong>Details:</strong> Kickoff 3:00 PM, Venue: Babadogo Community Field. Bring your blue & red! Predictions: CCFC win 2-1? <button onclick="shareFixture(event)">RSVP Here</button></p>
+            <div id="countdown" style="margin-top: 1rem; font-weight: bold; color: var(--primary-red);"></div>
+          </div>
         </div>
       </div>
-      <div class="ugc-card" onclick="toggleExpanded(this)">
-        <h3>Upcoming Fixture</h3>
-        <p>Next up: vs. Babadogo United – Oct 19, 2025 @ 3PM, Local Pitch</p>
-        <div class="expanded">
-          <p><strong>Details:</strong> Kickoff 3:00 PM, Venue: Babadogo Community Field. Bring your blue & red! Predictions: CCFC win 2-1? <button onclick="shareFixture(event)">RSVP Here</button></p>
-          <div id="countdown" style="margin-top: 1rem; font-weight: bold; color: var(--primary-red);"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>&copy; 2025 Chandaria Converting Football Club. All rights reserved.</footer>
 
