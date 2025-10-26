@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chandaria Converting Football Club | Team Squad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary-blue: #0047AB;
@@ -12,13 +13,14 @@
       --accent-gold: #FFD700;
       --light-bg: #f8f9fa;
       --white: #ffffff;
+      --dark-bg: #121212;
       --glass-bg: rgba(255, 255, 255, 0.1);
       --glass-border: rgba(255, 255, 255, 0.2);
       --text-dark: #1a1a1a;
       --text-light: #6c757d;
       --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
       --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
-      --border-radius: 20px;
+      --border-radius: 16px;
       --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -43,36 +45,23 @@
       z-index: 1000;
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
       color: var(--white);
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 1rem;
+      text-align: center;
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(10px);
-    }
-
-    header img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      transition: var(--transition);
-    }
-
-    header img:hover {
-      transform: scale(1.1);
+      width: 100%;
     }
 
     header h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.5rem, 5vw, 2.2rem);
       font-weight: 700;
-      margin: 0;
+      margin-bottom: 0.5rem;
       letter-spacing: 0.5px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     nav {
-      margin-left: auto;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -119,7 +108,7 @@
       box-shadow: var(--shadow-hover);
     }
 
-    /* Mobile Hamburger Menu Toggle */
+    /* Mobile Hamburger Menu Toggle (CSS-only) */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -128,7 +117,6 @@
       font-size: 1.5rem;
       cursor: pointer;
       padding: 0.5rem;
-      margin-left: auto;
     }
 
     /* Hero Section for Team */
@@ -140,7 +128,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(rgba(0, 71, 171, 0.7), rgba(211, 47, 47, 0.7)), url('team-hero-bg.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('team-hero-bg.jpg') center/cover no-repeat;
       color: var(--white);
       overflow: hidden;
     }
@@ -207,8 +195,15 @@
       border-radius: 2px;
     }
 
-    .position-section {
+    /* Player Columns Section */
+    .player-columns-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
       margin-bottom: 4rem;
+    }
+
+    .player-column {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
@@ -218,61 +213,62 @@
       transition: var(--transition);
     }
 
-    .position-section:hover {
+    .player-column:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-hover);
     }
 
-    .position-section h3 {
+    .player-column h3 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
       color: var(--primary-red);
       margin-bottom: 1.5rem;
       text-align: center;
       font-weight: 700;
+      position: relative;
     }
 
-    .players-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+    .player-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+      border-radius: 2px;
+    }
+
+    .player-list {
       list-style: none;
     }
 
-    .player-card {
+    .player-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
       background: var(--white);
-      padding: 1.5rem;
-      border-radius: 15px;
+      border-radius: 12px;
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      cursor: pointer;
     }
 
-    .player-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-    }
-
-    .player-card:hover {
-      transform: translateY(-10px) scale(1.02);
+    .player-item:hover {
+      transform: translateX(5px);
       box-shadow: var(--shadow-hover);
     }
 
     .player-avatar {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1rem;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent-gold);
-      transition: var(--transition);
+      margin-right: 1rem;
+      flex-shrink: 0;
     }
 
     .player-avatar img {
@@ -282,27 +278,370 @@
       display: block;
     }
 
-    .player-card:hover .player-avatar {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    .player-info {
+      flex-grow: 1;
     }
 
-    .player-card h4 {
-      font-size: 1.2rem;
+    .player-info h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .player-info .role {
+      color: var(--primary-red);
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: rgba(211, 47, 47, 0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 15px;
+      display: inline-block;
+    }
+
+    /* Formation Section */
+    .formation-section {
+      margin-bottom: 4rem;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .formation-section:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .formation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .formation-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: var(--primary-red);
+      font-weight: 700;
+    }
+
+    .formation-selector {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .formation-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .formation-btn.active {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      color: var(--white);
+    }
+
+    .formation-btn:hover:not(.active) {
+      background: rgba(0, 71, 171, 0.1);
+    }
+
+    .formation-pitch {
+      background: linear-gradient(to bottom, #2e7d32, #1b5e20);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pitch-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .pitch-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: 0;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .pitch-center::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .formation-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .player-position {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .player-position:hover {
+      transform: translateY(-5px);
+    }
+
+    .player-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
+      position: relative;
+      z-index: 2;
+    }
+
+    .player-position:hover .player-circle {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .player-name {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* First Eleven Section */
+    .first-eleven-section {
+      margin-bottom: 4rem;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .first-eleven-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: var(--primary-red);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .first-eleven-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .first-eleven-card {
+      background: var(--glass-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+    }
+
+    .first-eleven-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .first-eleven-avatar {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent-gold);
+    }
+
+    .first-eleven-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .first-eleven-card h4 {
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--text-dark);
       margin-bottom: 0.5rem;
     }
 
-    .player-card .role {
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--white);
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      box-shadow: var(--shadow-hover);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close {
+      color: var(--text-light);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+
+    .close:hover {
+      color: var(--primary-red);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent-gold);
+    }
+
+    .modal-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-info h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-info .role {
       color: var(--primary-red);
       font-weight: 700;
-      font-size: 0.9rem;
       background: rgba(211, 47, 47, 0.1);
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       display: inline-block;
-      margin-top: 0.5rem;
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .modal-bio {
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .modal-stats {
+      background: rgba(0, 71, 171, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+    }
+
+    .modal-stats h4 {
+      margin-bottom: 1rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value-large {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .stat-label-large {
+      font-size: 0.85rem;
+      color: var(--text-light);
     }
 
     /* Footer */
@@ -341,6 +680,9 @@
 
       .mobile-menu-toggle {
         display: block;
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
       }
 
       nav {
@@ -352,10 +694,6 @@
         padding: 1rem;
         border-radius: 10px;
         margin-top: 1rem;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
       }
 
       nav.active {
@@ -377,19 +715,53 @@
         padding: 1rem;
       }
 
-      .position-section {
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .players-grid {
+      .player-columns-section {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 1.5rem;
       }
 
-      .player-avatar {
-        width: 70px;
-        height: 70px;
+      .player-column {
+        padding: 1.5rem;
+      }
+
+      .formation-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .formation-selector {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .formation-pitch {
+        min-height: 400px;
+        padding: 1rem;
+      }
+
+      .player-circle {
+        width: 50px;
+        height: 50px;
+        font-size: 0.8rem;
+      }
+
+      .player-name {
+        font-size: 0.75rem;
+        max-width: 60px;
+      }
+
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 1.5rem;
+      }
+
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+
+      .first-eleven-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       }
     }
 
@@ -402,13 +774,37 @@
         font-size: 2rem;
       }
 
-      .position-section h3 {
-        font-size: 1.8rem;
+      .player-item {
+        padding: 0.75rem;
       }
 
       .player-avatar {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
+        margin-right: 0.75rem;
+      }
+
+      .player-info h4 {
+        font-size: 1rem;
+      }
+
+      .formation-pitch {
+        min-height: 350px;
+      }
+
+      .player-circle {
+        width: 45px;
+        height: 45px;
+        font-size: 0.7rem;
+      }
+
+      .player-name {
+        font-size: 0.7rem;
+        max-width: 50px;
+      }
+
+      .first-eleven-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -427,12 +823,15 @@
         color: #e0e0e0;
       }
 
-      .position-section {
+      .player-column,
+      .formation-section,
+      .first-eleven-section {
         background: rgba(18, 18, 18, 0.8);
         border-color: rgba(255, 255, 255, 0.1);
       }
 
-      .player-card {
+      .player-item,
+      .first-eleven-card {
         background: #333;
         color: #e0e0e0;
       }
@@ -440,18 +839,28 @@
       .hero {
         background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(211, 47, 47, 0.8)), url('team-hero-bg-dark.jpg') center/cover no-repeat;
       }
+
+      .modal-content {
+        background: #333;
+        color: #e0e0e0;
+      }
+
+      .modal-stats {
+        background: rgba(255, 255, 255, 0.05);
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="CCFC Logo">
-    <h1>Chandaria Converting FC</h1>
     <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
-    <nav id="main-nav">
+    <h1>Chandaria Converting Football Club (C.C.F.C)</h1>
+    <nav id="main-nav" class="nav">
       <a href="index.html">Home</a>
       <a href="team.html">Team</a>
-      <a href="fixtures.html">Fixtures</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="finance.html">Finance</a>
+      <a href="fixtures.html">Fixtures & Results</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
@@ -466,239 +875,1039 @@
       <h2>Team Squad 2025</h2>
     </div>
 
-    <section class="position-section">
-      <h3>Goalkeepers</h3>
-      <ul class="players-grid">
-        <li class="player-card">
-          <div class="player-avatar">
+    <!-- Player Columns Section -->
+    <section class="player-columns-section">
+      <div class="player-column">
+        <h3>Goalkeepers</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('richie')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
+            </div>
+            <div class="player-info">
+              <h4>Richie</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('giddy')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Giddy Photo">
+            </div>
+            <div class="player-info">
+              <h4>Giddy</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Defenders</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('arthur')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
+            </div>
+            <div class="player-info">
+              <h4>Arthur</h4>
+              <span class="role">Treasurer</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('chaloh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Chaloh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Chaloh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('collo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Collo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('tom')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Tom Photo">
+            </div>
+            <div class="player-info">
+              <h4>Tom</h4>
+              <span class="role">Assistant Treasurer</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ogola')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ogola Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ogola</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('yobra')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
+            </div>
+            <div class="player-info">
+              <h4>Yobra</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('timo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Timo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('amoh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Amoh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ogwaro')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ogwaro</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('edgar')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
+            </div>
+            <div class="player-info">
+              <h4>Edgar</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('mlei')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
+            </div>
+            <div class="player-info">
+              <h4>Mlei</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Midfielders</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('gerry')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
+            </div>
+            <div class="player-info">
+              <h4>Gerry</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('dickens')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
+            </div>
+            <div class="player-info">
+              <h4>Dickens</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('hillary')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
+            </div>
+            <div class="player-info">
+              <h4>Hillary</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('nico')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
+            </div>
+            <div class="player-info">
+              <h4>Nico</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('castro')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
+            </div>
+            <div class="player-info">
+              <h4>Castro</h4>
+              <span class="role">Assistant Captain</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('jemmo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Jemmo</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('malcom')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
+            </div>
+            <div class="player-info">
+              <h4>Malcom</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('bella')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
+            </div>
+            <div class="player-info">
+              <h4>Bella</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('dominic')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
+            </div>
+            <div class="player-info">
+              <h4>Dominic</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('kylloh')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
+            </div>
+            <div class="player-info">
+              <h4>Kylloh</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('rapho')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
+            </div>
+            <div class="player-info">
+              <h4>Rapho</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="player-column">
+        <h3>Forwards</h3>
+        <ul class="player-list">
+          <li class="player-item" onclick="openModal('felix')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
+            </div>
+            <div class="player-info">
+              <h4>Felix</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('davy')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
+            </div>
+            <div class="player-info">
+              <h4>Davy</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('rigan')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
+            </div>
+            <div class="player-info">
+              <h4>Rigan</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('brayo')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
+            </div>
+            <div class="player-info">
+              <h4>Brayo</h4>
+              <span class="role">Captain</span>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('julius')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
+            </div>
+            <div class="player-info">
+              <h4>Julius</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('masinde')">
+            <div class="player-avatar">
+              <img src="masinde.png" alt="Masinde Photo">
+            </div>
+            <div class="player-info">
+              <h4>Masinde</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('franco')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
+            </div>
+            <div class="player-info">
+              <h4>Franco</h4>
+            </div>
+          </li>
+          <li class="player-item" onclick="openModal('ben')">
+            <div class="player-avatar">
+              <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
+            </div>
+            <div class="player-info">
+              <h4>Ben</h4>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Formation Section -->
+    <section class="formation-section">
+      <div class="formation-header">
+        <h3>First Team Formation</h3>
+        <div class="formation-selector">
+          <button class="formation-btn active" data-formation="4-3-3">4-3-3</button>
+          <button class="formation-btn" data-formation="4-4-2">4-4-2</button>
+          <button class="formation-btn" data-formation="3-5-2">3-5-2</button>
+        </div>
+      </div>
+      
+      <div class="formation-pitch">
+        <div class="pitch-lines"></div>
+        <div class="pitch-center"></div>
+        
+        <!-- 4-3-3 Formation (Default) -->
+        <div class="formation active" id="formation-4-3-3">
+          <!-- Goalkeeper -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('richie')">
+              <div class="player-circle">1</div>
+              <div class="player-name">Richie</div>
+            </div>
+          </div>
+          
+          <!-- Defenders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('amoh')">
+              <div class="player-circle">2</div>
+              <div class="player-name">Amoh</div>
+            </div>
+            <div class="player-position" onclick="openModal('collo')">
+              <div class="player-circle">5</div>
+              <div class="player-name">Collo</div>
+            </div>
+            <div class="player-position" onclick="openModal('arthur')">
+              <div class="player-circle">6</div>
+              <div class="player-name">Arthur</div>
+            </div>
+            <div class="player-position" onclick="openModal('mlei')">
+              <div class="player-circle">3</div>
+              <div class="player-name">Mlei</div>
+            </div>
+          </div>
+          
+          <!-- Midfielders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('castro')">
+              <div class="player-circle">8</div>
+              <div class="player-name">Castro</div>
+            </div>
+            <div class="player-position" onclick="openModal('gerry')">
+              <div class="player-circle">4</div>
+              <div class="player-name">Gerry</div>
+            </div>
+            <div class="player-position" onclick="openModal('nico')">
+              <div class="player-circle">10</div>
+              <div class="player-name">Nico</div>
+            </div>
+          </div>
+          
+          <!-- Forwards -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('davy')">
+              <div class="player-circle">7</div>
+              <div class="player-name">Davy</div>
+            </div>
+            <div class="player-position" onclick="openModal('brayo')">
+              <div class="player-circle">9</div>
+              <div class="player-name">Brayo</div>
+            </div>
+            <div class="player-position" onclick="openModal('felix')">
+              <div class="player-circle">11</div>
+              <div class="player-name">Felix</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 4-4-2 Formation -->
+        <div class="formation" id="formation-4-4-2" style="display: none;">
+          <!-- Goalkeeper -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('richie')">
+              <div class="player-circle">1</div>
+              <div class="player-name">Richie</div>
+            </div>
+          </div>
+          
+          <!-- Defenders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('amoh')">
+              <div class="player-circle">2</div>
+              <div class="player-name">Amoh</div>
+            </div>
+            <div class="player-position" onclick="openModal('collo')">
+              <div class="player-circle">5</div>
+              <div class="player-name">Collo</div>
+            </div>
+            <div class="player-position" onclick="openModal('arthur')">
+              <div class="player-circle">6</div>
+              <div class="player-name">Arthur</div>
+            </div>
+            <div class="player-position" onclick="openModal('mlei')">
+              <div class="player-circle">3</div>
+              <div class="player-name">Mlei</div>
+            </div>
+          </div>
+          
+          <!-- Midfielders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('davy')">
+              <div class="player-circle">7</div>
+              <div class="player-name">Davy</div>
+            </div>
+            <div class="player-position" onclick="openModal('castro')">
+              <div class="player-circle">8</div>
+              <div class="player-name">Castro</div>
+            </div>
+            <div class="player-position" onclick="openModal('gerry')">
+              <div class="player-circle">4</div>
+              <div class="player-name">Gerry</div>
+            </div>
+            <div class="player-position" onclick="openModal('felix')">
+              <div class="player-circle">11</div>
+              <div class="player-name">Felix</div>
+            </div>
+          </div>
+          
+          <!-- Forwards -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('brayo')">
+              <div class="player-circle">9</div>
+              <div class="player-name">Brayo</div>
+            </div>
+            <div class="player-position" onclick="openModal('masinde')">
+              <div class="player-circle">10</div>
+              <div class="player-name">Masinde</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 3-5-2 Formation -->
+        <div class="formation" id="formation-3-5-2" style="display: none;">
+          <!-- Goalkeeper -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('richie')">
+              <div class="player-circle">1</div>
+              <div class="player-name">Richie</div>
+            </div>
+          </div>
+          
+          <!-- Defenders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('collo')">
+              <div class="player-circle">5</div>
+              <div class="player-name">Collo</div>
+            </div>
+            <div class="player-position" onclick="openModal('arthur')">
+              <div class="player-circle">6</div>
+              <div class="player-name">Arthur</div>
+            </div>
+            <div class="player-position" onclick="openModal('amoh')">
+              <div class="player-circle">2</div>
+              <div class="player-name">Amoh</div>
+            </div>
+          </div>
+          
+          <!-- Midfielders -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('davy')">
+              <div class="player-circle">7</div>
+              <div class="player-name">Davy</div>
+            </div>
+            <div class="player-position" onclick="openModal('castro')">
+              <div class="player-circle">8</div>
+              <div class="player-name">Castro</div>
+            </div>
+            <div class="player-position" onclick="openModal('gerry')">
+              <div class="player-circle">4</div>
+              <div class="player-name">Gerry</div>
+            </div>
+            <div class="player-position" onclick="openModal('nico')">
+              <div class="player-circle">10</div>
+              <div class="player-name">Nico</div>
+            </div>
+            <div class="player-position" onclick="openModal('mlei')">
+              <div class="player-circle">3</div>
+              <div class="player-name">Mlei</div>
+            </div>
+          </div>
+          
+          <!-- Forwards -->
+          <div class="formation-row">
+            <div class="player-position" onclick="openModal('brayo')">
+              <div class="player-circle">9</div>
+              <div class="player-name">Brayo</div>
+            </div>
+            <div class="player-position" onclick="openModal('masinde')">
+              <div class="player-circle">11</div>
+              <div class="player-name">Masinde</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- First Eleven Section -->
+    <section class="first-eleven-section">
+      <h3>First Eleven</h3>
+      <ul class="first-eleven-grid">
+        <li class="first-eleven-card" onclick="openModal('richie')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Richie Photo">
           </div>
           <h4>Richie</h4>
+          <span class="role">Goalkeeper</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Giddy Photo">
-          </div>
-          <h4>Giddy</h4>
-        </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Defenders</h3>
-      <ul class="players-grid">
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
-          </div>
-          <h4>Arthur</h4>
-          <span class="role">Treasurer</span>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Chaloh Photo">
-          </div>
-          <h4>Chaloh</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
-          </div>
-          <h4>Collo</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Tom Photo">
-          </div>
-          <h4>Tom</h4>
-          <span class="role">Assistant Treasurer</span>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ogola Photo">
-          </div>
-          <h4>Ogola</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Yobra Photo">
-          </div>
-          <h4>Yobra</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Timo Photo">
-          </div>
-          <h4>Timo</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
+        <li class="first-eleven-card" onclick="openModal('amoh')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Amoh Photo">
           </div>
           <h4>Amoh</h4>
+          <span class="role">Defender</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ogwaro Photo">
+        <li class="first-eleven-card" onclick="openModal('collo')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Collo Photo">
           </div>
-          <h4>Ogwaro</h4>
+          <h4>Collo</h4>
+          <span class="role">Defender</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Edgar Photo">
+        <li class="first-eleven-card" onclick="openModal('arthur')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Arthur Photo">
           </div>
-          <h4>Edgar</h4>
+          <h4>Arthur</h4>
+          <span class="role">Defender</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
+        <li class="first-eleven-card" onclick="openModal('mlei')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Mlei Photo">
           </div>
           <h4>Mlei</h4>
+          <span class="role">Defender</span>
         </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Midfielders</h3>
-      <ul class="players-grid">
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
-          </div>
-          <h4>Gerry</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Dickens Photo">
-          </div>
-          <h4>Dickens</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Hillary Photo">
-          </div>
-          <h4>Hillary</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
-          </div>
-          <h4>Nico</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
+        <li class="first-eleven-card" onclick="openModal('castro')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Castro Photo">
           </div>
           <h4>Castro</h4>
-          <span class="role">Assistant Captain</span>
+          <span class="role">Midfielder</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Jemmo Photo">
+        <li class="first-eleven-card" onclick="openModal('gerry')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Gerry Photo">
           </div>
-          <h4>Jemmo</h4>
+          <h4>Gerry</h4>
+          <span class="role">Midfielder</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Malcom Photo">
+        <li class="first-eleven-card" onclick="openModal('nico')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Nico Photo">
           </div>
-          <h4>Malcom</h4>
+          <h4>Nico</h4>
+          <span class="role">Midfielder</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Bella Photo">
-          </div>
-          <h4>Bella</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Dominic Photo">
-          </div>
-          <h4>Dominic</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Kylloh Photo">
-          </div>
-          <h4>Kylloh</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Rapho Photo">
-          </div>
-          <h4>Rapho</h4>
-        </li>
-      </ul>
-    </section>
-
-    <section class="position-section">
-      <h3>Forwards</h3>
-      <ul class="players-grid">
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
-          </div>
-          <h4>Felix</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
+        <li class="first-eleven-card" onclick="openModal('davy')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Davy Photo">
           </div>
           <h4>Davy</h4>
+          <span class="role">Forward</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Rigan Photo">
-          </div>
-          <h4>Rigan</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
+        <li class="first-eleven-card" onclick="openModal('brayo')">
+          <div class="first-eleven-avatar">
             <img src="https://via.placeholder.com/80?text=?" alt="Brayo Photo">
           </div>
           <h4>Brayo</h4>
-          <span class="role">Captain</span>
+          <span class="role">Forward</span>
         </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Julius Photo">
+        <li class="first-eleven-card" onclick="openModal('felix')">
+          <div class="first-eleven-avatar">
+            <img src="https://via.placeholder.com/80?text=?" alt="Felix Photo">
           </div>
-          <h4>Julius</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="masinde.png" alt="Masinde Photo">
-          </div>
-          <h4>Masinde</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Franco Photo">
-          </div>
-          <h4>Franco</h4>
-        </li>
-        <li class="player-card">
-          <div class="player-avatar">
-            <img src="https://via.placeholder.com/80?text=?" alt="Ben Photo">
-          </div>
-          <h4>Ben</h4>
+          <h4>Felix</h4>
+          <span class="role">Forward</span>
         </li>
       </ul>
     </section>
   </main>
+
+  <!-- Player Bio Modal -->
+  <div id="playerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-header">
+        <div class="modal-avatar">
+          <img id="modalAvatar" src="" alt="Player Photo">
+        </div>
+        <div class="modal-info">
+          <h3 id="modalName"></h3>
+          <span class="role" id="modalRole"></span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-bio">
+          <p id="modalBio"></p>
+        </div>
+        <div class="modal-stats">
+          <h4>Season Stats</h4>
+          <div class="stats-grid" id="modalStats">
+            <!-- Stats will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer>
     &copy; 2025 Chandaria Converting Football Club • Together as One
   </footer>
 
   <script>
-    // Simple JS for mobile menu toggle
+    // Mobile menu toggle
     const toggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.getElementById('main-nav');
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         nav.classList.toggle('active');
       });
+    }
+
+    // Formation selector
+    const formationBtns = document.querySelectorAll('.formation-btn');
+    const formations = document.querySelectorAll('.formation');
+    
+    formationBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const formationId = btn.dataset.formation;
+        
+        // Update active button
+        formationBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Show selected formation
+        formations.forEach(formation => {
+          formation.style.display = 'none';
+        });
+        document.getElementById(`formation-${formationId}`).style.display = 'block';
+      });
+    });
+
+    // Player bios data (extended with stats)
+    const playerBios = {
+      richie: { 
+        name: 'Richie', 
+        bio: 'Veteran GK with lightning reflexes. Joined founding year—saved us in debut match!', 
+        role: 'Goalkeeper',
+        stats: [
+          { label: 'Games Played', value: '12' },
+          { label: 'Clean Sheets', value: '4' },
+          { label: 'Saves', value: '28' },
+          { label: 'Goals Conceded', value: '15' }
+        ]
+      },
+      giddy: { 
+        name: 'Giddy', 
+        bio: 'Rising star between the posts. Fun fact: Collects vintage gloves from 80s legends.', 
+        role: 'Goalkeeper',
+        stats: [
+          { label: 'Games Played', value: '5' },
+          { label: 'Clean Sheets', value: '2' },
+          { label: 'Saves', value: '12' },
+          { label: 'Goals Conceded', value: '7' }
+        ]
+      },
+      arthur: { 
+        name: 'Arthur', 
+        bio: 'Solid defender, club treasurer. Off-pitch: Manages finances like he shuts down attacks.', 
+        role: 'Defender / Treasurer',
+        stats: [
+          { label: 'Games Played', value: '15' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '3' },
+          { label: 'Tackles', value: '42' }
+        ]
+      },
+      chaloh: { 
+        name: 'Chaloh', 
+        bio: 'Tough tackler with heart. Babadogo local, always first to training.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Tackles', value: '25' }
+        ]
+      },
+      collo: { 
+        name: 'Collo', 
+        bio: 'Wall of steel in backline. Motto: "No way through!"', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '14' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Tackles', value: '38' }
+        ]
+      },
+      tom: { 
+        name: 'Tom', 
+        bio: 'Versatile full-back, assistant treasurer. Balances books and clearances perfectly.', 
+        role: 'Defender / Assistant Treasurer',
+        stats: [
+          { label: 'Games Played', value: '12' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '4' },
+          { label: 'Tackles', value: '30' }
+        ]
+      },
+      ogola: { 
+        name: 'Ogola', 
+        bio: 'Speedy wing-back. Scored from his own half last season!', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Tackles', value: '18' }
+        ]
+      },
+      yobra: { 
+        name: 'Yobra', 
+        bio: 'Aerial beast. Headers win games—his do too.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '0' },
+          { label: 'Tackles', value: '22' }
+        ]
+      },
+      timo: { 
+        name: 'Timo', 
+        bio: 'Calm under pressure. Reads the game like a book.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '2' },
+          { label: 'Tackles', value: '27' }
+        ]
+      },
+      amoh: { 
+        name: 'Amoh', 
+        bio: 'Aggressive marker. Passionate about youth development.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '12' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Tackles', value: '35' }
+        ]
+      },
+      ogwaro: { 
+        name: 'Ogwaro', 
+        bio: 'Club veteran. Mentors the young guns on and off pitch.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '0' },
+          { label: 'Tackles', value: '15' }
+        ]
+      },
+      edgar: { 
+        name: 'Edgar', 
+        bio: 'Quick recovery defender. Fitness fanatic—runs marathons post-match.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Tackles', value: '24' }
+        ]
+      },
+      mlei: { 
+        name: 'Mlei', 
+        bio: 'Left-back dynamo. Crosses are pure gold.', 
+        role: 'Defender',
+        stats: [
+          { label: 'Games Played', value: '13' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '4' },
+          { label: 'Tackles', value: '29' }
+        ]
+      },
+      gerry: { 
+        name: 'Gerry', 
+        bio: 'Engine in midfield. Dictates tempo like a maestro.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '14' },
+          { label: 'Goals', value: '3' },
+          { label: 'Assists', value: '5' },
+          { label: 'Pass Accuracy', value: '85%' }
+        ]
+      },
+      dickens: { 
+        name: 'Dickens', 
+        bio: 'Visionary passer. Assists are his art form.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '4' },
+          { label: 'Pass Accuracy', value: '82%' }
+        ]
+      },
+      hillary: { 
+        name: 'Hillary', 
+        bio: 'Box-to-box warrior. Covers every blade of grass.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '78%' }
+        ]
+      },
+      nico: { 
+        name: 'Nico', 
+        bio: 'Creative spark. Free-kick specialist.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '13' },
+          { label: 'Goals', value: '4' },
+          { label: 'Assists', value: '6' },
+          { label: 'Pass Accuracy', value: '79%' }
+        ]
+      },
+      castro: { 
+        name: 'Castro', 
+        bio: 'Dynamic leader, assistant captain. Rallies the team in crunch time.', 
+        role: 'Midfielder / Assistant Captain',
+        stats: [
+          { label: 'Games Played', value: '16' },
+          { label: 'Goals', value: '5' },
+          { label: 'Assists', value: '7' },
+          { label: 'Pass Accuracy', value: '82%' }
+        ]
+      },
+      jemmo: { 
+        name: 'Jemmo', 
+        bio: 'Tough tackler with silky touches.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Pass Accuracy', value: '76%' }
+        ]
+      },
+      malcom: { 
+        name: 'Malcom', 
+        bio: 'Ball-winning mid. Turns defense to attack in seconds.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '80%' }
+        ]
+      },
+      bella: { 
+        name: 'Bella', 
+        bio: 'Graceful controller. Keeps possession like glue.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Pass Accuracy', value: '84%' }
+        ]
+      },
+      dominic: { 
+        name: 'Dominic', 
+        bio: 'Long-range threat from deep. Set-piece wizard.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Pass Accuracy', value: '77%' }
+        ]
+      },
+      kylloh: { 
+        name: 'Kylloh', 
+        bio: 'Energetic runner. Covers for everyone.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '6' },
+          { label: 'Goals', value: '0' },
+          { label: 'Assists', value: '1' },
+          { label: 'Pass Accuracy', value: '75%' }
+        ]
+      },
+      rapho: { 
+        name: 'Rapho', 
+        bio: 'Technical gem. Dribbles past defenders for fun.', 
+        role: 'Midfielder',
+        stats: [
+          { label: 'Games Played', value: '8' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '3' },
+          { label: 'Pass Accuracy', value: '81%' }
+        ]
+      },
+      felix: { 
+        name: 'Felix', 
+        bio: 'Poacher supreme. Sniffs out goals like a pro.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '14' },
+          { label: 'Goals', value: '7' },
+          { label: 'Assists', value: '3' },
+          { label: 'Shots on Target', value: '18' }
+        ]
+      },
+      davy: { 
+        name: 'Davy', 
+        bio: 'Pacey winger. Burns full-backs for breakfast.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '15' },
+          { label: 'Goals', value: '6' },
+          { label: 'Assists', value: '8' },
+          { label: 'Shots on Target', value: '22' }
+        ]
+      },
+      rigan: { 
+        name: 'Rigan', 
+        bio: 'Clinical finisher. One-touch wonders.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '11' },
+          { label: 'Goals', value: '4' },
+          { label: 'Assists', value: '2' },
+          { label: 'Shots on Target', value: '15' }
+        ]
+      },
+      brayo: { 
+        name: 'Brayo', 
+        bio: 'Club captain, goal machine. Leads by example on the pitch.', 
+        role: 'Forward / Captain',
+        stats: [
+          { label: 'Games Played', value: '18' },
+          { label: 'Goals', value: '12' },
+          { label: 'Assists', value: '5' },
+          { label: 'Shots on Target', value: '35' }
+        ]
+      },
+      julius: { 
+        name: 'Julius', 
+        bio: 'Target man. Holds up play, brings others in.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '10' },
+          { label: 'Goals', value: '3' },
+          { label: 'Assists', value: '4' },
+          { label: 'Shots on Target', value: '12' }
+        ]
+      },
+      masinde: { 
+        name: 'Masinde', 
+        bio: 'Lightning forward, founding member. Scored CCFC\'s first ever goal—pure fire!', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '14' },
+          { label: 'Goals', value: '8' },
+          { label: 'Assists', value: '4' },
+          { label: 'Shots on Target', value: '26' }
+        ]
+      },
+      franco: { 
+        name: 'Franco', 
+        bio: 'Tricky dribbler. Loves a nutmeg.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '9' },
+          { label: 'Goals', value: '2' },
+          { label: 'Assists', value: '3' },
+          { label: 'Shots on Target', value: '10' }
+        ]
+      },
+      ben: { 
+        name: 'Ben', 
+        bio: 'Super sub. Changes games off the bench.', 
+        role: 'Forward',
+        stats: [
+          { label: 'Games Played', value: '7' },
+          { label: 'Goals', value: '1' },
+          { label: 'Assists', value: '2' },
+          { label: 'Shots on Target', value: '8' }
+        ]
+      }
+    };
+
+    // Modal functions
+    function openModal(playerId) {
+      const modal = document.getElementById('playerModal');
+      const player = playerBios[playerId];
+      
+      if (player) {
+        document.getElementById('modalName').textContent = player.name;
+        document.getElementById('modalBio').textContent = player.bio;
+        document.getElementById('modalRole').textContent = player.role;
+        document.getElementById('modalAvatar').src = playerId === 'masinde' ? 'masinde.png' : 'https://via.placeholder.com/100?text=?';
+        
+        // Populate stats
+        const statsGrid = document.getElementById('modalStats');
+        statsGrid.innerHTML = '';
+        player.stats.forEach(stat => {
+          const statItem = document.createElement('div');
+          statItem.className = 'stat-item';
+          statItem.innerHTML = `
+            <span class="stat-value-large">${stat.value}</span>
+            <span class="stat-label-large">${stat.label}</span>
+          `;
+          statsGrid.appendChild(statItem);
+        });
+        
+        modal.style.display = 'block';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('playerModal').style.display = 'none';
+    }
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('playerModal');
+      if (event.target == modal) {
+        closeModal();
+      }
     }
   </script>
 </body>
