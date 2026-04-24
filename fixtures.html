@@ -4,461 +4,580 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chandaria Converting Football Club | Results & Fixtures</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-blue: #0047AB;
-      --primary-red: #D32F2F;
-      --accent-gold: #FFD700;
-      --light-bg: #f8f9fa;
+      --blue: #0047AB;
+      --red: #D32F2F;
+      --gold: #FFD700;
+      --bg: #f4f5f7;
       --white: #ffffff;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --text-dark: #1a1a1a;
-      --text-light: #6c757d;
-      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
-      --border-radius: 24px;
-      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --win-bg: linear-gradient(135deg, #d4edda, #c3e6cb);
-      --loss-bg: linear-gradient(135deg, #f8d7da, #f5c6cb);
-      --upcoming-bg: linear-gradient(135deg, #fff3cd, #ffeaa7);
-      --win-green: #28a745; /* Very green for wins */
+      --dark: #111827;
+      --muted: #6b7280;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.07);
+      --shadow-hover: 0 10px 36px rgba(0,0,0,0.13);
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+      /* result colours */
+      --win-bg:       #f0fdf4;
+      --win-border:   #16a34a;
+      --win-score:    #15803d;
+      --loss-bg:      #fff5f5;
+      --loss-border:  #dc2626;
+      --loss-score:   #b91c1c;
+      --draw-bg:      #fffbeb;
+      --draw-border:  #d97706;
+      --draw-score:   #92400e;
+      --up-bg:        #eff6ff;
+      --up-border:    #3b82f6;
+      --up-score:     #1d4ed8;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--light-bg);
-      color: var(--text-dark);
-      line-height: 1.7;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* Header */
+    /* ── Header ── */
     header {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, var(--blue) 0%, #c62828 100%);
       color: var(--white);
-      padding: 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
     }
 
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 400;
-      margin: 0;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1200px;
+    .header-inner {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 2rem;
-    }
-
-    /* Legend */
-    .legend {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
       flex-wrap: wrap;
     }
 
-    .legend span {
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      letter-spacing: 1px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.45rem 0.9rem;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    nav a:hover, nav a.active {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      height: 38vh;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(160deg, rgba(0,71,171,0.9) 0%, rgba(198,40,40,0.9) 100%);
+      color: var(--white);
+      padding: 2rem;
+    }
+
+    .hero h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 9vw, 5rem);
+      letter-spacing: 4px;
+      margin-bottom: 0.4rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      font-weight: 300;
+      opacity: 0.85;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.1rem 0.75rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--blue);
+    }
+
+    .stat-card.wins   { border-top-color: var(--win-border); }
+    .stat-card.losses { border-top-color: var(--loss-border); }
+    .stat-card.draws  { border-top-color: var(--draw-border); }
+    .stat-card.upcoming-stat { border-top-color: var(--up-border); }
+
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card.wins   .stat-value { color: var(--win-border); }
+    .stat-card.losses .stat-value { color: var(--loss-border); }
+    .stat-card.draws  .stat-value { color: var(--draw-border); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--blue);
+      margin-bottom: 1rem;
+      padding-left: 0.75rem;
+      border-left: 4px solid var(--red);
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .legend-item {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.95rem;
+      gap: 0.45rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      color: var(--text-light);
+      color: var(--muted);
     }
 
-    .legend .dot {
-      width: 16px;
-      height: 16px;
+    .legend-dot {
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      border: 2px solid var(--text-light);
+      flex-shrink: 0;
     }
 
-    .legend .dot.win {
-      background: var(--win-bg);
-      border-color: var(--win-green);
-    }
+    .legend-dot.win  { background: var(--win-border); }
+    .legend-dot.loss { background: var(--loss-border); }
+    .legend-dot.draw { background: var(--draw-border); }
+    .legend-dot.up   { background: var(--up-border); }
 
-    .legend .dot.loss {
-      background: var(--loss-bg);
-      border-color: #dc3545;
-    }
-
-    .legend .dot.upcoming {
-      background: var(--upcoming-bg);
-      border-color: #ffc107;
-    }
-
-    /* Matches List - Modern Card Layout */
+    /* ── Matches List ── */
     .matches-list {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 0.85rem;
+      margin-bottom: 3rem;
     }
 
+    /* ── Match Card ── */
     .match-card {
       background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow-soft);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow);
       transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      border-left: 5px solid var(--primary-blue);
+      border-left: 5px solid var(--blue);
+      display: grid;
+      grid-template-columns: 90px 1fr auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .match-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
 
-    .match-card.win {
-      border-left-color: var(--win-green);
-      background: var(--win-bg);
-    }
+    .match-card.win      { border-left-color: var(--win-border);  background: var(--win-bg); }
+    .match-card.loss     { border-left-color: var(--loss-border); background: var(--loss-bg); }
+    .match-card.draw     { border-left-color: var(--draw-border); background: var(--draw-bg); }
+    .match-card.upcoming { border-left-color: var(--up-border);   background: var(--up-bg); }
 
-    .match-card.loss {
-      border-left-color: #dc3545;
-      background: var(--loss-bg);
-    }
-
-    .match-card.upcoming {
-      border-left-color: #ffc107;
-      background: var(--upcoming-bg);
-    }
-
-    .match-header {
+    .match-meta {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
+      flex-direction: column;
+      gap: 0.15rem;
     }
 
-    .match-number {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-light);
+    .match-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
     }
 
     .match-date {
-      font-size: 0.85rem;
-      color: var(--text-light);
+      font-size: 0.8rem;
+      color: var(--muted);
       font-style: italic;
-    }
-
-    .match-teams {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
+      white-space: nowrap;
     }
 
     .team-name {
-      font-size: 1.1rem;
-      color: var(--text-dark);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .team-name.ccfc {
+      text-align: right;
+    }
+
+    /* FIX: score is always centred; colour reflects result */
+    .score-block {
+      text-align: center;
+      min-width: 90px;
     }
 
     .score {
-      font-size: 1.2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .match-card.win      .score { color: var(--win-score); }
+    .match-card.loss     .score { color: var(--loss-score); }
+    .match-card.draw     .score { color: var(--draw-score); }
+    .match-card.upcoming .score { color: var(--up-score); }
+
+    .score-venue {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* result badge */
+    .result-badge {
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--primary-blue);
-      min-width: 80px;
-      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 50px;
+      white-space: nowrap;
     }
 
-    .match-card.win .score {
-      color: var(--win-green); /* Very green for wins */
-    }
+    .match-card.win      .result-badge { background: var(--win-border);  color: #fff; }
+    .match-card.loss     .result-badge { background: var(--loss-border); color: #fff; }
+    .match-card.draw     .result-badge { background: var(--draw-border); color: #fff; }
+    .match-card.upcoming .result-badge { background: var(--up-border);   color: #fff; }
 
-    .match-card.loss .score {
-      color: #dc3545; /* Red for losses */
-    }
+    /* ── Upcoming Section ── */
+    .upcoming-section { margin-bottom: 3rem; }
 
-    .match-card.upcoming .score {
-      color: var(--primary-red);
-    }
-
-    .result {
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: center;
-      margin-top: 0.5rem;
-      opacity: 0.8;
-    }
-
-    /* Footer */
+    /* ── Footer ── */
     footer {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      color: rgba(255,255,255,0.9);
       text-align: center;
-      padding: 2rem;
+      padding: 1.75rem;
+      font-size: 0.9rem;
       font-weight: 300;
-      border-radius: var(--border-radius);
-      margin-top: 3rem;
-      position: relative;
-      overflow: hidden;
+      margin-top: 1rem;
     }
 
-    /* Responsive */
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
+      .nav-toggle { display: block; }
+      nav { display: none; flex-direction: column; width: 100%; padding-top: 0.75rem; gap: 0.4rem; }
+      nav.open { display: flex; }
+      nav a { width: 100%; text-align: center; }
+      .header-inner { flex-direction: column; align-items: flex-start; }
 
-      .legend {
-        gap: 1rem;
-        justify-content: center;
-      }
-
-      .match-teams {
-        flex-direction: column;
+      .match-card {
+        grid-template-columns: 1fr;
         gap: 0.5rem;
-        align-items: flex-start;
       }
 
-      .score {
-        align-self: center;
-      }
+      .team-name.ccfc { text-align: left; }
 
-      .hero {
-        height: 50vh;
-      }
+      .score-block { text-align: left; }
+
+      .result-badge { align-self: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    /* Dark Mode */
     @media (prefers-color-scheme: dark) {
-      body {
-        background: #121212;
-        color: #e0e0e0;
-      }
-
-      .match-card {
-        background: #1e1e1e;
-      }
-
-      .match-card.win {
-        background: linear-gradient(135deg, #2d5a3a, #1e4028);
-      }
-
-      .match-card.loss {
-        background: linear-gradient(135deg, #5a2d2d, #401e1e);
-      }
-
-      .match-card.upcoming {
-        background: linear-gradient(135deg, #5a4d2d, #40381e);
-      }
-
-      .match-card.win .score {
-        color: #4caf50; /* Lighter green for dark mode wins */
+      :root {
+        --bg: #1a1d27;
+        --white: #252836;
+        --dark: #f0f0f0;
+        --muted: #9ca3af;
+        --win-bg:  #0d2e1a;
+        --loss-bg: #2e0d0d;
+        --draw-bg: #2e240d;
+        --up-bg:   #0d1a2e;
       }
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Results & Fixtures</h1>
+    <div class="header-inner">
+      <h1>Chandaria Converting F.C.</h1>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav id="mainNav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="team.html">Team</a>
+        <a href="Gallery.html">Gallery</a>
+        <a href="finance.html">Finance</a>
+        <a href="fixtures.html" class="active" aria-current="page">Fixtures &amp; Results</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
   </header>
 
+  <div class="hero">
+    <h2>Fixtures &amp; Results</h2>
+    <p>2025 Season — Chandaria Converting FC</p>
+  </div>
+
   <div class="container">
-    <div class="legend">
-      <span><span class="dot win"></span> Won</span>
-      <span><span class="dot loss"></span> Lost</span>
-      <span><span class="dot upcoming"></span> Upcoming</span>
+
+    <!-- ── Season Stats Bar ── -->
+    <div class="stats-bar" id="statsBar" aria-label="Season summary">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-played">0</div>
+        <div class="stat-label">Played</div>
+      </div>
+      <div class="stat-card wins">
+        <div class="stat-value" id="stat-wins">0</div>
+        <div class="stat-label">Won</div>
+      </div>
+      <div class="stat-card draws">
+        <div class="stat-value" id="stat-draws">0</div>
+        <div class="stat-label">Drawn</div>
+      </div>
+      <div class="stat-card losses">
+        <div class="stat-value" id="stat-losses">0</div>
+        <div class="stat-label">Lost</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-gf">0</div>
+        <div class="stat-label">Goals For</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-ga">0</div>
+        <div class="stat-label">Goals Against</div>
+      </div>
+      <div class="stat-card upcoming-stat">
+        <div class="stat-value" id="stat-upcoming">0</div>
+        <div class="stat-label">Upcoming</div>
+      </div>
     </div>
 
-    <div class="matches-list">
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 1</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Transport FC</div>
-          <div class="score">1 - 3</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
+    <!-- ── Past Results ── -->
+    <div class="section-heading">Past Results</div>
 
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 2</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Ngomongo FC</div>
-          <div class="score">1 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot win"></span> Won</div>
+      <div class="legend-item"><span class="legend-dot draw"></span> Draw</div>
+      <div class="legend-item"><span class="legend-dot loss"></span> Lost</div>
+      <div class="legend-item"><span class="legend-dot up"></span> Upcoming</div>
+    </div>
 
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 3</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Transport FC</div>
-          <div class="score">1 - 0</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
+    <div class="matches-list" id="resultsList" aria-label="Past results"></div>
 
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 4</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">NYS Engineers</div>
-          <div class="score">5 - 0</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
+    <!-- ── Upcoming Fixtures ── -->
+    <div class="upcoming-section">
+      <div class="section-heading">Upcoming Fixtures</div>
+      <div class="matches-list" id="upcomingList" aria-label="Upcoming fixtures"></div>
+    </div>
 
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 5</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Dispatch FC</div>
-          <div class="score">6 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
+  </div>
 
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 6</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Chandaria Juniors</div>
-          <div class="score">1 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
+  <footer>
+    &copy; 2025 Chandaria Converting Football Club &bull; Together as One
+  </footer>
 
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 7</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Catholic FC</div>
-          <div class="score">1 - 6</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
+  <script>
+    /* ─────────────────────────────────────────────────────────────
+       MATCH DATA
+       result: 'win' | 'loss' | 'draw' | 'upcoming'
+       homeScore / awayScore: numbers (leave null for upcoming)
+       Note: Converting FC is always the AWAY team in this data
+             (listed on the right). Adjust per match if needed.
+    ───────────────────────────────────────────────────────────── */
+    const matches = [
+      { num: 1,  home: 'Transport FC',       homeScore: 1, awayScore: 3, result: 'win',      date: 'Past',                   venue: '' },
+      { num: 2,  home: 'Ngomongo FC',        homeScore: 1, awayScore: 4, result: 'win',      date: 'Past',                   venue: '' },
+      { num: 3,  home: 'Transport FC',       homeScore: 1, awayScore: 0, result: 'loss',     date: 'Past',                   venue: '' },
+      { num: 4,  home: 'NYS Engineers',      homeScore: 5, awayScore: 0, result: 'loss',     date: 'Past',                   venue: '' },
+      { num: 5,  home: 'Dispatch FC',        homeScore: 6, awayScore: 4, result: 'loss',     date: 'Past',                   venue: '' },
+      { num: 6,  home: 'Chandaria Juniors',  homeScore: 1, awayScore: 4, result: 'win',      date: 'Past',                   venue: '' },
+      { num: 7,  home: 'Catholic FC',        homeScore: 1, awayScore: 6, result: 'win',      date: 'Past',                   venue: '' },
+      { num: 8,  home: 'NYS Engineers (2)',  homeScore: 2, awayScore: 1, result: 'loss',     date: 'Past',                   venue: '' },
+      { num: 9,  home: 'KMTC FC',            homeScore: 5, awayScore: 2, result: 'loss',     date: 'Sun 12th Oct 2025',      venue: '' },
+      { num: 10, home: 'Raiders FC',         homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
+      { num: 11, home: 'Lucky Summer FC',    homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
+      { num: 12, home: 'City Foxes',         homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
+    ];
 
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 8</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">NYS Engineers (2)</div>
-          <div class="score">2 - 1</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
+    /* ─────────────────────────────────────────────────────────────
+       BUILD CARD
+    ───────────────────────────────────────────────────────────── */
+    function buildCard(m, idx) {
+      const isUpcoming = m.result === 'upcoming';
 
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 9</div>
-          <div class="match-date">Sun 12th October 2025</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">KMTC FC</div>
-          <div class="score">5 vs 2</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
+      const scoreText = isUpcoming
+        ? '— vs —'
+        : `${m.homeScore} – ${m.awayScore}`;
 
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 10</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Raiders FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
+      const badgeText = {
+        win: 'Win', loss: 'Loss', draw: 'Draw', upcoming: 'Upcoming'
+      }[m.result];
 
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 11</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Lucky Summer FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
+      const card = document.createElement('div');
+      card.className = `match-card ${m.result}`;
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `Match ${m.num}: ${m.home} vs Converting FC — ${badgeText}`);
 
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 12</div>
-          <div class="match-date">Upcoming</div>
+      card.innerHTML = `
+        <div class="match-meta">
+          <span class="match-num">Match ${m.num}</span>
+          <span class="match-date">${m.date}</span>
         </div>
-        <div class="match-teams">
-          <div class="team-name">City Foxes</div>
-          <div class="score">
+        <div class="team-name">${m.home}</div>
+        <div class="score-block">
+          <div class="score">${scoreText}</div>
+          ${m.venue ? `<div class="score-venue">${m.venue}</div>` : ''}
+        </div>
+        <div class="team-name ccfc">Converting FC</div>
+        <span class="result-badge">${badgeText}</span>
+      `;
+
+      return card;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       RENDER + STATS
+    ───────────────────────────────────────────────────────────── */
+    function render() {
+      const resultsList   = document.getElementById('resultsList');
+      const upcomingList  = document.getElementById('upcomingList');
+
+      let played = 0, wins = 0, draws = 0, losses = 0, gf = 0, ga = 0, upcoming = 0;
+
+      matches.forEach((m, i) => {
+        const card = buildCard(m, i);
+
+        if (m.result === 'upcoming') {
+          upcoming++;
+          upcomingList.appendChild(card);
+        } else {
+          played++;
+          if (m.result === 'win')  wins++;
+          if (m.result === 'draw') draws++;
+          if (m.result === 'loss') losses++;
+          gf += m.awayScore;  /* Converting FC is away */
+          ga += m.homeScore;
+          resultsList.appendChild(card);
+        }
+      });
+
+      /* update stats bar */
+      document.getElementById('stat-played').textContent   = played;
+      document.getElementById('stat-wins').textContent     = wins;
+      document.getElementById('stat-draws').textContent    = draws;
+      document.getElementById('stat-losses').textContent   = losses;
+      document.getElementById('stat-gf').textContent       = gf;
+      document.getElementById('stat-ga').textContent       = ga;
+      document.getElementById('stat-upcoming').textContent = upcoming;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       MOBILE NAV
+    ───────────────────────────────────────────────────────────── */
+    const navToggle = document.getElementById('navToggle');
+    const mainNav   = document.getElementById('mainNav');
+
+    navToggle.addEventListener('click', () => {
+      const open = mainNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open);
+      navToggle.textContent = open ? '✕' : '☰';
+    });
+
+    mainNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.textContent = '☰';
+      });
+    });
+
+    /* ─── Init ─── */
+    render();
+  </script>
+</body>
+</html>
