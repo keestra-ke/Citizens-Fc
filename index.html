@@ -701,6 +701,105 @@
       }
     }
 
+    /* ── INTERNAL WAR BANNER ── */
+    .internal-war-banner {
+      position: relative;
+      background: linear-gradient(135deg, #1a0000 0%, #0A2463 40%, #1a0000 100%);
+      overflow: hidden;
+      padding: 20px 1.25rem;
+      border-top: 3px solid #D62828;
+      border-bottom: 3px solid #D62828;
+    }
+    .iw-particles span {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      animation: iwFloat 3s infinite ease-in-out;
+      opacity: 0.6;
+    }
+    .iw-particles span:nth-child(1) { background:#D62828; top:15%; left:8%;  animation-delay:0s;   animation-duration:2.8s; }
+    .iw-particles span:nth-child(2) { background:#F7B731; top:70%; left:15%; animation-delay:0.4s; animation-duration:3.2s; }
+    .iw-particles span:nth-child(3) { background:#D62828; top:30%; left:80%; animation-delay:0.8s; animation-duration:2.5s; }
+    .iw-particles span:nth-child(4) { background:#fff;    top:80%; left:75%; animation-delay:1.2s; animation-duration:3.5s; }
+    .iw-particles span:nth-child(5) { background:#F7B731; top:50%; left:50%; animation-delay:0.3s; animation-duration:2.9s; width:6px; height:6px; }
+    .iw-particles span:nth-child(6) { background:#D62828; top:10%; left:45%; animation-delay:1.5s; animation-duration:3.1s; }
+    .iw-particles span:nth-child(7) { background:#fff;    top:85%; left:35%; animation-delay:0.6s; animation-duration:2.7s; }
+    .iw-particles span:nth-child(8) { background:#F7B731; top:20%; left:62%; animation-delay:1.0s; animation-duration:3.4s; width:5px; height:5px; }
+    @keyframes iwFloat {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50%       { transform: translateY(-12px) scale(1.4); opacity: 1; }
+    }
+    .iw-inner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .iw-label {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: #F7B731;
+      text-shadow: 0 0 10px rgba(247,183,49,0.6);
+      animation: iwPulseLabel 2s infinite;
+    }
+    @keyframes iwPulseLabel {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.65; }
+    }
+    .iw-clash {
+      display: flex; align-items: center; gap: 16px;
+      width: 100%; justify-content: center;
+    }
+    .iw-team {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px; flex: 1; max-width: 130px;
+    }
+    .iw-team-badge {
+      font-size: 2rem;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.4));
+      animation: iwBadgePulse 1.8s infinite ease-in-out;
+    }
+    .iw-red .iw-team-badge  { animation-delay: 0s; }
+    .iw-blue .iw-team-badge { animation-delay: 0.9s; }
+    @keyframes iwBadgePulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.18); }
+    }
+    .iw-team-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 2px; color: #fff;
+    }
+    .iw-red  .iw-team-name { color: #ff6b6b; text-shadow: 0 0 14px rgba(214,40,40,0.9); }
+    .iw-blue .iw-team-name { color: #6bb3ff; text-shadow: 0 0 14px rgba(30,80,200,0.9); }
+    .iw-vs {
+      display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0;
+    }
+    .iw-vs-text {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: #F7B731; line-height: 1;
+      text-shadow: 0 0 18px rgba(247,183,49,0.9), 0 0 36px rgba(247,183,49,0.4);
+      animation: iwVsPulse 1.2s infinite alternate;
+    }
+    @keyframes iwVsPulse {
+      from { transform: scale(1);    text-shadow: 0 0 16px rgba(247,183,49,0.9); }
+      to   { transform: scale(1.14); text-shadow: 0 0 30px rgba(247,183,49,1), 0 0 55px rgba(247,183,49,0.5); }
+    }
+    .iw-vs-fire { font-size: 1.2rem; animation: iwFireWiggle 0.6s infinite alternate; }
+    @keyframes iwFireWiggle {
+      from { transform: rotate(-8deg) scale(1); }
+      to   { transform: rotate(8deg) scale(1.2); }
+    }
+    .iw-sub {
+      font-size: 0.7rem; color: rgba(255,255,255,0.5);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .iw-cta {
+      background: linear-gradient(90deg, #D62828, #F7B731);
+      color: #fff; font-size: 0.75rem; font-weight: 800;
+      padding: 8px 22px; border-radius: 20px; text-decoration: none;
+      letter-spacing: 1px; text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(214,40,40,0.4);
+    }
+    .iw-cta:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(214,40,40,0.65); }
+
     /* ── REDUCED MOTION ── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -793,14 +892,29 @@
     </div>
   </section>
 
-  <!-- ── NEXT FIXTURE BANNER ── -->
-  <div class="fixture-banner" role="complementary" aria-label="Next match">
-    <div class="fixture-banner-inner">
-      <div>
-        <div class="fixture-banner-label">Next Match</div>
-        <div class="fixture-banner-match">Raiders FC <span>vs</span> C.C.F.C</div>
+  <!-- ── INTERNAL WAR BANNER ── -->
+  <div class="internal-war-banner" role="complementary" aria-label="Next match">
+    <div class="iw-particles">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="iw-inner">
+      <div class="iw-label">&#9876; NEXT MATCH &mdash; INTERNAL WAR &#9876;</div>
+      <div class="iw-clash">
+        <div class="iw-team iw-red">
+          <div class="iw-team-badge">&#128308;</div>
+          <div class="iw-team-name">Team Red</div>
+        </div>
+        <div class="iw-vs">
+          <span class="iw-vs-text">VS</span>
+          <div class="iw-vs-fire">&#128293;</div>
+        </div>
+        <div class="iw-team iw-blue">
+          <div class="iw-team-badge">&#128309;</div>
+          <div class="iw-team-name">Team Blue</div>
+        </div>
       </div>
-      <a class="fixture-banner-cta" href="fixtures.html">See All Fixtures</a>
+      <div class="iw-sub">Converting FC &bull; Brothers vs Brothers &bull; Who survives?</div>
+      <a class="iw-cta" href="fixtures.html">See All Fixtures</a>
     </div>
   </div>
 
@@ -836,6 +950,43 @@
         </div>
       </div>
     </div>
+    <div class="ticket-announcement" onclick="toggleTicketInfo()" style="text-align: center; margin: 20px 0; cursor: pointer;">
+      <span class="blinking-text" style="font-size: 2rem; font-weight: bold; color: red; background: yellow; padding: 10px 20px; border-radius: 5px;">
+        BOOK YOUR TICKETS NOW
+      </span>
+      <div id="ticket-info" style="display: none; margin-top: 14px;">
+        <p style="font-size:0.9rem;color:var(--muted);margin-bottom:10px;">To purchase a ticket, reach out to:</p>
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+          <a href="tel:+254708956069" style="display:flex;align-items:center;gap:12px;background:var(--blue);color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;font-size:1rem;width:fit-content;">
+            <span>📞</span>
+            <span><span style="opacity:0.75;font-size:0.8rem;display:block;margin-bottom:2px;">1. Musiomi</span>0708 956 069</span>
+          </a>
+          <a href="tel:+254796573630" style="display:flex;align-items:center;gap:12px;background:var(--red);color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;font-size:1rem;width:fit-content;">
+            <span>📞</span>
+            <span><span style="opacity:0.75;font-size:0.8rem;display:block;margin-bottom:2px;">2. Brayo</span>0796 573 630</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+      }
+      .blinking-text {
+        animation: blink 1s infinite;
+      }
+    </style>
+    
+    <script>
+      function toggleTicketInfo() {
+        const info = document.getElementById('ticket-info');
+        info.style.display = info.style.display === 'none' ? 'block' : 'none';
+      }
+    </script>
+
 
     <!-- Recent Results -->
     <h2 class="section-title">Recent Results</h2>
@@ -915,7 +1066,7 @@
       <h3>Player Spotlight</h3>
       <p>Shoutout to our most valuable players this season</p>
       <div class="fan-zone-expanded">
-        <p><strong>Captain Brayo</strong> leads from the front with goals and leadership. <strong>Asst. Captain Castro</strong> controls the midfield with vision and energy.</p>
+        <p><strong>Captain Brayo</strong> leads from the front with morale and leadership. <strong>Holding midfielder Jemmo</strong> leads with most goals this season and controls the midfield with vision and energy.</p>
         <button class="share-btn" onclick="sharePage(event,'CCFC Player Spotlight','Shoutout to our star players this season!')">Nominate Next MVP</button>
       </div>
     </div>
@@ -923,10 +1074,11 @@
     <div class="fan-zone-card" onclick="toggleFan(this)" role="button" aria-expanded="false">
       <span class="expand-indicator">+</span>
       <h3>Upcoming Fixture</h3>
-      <p>Who&rsquo;s ready for the next game against Raiders FC?</p>
+      <p>Converting FC vs Fitness &mdash; Kinunga Complex, Nyeri 🏟️</p>
       <div class="fan-zone-expanded">
-        <p>Our next match is against <strong>Raiders FC</strong>. Kick-off time and venue to be confirmed on the WhatsApp group. Make sure you&rsquo;re available and ready!</p>
-        <a class="share-btn" href="fixtures.html">See Full Schedule</a>
+        <p>Our next away fixture is against <strong>Fitness</strong> at <strong>Kinunga Complex, Nyeri</strong>. Get your travel plans sorted early — full match details on the poster below!</p>
+        <img src="nyeri-poster1-1.png" alt="Nyeri Match Poster" style="width:100%;border-radius:8px;margin:0.75rem 0;display:block;">
+        <a class="share-btn" href="nyeri-poster1-1.png" target="_blank">View Full Poster</a>
       </div>
     </div>
 
