@@ -616,21 +616,21 @@
   </div>
 
   <script>
-    // ========== GALLERY DATA (REPLACE WITH YOUR ACTUAL LOCAL IMAGES) ==========
-    // Edit the array below: add your own images, titles, dates, categories and tags.
-    // Categories: "matches", "training", "team-building", "celebrations"
+    // ========== GALLERY DATA ==========
     const galleryData = [
-      { src: "images/match_victory.jpg", title: "Victory Against Rivals", date: "Oct 15, 2025", category: "matches", tags: ["Match", "Victory", "Action"] },
-      { src: "images/winning_goal.jpg", title: "Winning Goal Celebration", date: "Sep 22, 2025", category: "matches", tags: ["Goal", "Celebration", "Team Spirit"] },
-      { src: "images/training_intense.jpg", title: "Intensive Training Session", date: "Aug 30, 2025", category: "training", tags: ["Training", "Fitness", "Teamwork"] },
-      { src: "images/skills_dev.jpg", title: "Skills Development", date: "Jul 18, 2025", category: "training", tags: ["Training", "Skills", "Development"] },
-      { src: "images/team_meeting.jpg", title: "Tactical Team Meeting", date: "Jun 10, 2025", category: "team-building", tags: ["Team Building", "Strategy", "Planning"] },
-      { src: "images/bonding.jpg", title: "Team Bonding Activity", date: "May 5, 2025", category: "team-building", tags: ["Team Building", "Bonding", "Fun"] },
-      { src: "images/trophy_celebration.jpg", title: "League Trophy Celebration", date: "Apr 28, 2025", category: "celebrations", tags: ["Celebration", "Trophy", "Achievement"] },
-      { src: "images/player_award.jpg", title: "Player of the Month Award", date: "Mar 15, 2025", category: "celebrations", tags: ["Celebration", "Award", "Recognition"] }
+      { src: "IMG-20250921-WA0174.jpg", title: "Starting eleven — NYS Shamba la Mawe Derby", date: "Sep 21, 2025", category: "matches", tags: ["Match", "Starting XI", "NYS Derby"] },
+      { src: "IMG-20250720-WA0085.jpg", title: "Converting group photo at NYS", date: "Jul 20, 2025", category: "team-building", tags: ["Group Photo", "NYS", "CCFC"] },
+      { src: "IMG-20250720-WA0087.jpg", title: "Converting group photo at NYS — Kameramani hoyee 🎶🎶", date: "Jul 20, 2025", category: "team-building", tags: ["Group Photo", "NYS", "CCFC"] },
+      { src: "IMG-20250720-WA0090.jpg", title: "Converting group photo at NYS before losing massively", date: "Jul 20, 2025", category: "team-building", tags: ["Group Photo", "NYS", "Classic"] },
+      { src: "IMG-20250713-WA0126.jpg", title: "Transport vs Converting — Vurugu Kickoff", date: "Jul 13, 2025", category: "matches", tags: ["Match", "Transport FC", "Vurugu"] },
+      { src: "IMG-20250713-WA0127.jpg", title: "Transport vs Converting — Vurugu Standoff War", date: "Jul 13, 2025", category: "matches", tags: ["Match", "Transport FC", "Vurugu"] },
+      { src: "IMG-20250713-WA0161.jpg", title: "The coming of the Citizens kit — Smile Mamuu! 😀", date: "Jul 13, 2025", category: "celebrations", tags: ["Kit", "Citizens", "Celebrations"] },
+      { src: "IMG-20250629-WA0096.jpg", title: "NYS Sitdown Session", date: "Jun 29, 2025", category: "team-building", tags: ["NYS", "Team Building", "Session"] }
     ];
-    // ========================================================================
+    // =====================================
 
+    // filteredData tracks the current filtered view so the lightbox navigates correctly
+    let filteredData = [...galleryData];
     let currentLightboxIndex = 0;
     const gridContainer = document.getElementById('galleryGrid');
     const lightbox = document.getElementById('lightbox');
@@ -650,17 +650,17 @@
 
     function renderGallery(filter = 'all') {
       gridContainer.innerHTML = '';
-      const filtered = galleryData.filter(item => filter === 'all' || item.category === filter);
-      if (filtered.length === 0) {
+      filteredData = galleryData.filter(item => filter === 'all' || item.category === filter);
+      if (filteredData.length === 0) {
         gridContainer.innerHTML = '<div style="text-align:center; padding:3rem; color:var(--muted);">No photos in this category yet.</div>';
         return;
       }
-      filtered.forEach((item, idx) => {
+      filteredData.forEach((item, idx) => {
         const card = document.createElement('div');
         card.className = 'gallery-card';
         card.setAttribute('data-idx', idx);
         card.innerHTML = `
-          <img class="gallery-img" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.src='fallback-image.png'; this.onerror=null;">
+          <img class="gallery-img" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.style.opacity='0.3'; this.onerror=null;">
           <div class="card-info">
             <h3>${escapeHtml(item.title)}</h3>
             <div class="date">${escapeHtml(item.date)}</div>
@@ -680,7 +680,7 @@
     }
 
     function updateLightboxContent() {
-      const item = galleryData[currentLightboxIndex];
+      const item = filteredData[currentLightboxIndex];
       lightboxImg.src = item.src;
       lbTitle.innerText = item.title;
       lbTags.innerHTML = item.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
@@ -692,12 +692,12 @@
     }
 
     function nextImage() {
-      currentLightboxIndex = (currentLightboxIndex + 1) % galleryData.length;
+      currentLightboxIndex = (currentLightboxIndex + 1) % filteredData.length;
       updateLightboxContent();
     }
 
     function prevImage() {
-      currentLightboxIndex = (currentLightboxIndex - 1 + galleryData.length) % galleryData.length;
+      currentLightboxIndex = (currentLightboxIndex - 1 + filteredData.length) % filteredData.length;
       updateLightboxContent();
     }
 
