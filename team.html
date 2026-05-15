@@ -4,213 +4,479 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chandaria Converting Football Club | Team Squad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue: #0047AB;
-      --red: #D32F2F;
-      --gold: #FFD700;
-      --bg: #f4f5f7;
-      --white: #ffffff;
-      --dark: #111827;
-      --muted: #6b7280;
-      --radius: 14px;
-      --shadow: 0 4px 24px rgba(0,0,0,0.08);
-      --shadow-hover: 0 8px 32px rgba(0,0,0,0.14);
-      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --blue: #0A2463;
+      --red: #D62828;
+      --gold: #F7B731;
+      --light: #F4F3EE;
+      --dark: #111111;
+      --card: #ffffff;
+      --border: #E2DFD6;
+      --muted: #6B6B6B;
+      --radius: 12px;
+      --glass: rgba(255,255,255,0.08);
     }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
+      background: var(--light);
       color: var(--dark);
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* ── Header ── */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: linear-gradient(135deg, var(--blue) 0%, #c62828 100%);
-      color: var(--white);
-      padding: 1rem 1.5rem;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--light); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(60px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(247,183,49,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(247,183,49,0); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lineGrow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes statFill {
+      from { width: 0%; }
     }
 
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10,36,99,0.85);
+      backdrop-filter: blur(20px) saturate(1.2);
+      border-bottom: 2px solid var(--red);
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(10,36,99,0.98);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+      padding: 0 1.25rem;
+      height: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    header h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.3rem, 4vw, 1.9rem);
-      letter-spacing: 1px;
-    }
-
-    .nav-toggle {
-      display: none;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--white);
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
-
-    nav {
+    .nav-logo {
       display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-
-    nav a:hover {
-      background: rgba(255,255,255,0.25);
-      transform: translateY(-2px);
-    }
-
-    /* ── Hero ── */
-    .hero {
-      height: 55vh;
-      min-height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      object-fit: contain;
+      border: 2px solid var(--red);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover img { transform: rotate(15deg) scale(1.1); }
+
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+
+    .hamburger {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 8px;
+      width: 44px; height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger:hover {
+      background: var(--red);
+      border-color: var(--red);
+      transform: rotate(90deg);
+    }
+
+    .nav-links-desktop { display: none; gap: 6px; }
+
+    .nav-links-desktop a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-links-desktop a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      border-radius: 50px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+    .nav-links-desktop a:hover::before,
+    .nav-links-desktop a.active::before {
+      transform: scaleX(1);
+    }
+
+    .nav-links-desktop a:hover,
+    .nav-links-desktop a.active {
+      color: #fff;
+    }
+
+    .nav-drawer {
+      display: none;
+      flex-direction: column;
+      background: rgba(10,36,99,0.98);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem 0;
+    }
+
+    .nav-drawer.open { display: flex; animation: fadeIn 0.3s ease; }
+
+    .nav-drawer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 14px 2rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-drawer a::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--red);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+
+    .nav-drawer a:hover::after { transform: scaleY(1); }
+    .nav-drawer a:hover { background: rgba(255,255,255,0.05); color: #fff; padding-left: 2.5rem; }
+
+    .nav-drawer a .nav-icon { font-size: 1.2rem; width: 24px; text-align: center; }
+
+    /* ── PARTICLE HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--blue) 0%, #061845 60%, #0d1f4d 100%);
+      overflow: hidden;
+      padding: 6rem 1.25rem 3rem;
+    }
+
+    #particle-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
       text-align: center;
-      background: linear-gradient(160deg, rgba(0,71,171,0.85) 0%, rgba(198,40,40,0.85) 100%),
-                  url('team-hero-bg.jpg') center/cover no-repeat;
-      color: var(--white);
-      padding: 2rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(214,40,40,0.2);
+      border: 1px solid rgba(214,40,40,0.4);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
     }
 
     .hero h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 10vw, 5.5rem);
-      letter-spacing: 4px;
-      margin-bottom: 0.75rem;
-      animation: fadeUp 0.8s ease both;
+      font-size: clamp(3rem, 10vw, 7rem);
+      color: #fff;
+      letter-spacing: 6px;
+      line-height: 0.9;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.3);
     }
 
     .hero p {
-      font-size: clamp(1rem, 3vw, 1.15rem);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
       font-weight: 300;
-      opacity: 0.9;
-      animation: fadeUp 0.8s ease 0.2s both;
-      max-width: 500px;
+      animation: fadeUp 0.8s ease 0.4s both;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeUp 0.8s ease 0.6s both;
     }
 
-    /* ── Main ── */
+    .hstat {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .hstat:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+
+    .hstat strong {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .hstat span {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: float 2s ease infinite;
+      cursor: pointer;
+    }
+
+    .scroll-indicator svg {
+      width: 24px; height: 24px;
+      stroke: var(--gold);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ── MAIN ── */
     main {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem;
+      padding: 0 1.25rem 6rem;
     }
 
-    .section-heading {
+    .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      letter-spacing: 3px;
       color: var(--blue);
-      letter-spacing: 2px;
-      margin-bottom: 0.5rem;
-      text-align: center;
+      margin: 3rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .section-divider {
-      width: 60px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--blue), var(--red));
-      border-radius: 2px;
-      margin: 0 auto 2.5rem;
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* ── Squad Columns ── */
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      border-radius: 1px;
+      transform-origin: left;
+      animation: lineGrow 1s ease 0.3s both;
+    }
+
+    /* ── SQUAD GRID ── */
     .squad-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1.5rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
     }
 
     .squad-column {
-      background: var(--white);
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .squad-column.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .squad-column:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-3px);
+      border-color: var(--blue);
+      box-shadow: 0 20px 60px rgba(10,36,99,0.12);
+      transform: translateY(-4px);
     }
 
     .column-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.6rem;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       color: var(--red);
       margin-bottom: 1.25rem;
       padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--bg);
+      border-bottom: 2px solid var(--light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .column-title::before {
+      content: '';
+      width: 4px; height: 24px;
+      background: var(--gold);
+      border-radius: 2px;
     }
 
     .player-list { list-style: none; }
 
-    /* ── Player Item ── */
     .player-item {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
-      padding: 0.75rem;
+      gap: 1rem;
+      padding: 0.85rem;
       border-radius: 10px;
       margin-bottom: 0.5rem;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
     }
+
+    .player-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .player-item:hover::before { transform: scaleY(1); }
 
     .player-item:hover,
     .player-item:focus-visible {
-      background: var(--bg);
-      border-color: rgba(0,71,171,0.12);
-      transform: translateX(4px);
+      background: linear-gradient(90deg, rgba(10,36,99,0.03), transparent);
+      border-color: rgba(10,36,99,0.1);
+      transform: translateX(8px);
       outline: none;
+      box-shadow: 0 4px 20px rgba(10,36,99,0.08);
     }
 
-    /* FIX: initials avatar as CSS fallback */
     .avatar {
-      width: 52px;
-      height: 52px;
+      width: 52px; height: 52px;
       border-radius: 50%;
       border: 2.5px solid var(--gold);
       flex-shrink: 0;
@@ -221,21 +487,24 @@
       justify-content: center;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
-      color: var(--white);
+      color: #fff;
       letter-spacing: 1px;
       position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .player-item:hover .avatar {
+      transform: scale(1.1);
+      border-color: var(--red);
+      box-shadow: 0 4px 15px rgba(214,40,40,0.3);
     }
 
     .avatar img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
-
-    .avatar img.hidden { display: none; }
 
     .player-meta { flex-grow: 1; }
 
@@ -243,26 +512,51 @@
       font-size: 0.95rem;
       font-weight: 600;
       color: var(--dark);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.2rem;
+      transition: color 0.3s;
     }
+
+    .player-item:hover .player-meta h4 { color: var(--blue); }
 
     .role-badge {
-      font-size: 0.72rem;
-      font-weight: 600;
+      font-size: 0.68rem;
+      font-weight: 700;
       color: var(--red);
-      background: rgba(211,47,47,0.1);
-      padding: 0.15rem 0.55rem;
+      background: rgba(214,40,40,0.08);
+      padding: 0.2rem 0.7rem;
       border-radius: 50px;
       display: inline-block;
+      letter-spacing: 0.5px;
     }
 
-    /* ── Formation ── */
+    .player-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--border);
+      margin-left: auto;
+      transition: all 0.3s;
+    }
+
+    .player-item:hover .player-number {
+      color: var(--gold);
+      transform: scale(1.2);
+    }
+
+    /* ── FORMATION ── */
     .formation-section {
-      background: var(--white);
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.75rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 3.5rem;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .formation-section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .formation-header {
@@ -276,87 +570,110 @@
 
     .formation-header h3 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 2px;
+      font-size: 1.6rem;
+      letter-spacing: 3px;
       color: var(--blue);
     }
 
-    .formation-btns {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
+    .formation-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
     .f-btn {
-      padding: 0.5rem 1.1rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 50px;
-      border: 1.5px solid var(--blue);
+      border: 1.5px solid var(--border);
       background: transparent;
-      color: var(--blue);
+      color: var(--muted);
       font-family: 'DM Sans', sans-serif;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .f-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      border-radius: 50px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
     }
 
     .f-btn.active,
     .f-btn:hover {
-      background: linear-gradient(135deg, var(--blue), var(--red));
-      color: var(--white);
+      color: #fff;
       border-color: transparent;
     }
 
-    /* FIX: pitch uses flex-direction column throughout */
+    .f-btn.active::before,
+    .f-btn:hover::before {
+      transform: scaleX(1);
+    }
+
     .pitch {
-      background: linear-gradient(to bottom, #2e7d32, #1b5e20);
-      border-radius: 12px;
-      padding: 1.5rem 1rem;
+      background:
+        radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 70%),
+        linear-gradient(to bottom, #3d8c40 0%, #2d6a30 50%, #1e4d20 100%);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
       position: relative;
       overflow: hidden;
-      min-height: 460px;
+      min-height: 480px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      box-shadow: inset 0 0 60px rgba(0,0,0,0.3);
     }
 
     .pitch::before {
       content: '';
       position: absolute;
-      inset: 8px;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 8px;
+      inset: 12px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
       pointer-events: none;
     }
 
     .pitch::after {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 10%;
-      width: 80%;
+      top: 50%; left: 12px; right: 12px;
       height: 0;
-      border-top: 1.5px solid rgba(255,255,255,0.25);
+      border-top: 2px solid rgba(255,255,255,0.2);
     }
 
-    /* FIX: formation wrapper — always flex column, shown/hidden properly */
+    .pitch-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
     .formation {
       display: none;
       flex-direction: column;
       justify-content: space-around;
       height: 100%;
       width: 100%;
-      gap: 0.75rem;
+      gap: 1rem;
+      position: relative;
+      z-index: 2;
     }
 
-    .formation.active {
-      display: flex;
-    }
+    .formation.active { display: flex; animation: fadeIn 0.5s ease; }
 
     .f-row {
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
 
@@ -365,181 +682,263 @@
       flex-direction: column;
       align-items: center;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
-    .f-player:hover { transform: translateY(-4px); }
+    .f-player:hover { transform: translateY(-8px) scale(1.05); }
+
+    .f-player::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      width: 30px; height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .f-player:hover::after { transform: scaleX(1); }
 
     .f-circle {
-      width: 52px;
-      height: 52px;
+      width: 56px; height: 56px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--blue), var(--red));
-      color: var(--white);
+      color: #fff;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-      border: 2px solid rgba(255,255,255,0.3);
-      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 3px rgba(247,183,49,0.3);
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      animation: pulse 3s infinite;
     }
 
     .f-player:hover .f-circle {
-      transform: scale(1.12);
-      border-color: var(--gold);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 6px rgba(247,183,49,0.5);
+      transform: scale(1.15);
     }
 
     .f-name {
-      margin-top: 0.35rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--white);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
       text-align: center;
-      max-width: 72px;
+      max-width: 80px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      letter-spacing: 0.5px;
     }
 
-    /* ── First Eleven ── */
+    /* ── FIRST ELEVEN ── */
     .first-eleven-section {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      box-shadow: var(--shadow);
       margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* FIX: generated dynamically — no manual HTML duplication */
+    .first-eleven-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .first-eleven-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.5rem;
       list-style: none;
     }
 
     .eleven-card {
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 1.25rem 0.75rem;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
       text-align: center;
       cursor: pointer;
-      transition: var(--transition);
-      border: 1px solid transparent;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
-    .eleven-card:hover,
-    .eleven-card:focus-visible {
-      background: var(--white);
-      border-color: rgba(0,71,171,0.15);
-      box-shadow: var(--shadow);
-      transform: translateY(-4px);
-      outline: none;
+    .eleven-card::before {
+      content: attr(data-number);
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: rgba(10,36,99,0.04);
+      z-index: 0;
+      pointer-events: none;
+      transition: all 0.4s;
+    }
+
+    .eleven-card:hover::before {
+      color: rgba(10,36,99,0.08);
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    .eleven-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 20px 60px rgba(10,36,99,0.15);
+      transform: translateY(-8px);
     }
 
     .eleven-avatar {
-      width: 62px;
-      height: 62px;
+      width: 80px; height: 80px;
       border-radius: 50%;
-      border: 2.5px solid var(--gold);
+      border: 3px solid var(--gold);
       overflow: hidden;
-      margin: 0 auto 0.75rem;
+      margin: 0 auto 1rem;
       background: linear-gradient(135deg, var(--blue), var(--red));
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      color: var(--white);
+      font-size: 1.4rem;
+      color: #fff;
       position: relative;
+      z-index: 1;
+      transition: all 0.4s ease;
+    }
+
+    .eleven-card:hover .eleven-avatar {
+      transform: scale(1.1);
+      border-color: var(--red);
+      box-shadow: 0 8px 25px rgba(214,40,40,0.3);
     }
 
     .eleven-avatar img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
 
     .eleven-card h4 {
-      font-size: 0.88rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ── Modal ── */
+    .eleven-card .role-badge {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eleven-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,36,99,0.9), transparent);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 1rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 2;
+    }
+
+    .eleven-card:hover .eleven-overlay { opacity: 1; }
+
+    .eleven-overlay span {
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* ── MODAL ── */
     .modal-backdrop {
       display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(4px);
+      position: fixed; inset: 0;
+      z-index: 3000;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      animation: fadeIn 0.25s ease;
+      animation: fadeIn 0.3s ease;
     }
 
     .modal-backdrop.open { display: flex; }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
     .modal-box {
-      background: var(--white);
-      border-radius: 18px;
+      background: var(--card);
+      border-radius: 20px;
       width: 100%;
-      max-width: 580px;
+      max-width: 600px;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 2rem;
       position: relative;
-      animation: slideUp 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .modal-hero {
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      padding: 2.5rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-hero::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 150px; height: 150px;
+      border: 25px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
     }
 
     .modal-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--bg);
-      border: none;
-      width: 34px;
-      height: 34px;
+      top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      width: 40px; height: 40px;
       border-radius: 50%;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       cursor: pointer;
-      color: var(--muted);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: var(--transition);
+      transition: all 0.3s;
+      z-index: 10;
     }
 
-    .modal-close:hover { background: var(--red); color: var(--white); }
+    .modal-close:hover {
+      background: var(--red);
+      border-color: var(--red);
+      transform: rotate(90deg);
+    }
 
     .modal-top {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
     }
 
     .modal-avatar {
-      width: 90px;
-      height: 90px;
+      width: 100px; height: 100px;
       border-radius: 50%;
-      border: 3px solid var(--gold);
+      border: 4px solid var(--gold);
       overflow: hidden;
       flex-shrink: 0;
       background: linear-gradient(135deg, var(--blue), var(--red));
@@ -547,176 +946,288 @@
       align-items: center;
       justify-content: center;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      color: var(--white);
+      font-size: 2rem;
+      color: #fff;
       position: relative;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
     }
 
     .modal-avatar img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
 
     .modal-title h3 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      color: var(--blue);
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      color: #fff;
+      line-height: 1;
     }
 
-    .modal-body-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+    .modal-title .role-badge {
+      background: rgba(255,255,255,0.2);
+      color: var(--gold);
+      margin-top: 0.5rem;
+      border: 1px solid rgba(247,183,49,0.3);
+    }
+
+    .modal-body {
+      padding: 2rem;
+      background: var(--card);
     }
 
     .modal-bio {
       font-size: 0.95rem;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
     }
 
     .modal-stats {
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 1rem;
+      background: var(--light);
+      border-radius: 14px;
+      padding: 1.5rem;
     }
 
     .modal-stats h4 {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
       color: var(--blue);
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
-    .stat-item { display: flex; flex-direction: column; }
+    .stat-row:last-child { margin-bottom: 0; }
 
-    .stat-value {
-      font-size: 1.3rem;
+    .stat-label-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+      width: 100px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .stat-bar-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 20px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+    }
+
+    .stat-value-text {
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--dark);
+      width: 50px;
+      text-align: right;
+      flex-shrink: 0;
     }
 
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    /* ── Footer ── */
+    /* ── FOOTER ── */
     footer {
-      background: linear-gradient(135deg, var(--blue), var(--red));
-      color: rgba(255,255,255,0.9);
+      background: var(--blue);
+      color: rgba(255,255,255,0.7);
       text-align: center;
-      padding: 1.75rem;
+      padding: 2rem 1.25rem;
       font-size: 0.9rem;
-      font-weight: 300;
-      margin-top: 2rem;
+      border-top: 3px solid var(--red);
+      position: relative;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .nav-toggle { display: block; }
+    footer strong { color: var(--gold); }
 
-      nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        padding-top: 0.75rem;
-        gap: 0.4rem;
-      }
+    /* ── TAB BAR ── */
+    .tab-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(10,36,99,0.95);
+      backdrop-filter: blur(20px);
+      border-top: 2px solid var(--red);
+      display: flex;
+      z-index: 200;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
 
-      nav.open { display: flex; }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 10px 2px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+    }
 
-      nav a { width: 100%; text-align: center; }
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
 
-      .header-inner { flex-direction: column; align-items: flex-start; }
+    .tab-btn.active::before { width: 30px; }
 
-      .squad-grid { grid-template-columns: 1fr; }
+    .tab-btn .ti { font-size: 1.2rem; line-height: 1; transition: transform 0.3s; }
 
-      .modal-body-grid { grid-template-columns: 1fr; }
+    .tab-btn.active,
+    .tab-btn:hover {
+      color: var(--gold);
+    }
 
-      .f-circle { width: 44px; height: 44px; font-size: 0.75rem; }
+    .tab-btn.active .ti { transform: translateY(-2px); }
 
-      .f-name { font-size: 0.68rem; max-width: 56px; }
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+      .nav-links-desktop { display: flex; }
+      .nav-drawer { display: none !important; }
+      .tab-bar { display: none; }
 
-      .pitch { min-height: 380px; }
+      main { padding-bottom: 3rem; }
+      .hero { min-height: 85vh; }
+      .hero-stats { grid-template-columns: repeat(4, 1fr); }
+      .squad-grid { grid-template-columns: repeat(2, 1fr); }
+      .first-eleven-grid { grid-template-columns: repeat(4, 1fr); }
+    }
 
-      .formation-header { flex-direction: column; align-items: flex-start; }
+    @media (min-width: 1024px) {
+      .squad-grid { grid-template-columns: repeat(4, 1fr); }
+      .first-eleven-grid { grid-template-columns: repeat(6, 1fr); }
     }
 
     @media (max-width: 480px) {
-      .first-eleven-grid { grid-template-columns: repeat(3, 1fr); }
-      .hero { height: 45vh; }
+      .first-eleven-grid { grid-template-columns: repeat(2, 1fr); }
+      .hstat strong { font-size: 2rem; }
+      .modal-top { flex-direction: column; text-align: center; }
+      .modal-avatar { margin: 0 auto; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
       }
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1a1d27;
-        --white: #252836;
+        --light: #0f1117;
         --dark: #f0f0f0;
-        --muted: #9ca3af;
+        --card: #1a1d27;
+        --border: #2a2d37;
+        --muted: #8b8f9a;
       }
-      .squad-column, .formation-section, .first-eleven-section { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
-      .player-item:hover { background: #1a1d27; }
-      .eleven-card:hover { background: #1a1d27; }
-      .modal-box { background: #252836; }
-      .modal-stats { background: #1a1d27; }
+      .player-item:hover { background: rgba(255,255,255,0.03); }
+      .eleven-card::before { color: rgba(255,255,255,0.03); }
+      .eleven-card:hover::before { color: rgba(255,255,255,0.06); }
+      .modal-stats { background: #14161f; }
     }
   </style>
+<base target="_blank">
 </head>
 <body>
 
-  <header>
-    <div class="header-inner">
-      <h1>Chandaria Converting F.C.</h1>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <nav id="mainNav" role="navigation" aria-label="Main navigation">
+  <header id="mainHeader">
+    <div class="nav-top">
+      <a class="nav-logo" href="index.html">
+        <img src="logo.png" alt="CCFC Logo" onerror="this.style.display='none'">
+        <span>C.C.F.C</span>
+      </a>
+
+      <nav class="nav-links-desktop" aria-label="Main navigation">
         <a href="index.html">Home</a>
-        <a href="team.html" aria-current="page">Team</a>
+        <a href="team.html" class="active">Team</a>
         <a href="Gallery.html">Gallery</a>
         <a href="finance.html">Finance</a>
-        <a href="fixtures.html">Fixtures &amp; Results</a>
+        <a href="fixtures.html">Fixtures</a>
         <a href="contact.html">Contact</a>
       </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     </div>
+
+    <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+      <a href="index.html"><span class="nav-icon">&#127968;</span> Home</a>
+      <a href="team.html"><span class="nav-icon">&#128101;</span> Team</a>
+      <a href="Gallery.html"><span class="nav-icon">&#128248;</span> Gallery</a>
+      <a href="finance.html"><span class="nav-icon">&#128176;</span> Finance</a>
+      <a href="fixtures.html"><span class="nav-icon">&#128197;</span> Fixtures &amp; Results</a>
+      <a href="contact.html"><span class="nav-icon">&#128222;</span> Contact</a>
+    </nav>
   </header>
 
-  <div class="hero" role="img" aria-label="Team squad hero banner">
-    <h2>Our Squad</h2>
-    <p>Meet the passionate players driving C.C.F.C. forward in 2025.</p>
-  </div>
+  <section class="hero" aria-label="Team squad hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-inner">
+      <div class="hero-badge">2025 Season &middot; Active Roster</div>
+      <h2>Our Squad</h2>
+      <p>Meet the warriors who wear the blue and red with pride. Every match, every minute, all heart.</p>
+
+      <div class="hero-stats" aria-label="Squad statistics">
+        <div class="hstat"><strong id="stat-players">0</strong><span>Players</span></div>
+        <div class="hstat"><strong id="stat-pos">0</strong><span>Positions</span></div>
+        <div class="hstat"><strong id="stat-starters">0</strong><span>Starters</span></div>
+        <div class="hstat"><strong id="stat-goals">0</strong><span>Goals</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" onclick="document.getElementById('squad-section').scrollIntoView({behavior:'smooth'})">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
 
   <main>
-
-    <h2 class="section-heading">Team Squad 2025</h2>
-    <div class="section-divider"></div>
-
-    <!-- ── Squad Columns (generated from JS data) ── -->
+    <div id="squad-section" style="padding-top:2rem;"></div>
+    <h2 class="section-title">Team Squad 2025</h2>
     <section class="squad-grid" id="squadGrid" aria-label="Squad by position"></section>
 
-    <!-- ── Formation ── -->
     <section class="formation-section" aria-label="Team formation">
       <div class="formation-header">
-        <h3>First Team Formation</h3>
+        <h3>Tactical Formation</h3>
         <div class="formation-btns" role="group" aria-label="Formation selector">
           <button class="f-btn active" data-f="433" aria-pressed="true">4-3-3</button>
           <button class="f-btn" data-f="442" aria-pressed="false">4-4-2</button>
@@ -725,707 +1236,409 @@
       </div>
 
       <div class="pitch" role="img" aria-label="Football pitch formation diagram">
+        <div class="pitch-center"></div>
 
-        <!-- 4-3-3 -->
         <div class="formation active" id="f-433">
           <div class="f-row">
-            <div class="f-player" data-player-id="richie" tabindex="0" role="button" aria-label="Richie - Goalkeeper">
-              <div class="f-circle">1</div><div class="f-name">Richie</div>
-            </div>
+            <div class="f-player" data-player-id="richie" tabindex="0" role="button" aria-label="Richie - Goalkeeper"><div class="f-circle">1</div><div class="f-name">Richie</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="amoh"   tabindex="0" role="button" aria-label="Amoh"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
-            <div class="f-player" data-player-id="collo"  tabindex="0" role="button" aria-label="Collo"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
-            <div class="f-player" data-player-id="arthur" tabindex="0" role="button" aria-label="Arthur"><div class="f-circle">6</div><div class="f-name">Arthur</div></div>
-            <div class="f-player" data-player-id="mlei"   tabindex="0" role="button" aria-label="Mlei"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
+            <div class="f-player" data-player-id="amoh" tabindex="0" role="button"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
+            <div class="f-player" data-player-id="collo" tabindex="0" role="button"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
+            <div class="f-player" data-player-id="arthur" tabindex="0" role="button"><div class="f-circle">6</div><div class="f-name">Arthur</div></div>
+            <div class="f-player" data-player-id="mlei" tabindex="0" role="button"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="castro" tabindex="0" role="button" aria-label="Castro"><div class="f-circle">8</div><div class="f-name">Castro</div></div>
-            <div class="f-player" data-player-id="gerry"  tabindex="0" role="button" aria-label="Gerry"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
-            <div class="f-player" data-player-id="nico"   tabindex="0" role="button" aria-label="Nico"><div class="f-circle">10</div><div class="f-name">Nico</div></div>
+            <div class="f-player" data-player-id="castro" tabindex="0" role="button"><div class="f-circle">8</div><div class="f-name">Castro</div></div>
+            <div class="f-player" data-player-id="gerry" tabindex="0" role="button"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
+            <div class="f-player" data-player-id="nico" tabindex="0" role="button"><div class="f-circle">10</div><div class="f-name">Nico</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="davy"  tabindex="0" role="button" aria-label="Davy"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
-            <div class="f-player" data-player-id="brayo" tabindex="0" role="button" aria-label="Brayo"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
-            <div class="f-player" data-player-id="felix" tabindex="0" role="button" aria-label="Felix"><div class="f-circle">11</div><div class="f-name">Felix</div></div>
+            <div class="f-player" data-player-id="davy" tabindex="0" role="button"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
+            <div class="f-player" data-player-id="brayo" tabindex="0" role="button"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
+            <div class="f-player" data-player-id="felix" tabindex="0" role="button"><div class="f-circle">11</div><div class="f-name">Felix</div></div>
           </div>
         </div>
 
-        <!-- 4-4-2 -->
         <div class="formation" id="f-442">
           <div class="f-row">
             <div class="f-player" data-player-id="richie" tabindex="0" role="button"><div class="f-circle">1</div><div class="f-name">Richie</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="amoh"   tabindex="0" role="button"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
-            <div class="f-player" data-player-id="collo"  tabindex="0" role="button"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
+            <div class="f-player" data-player-id="amoh" tabindex="0" role="button"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
+            <div class="f-player" data-player-id="collo" tabindex="0" role="button"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
             <div class="f-player" data-player-id="arthur" tabindex="0" role="button"><div class="f-circle">6</div><div class="f-name">Arthur</div></div>
-            <div class="f-player" data-player-id="mlei"   tabindex="0" role="button"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
+            <div class="f-player" data-player-id="mlei" tabindex="0" role="button"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="davy"   tabindex="0" role="button"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
+            <div class="f-player" data-player-id="davy" tabindex="0" role="button"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
             <div class="f-player" data-player-id="castro" tabindex="0" role="button"><div class="f-circle">8</div><div class="f-name">Castro</div></div>
-            <div class="f-player" data-player-id="gerry"  tabindex="0" role="button"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
-            <div class="f-player" data-player-id="felix"  tabindex="0" role="button"><div class="f-circle">11</div><div class="f-name">Felix</div></div>
+            <div class="f-player" data-player-id="gerry" tabindex="0" role="button"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
+            <div class="f-player" data-player-id="felix" tabindex="0" role="button"><div class="f-circle">11</div><div class="f-name">Felix</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="brayo"   tabindex="0" role="button"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
+            <div class="f-player" data-player-id="brayo" tabindex="0" role="button"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
             <div class="f-player" data-player-id="masinde" tabindex="0" role="button"><div class="f-circle">10</div><div class="f-name">Masinde</div></div>
           </div>
         </div>
 
-        <!-- 3-5-2 -->
         <div class="formation" id="f-352">
           <div class="f-row">
             <div class="f-player" data-player-id="richie" tabindex="0" role="button"><div class="f-circle">1</div><div class="f-name">Richie</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="collo"  tabindex="0" role="button"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
+            <div class="f-player" data-player-id="collo" tabindex="0" role="button"><div class="f-circle">5</div><div class="f-name">Collo</div></div>
             <div class="f-player" data-player-id="arthur" tabindex="0" role="button"><div class="f-circle">6</div><div class="f-name">Arthur</div></div>
-            <div class="f-player" data-player-id="amoh"   tabindex="0" role="button"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
+            <div class="f-player" data-player-id="amoh" tabindex="0" role="button"><div class="f-circle">2</div><div class="f-name">Amoh</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="davy"   tabindex="0" role="button"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
+            <div class="f-player" data-player-id="davy" tabindex="0" role="button"><div class="f-circle">7</div><div class="f-name">Davy</div></div>
             <div class="f-player" data-player-id="castro" tabindex="0" role="button"><div class="f-circle">8</div><div class="f-name">Castro</div></div>
-            <div class="f-player" data-player-id="gerry"  tabindex="0" role="button"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
-            <div class="f-player" data-player-id="nico"   tabindex="0" role="button"><div class="f-circle">10</div><div class="f-name">Nico</div></div>
-            <div class="f-player" data-player-id="mlei"   tabindex="0" role="button"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
+            <div class="f-player" data-player-id="gerry" tabindex="0" role="button"><div class="f-circle">4</div><div class="f-name">Gerry</div></div>
+            <div class="f-player" data-player-id="nico" tabindex="0" role="button"><div class="f-circle">10</div><div class="f-name">Nico</div></div>
+            <div class="f-player" data-player-id="mlei" tabindex="0" role="button"><div class="f-circle">3</div><div class="f-name">Mlei</div></div>
           </div>
           <div class="f-row">
-            <div class="f-player" data-player-id="brayo"   tabindex="0" role="button"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
+            <div class="f-player" data-player-id="brayo" tabindex="0" role="button"><div class="f-circle">9</div><div class="f-name">Brayo</div></div>
             <div class="f-player" data-player-id="masinde" tabindex="0" role="button"><div class="f-circle">11</div><div class="f-name">Masinde</div></div>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- ── First Eleven (generated from JS) ── -->
     <section class="first-eleven-section" aria-label="First eleven players">
-      <h2 class="section-heading" style="margin-bottom:0.5rem;">First Eleven</h2>
-      <div class="section-divider"></div>
+      <h2 class="section-title">First Eleven</h2>
       <ul class="first-eleven-grid" id="firstElevenGrid"></ul>
     </section>
-
   </main>
 
-  <!-- ── Modal ── -->
-  <div
-    id="playerModal"
-    class="modal-backdrop"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modalName"
-    aria-hidden="true"
-  >
+  <div id="playerModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalName" aria-hidden="true">
     <div class="modal-box" id="modalBox">
-      <button class="modal-close" id="modalClose" aria-label="Close player profile">✕</button>
-
-      <div class="modal-top">
-        <div class="modal-avatar" id="modalAvatar" aria-hidden="true"></div>
-        <div class="modal-title">
-          <h3 id="modalName"></h3>
-          <span class="role-badge" id="modalRole"></span>
+      <div class="modal-hero">
+        <button class="modal-close" id="modalClose" aria-label="Close player profile">&#10005;</button>
+        <div class="modal-top">
+          <div class="modal-avatar" id="modalAvatar" aria-hidden="true"></div>
+          <div class="modal-title">
+            <h3 id="modalName"></h3>
+            <span class="role-badge" id="modalRole"></span>
+          </div>
         </div>
       </div>
-
-      <div class="modal-body-grid">
+      <div class="modal-body">
         <p class="modal-bio" id="modalBio"></p>
         <div class="modal-stats">
-          <h4>Season Stats</h4>
-          <div class="stats-grid" id="modalStats"></div>
+          <h4>Season Performance</h4>
+          <div id="modalStats"></div>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 Chandaria Converting Football Club &bull; Together as One
+    <p>&copy; 2025 <strong>Chandaria Converting Football Club</strong> &bull; Together as One &#128153;&#10084;&#65039;</p>
   </footer>
 
+  <nav class="tab-bar" aria-label="Quick navigation">
+    <a class="tab-btn" href="index.html"><span class="ti">&#127968;</span>Home</a>
+    <a class="tab-btn" href="fixtures.html"><span class="ti">&#128197;</span>Fixtures</a>
+    <a class="tab-btn active" href="team.html"><span class="ti">&#128101;</span>Team</a>
+    <a class="tab-btn" href="Gallery.html"><span class="ti">&#128248;</span>Gallery</a>
+    <a class="tab-btn" href="finance.html"><span class="ti">&#128176;</span>Finance</a>
+    <a class="tab-btn" href="contact.html"><span class="ti">&#128222;</span>Contact</a>
+  </nav>
+
   <script>
-    /* ─────────────────────────────────────────────────────────────
-       PLAYER DATA
-       To add a real photo, set the `image` field to the filename
-       e.g.  image: 'photos/brayo.jpg'
-       If omitted or file missing, coloured initials show instead.
-    ───────────────────────────────────────────────────────────── */
-    const players = {
-      /* ── Goalkeepers ── */
-      richie: {
-        name: 'Richie', position: 'Goalkeeper', role: 'Goalkeeper',
-        image: '',
-        bio: 'Veteran GK with lightning reflexes. Joined the founding year — saved us in the debut match!',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '12' }, { label: 'Clean Sheets', value: '4' },
-          { label: 'Saves', value: '28' },         { label: 'Goals Conceded', value: '15' }
-        ]
-      },
-      giddy: {
-        name: 'Giddy', position: 'Goalkeeper', role: 'Goalkeeper',
-        image: '',
-        bio: 'Rising star between the posts. Fun fact: collects vintage gloves from 80s legends.',
-        stats: [
-          { label: 'Games Played', value: '5' }, { label: 'Clean Sheets', value: '2' },
-          { label: 'Saves', value: '12' },        { label: 'Goals Conceded', value: '7' }
-        ]
-      },
+    /* ── PARTICLE SYSTEM ── */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null };
 
-      /* ── Defenders ── */
-      arthur: {
-        name: 'Arthur', position: 'Defenders', role: 'Defender / Treasurer',
-        officialRole: 'Treasurer', image: '',
-        bio: 'Solid defender and club treasurer. Off-pitch he manages finances like he shuts down attacks.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '15' }, { label: 'Goals', value: '2' },
-          { label: 'Assists', value: '3' },        { label: 'Tackles', value: '42' }
-        ]
-      },
-      chaloh: {
-        name: 'Chaloh', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Tough tackler with heart. Babadogo local — always first to training.',
-        stats: [
-          { label: 'Games Played', value: '10' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '2' },        { label: 'Tackles', value: '25' }
-        ]
-      },
-      collo: {
-        name: 'Collo', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Wall of steel in the backline. Motto: "No way through!"',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '14' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '2' },        { label: 'Tackles', value: '38' }
-        ]
-      },
-      tom: {
-        name: 'Tom', position: 'Defenders', role: 'Defender / Asst. Treasurer',
-        officialRole: 'Assistant Treasurer', image: '',
-        bio: 'Versatile full-back and assistant treasurer. Balances books and clearances perfectly.',
-        stats: [
-          { label: 'Games Played', value: '12' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '4' },        { label: 'Tackles', value: '30' }
-        ]
-      },
-      ogola: {
-        name: 'Ogola', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Speedy wing-back. Scored from his own half last season!',
-        stats: [
-          { label: 'Games Played', value: '8' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '1' },       { label: 'Tackles', value: '18' }
-        ]
-      },
-      yobra: {
-        name: 'Yobra', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Aerial beast. Headers win games — his do too.',
-        stats: [
-          { label: 'Games Played', value: '9' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '0' },       { label: 'Tackles', value: '22' }
-        ]
-      },
-      timo: {
-        name: 'Timo', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Calm under pressure. Reads the game like a book.',
-        stats: [
-          { label: 'Games Played', value: '11' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '2' },        { label: 'Tackles', value: '27' }
-        ]
-      },
-      amoh: {
-        name: 'Amoh', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Aggressive marker. Passionate about youth development.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '12' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '1' },        { label: 'Tackles', value: '35' }
-        ]
-      },
-      ogwaro: {
-        name: 'Ogwaro', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Club veteran. Mentors the young guns on and off pitch.',
-        stats: [
-          { label: 'Games Played', value: '7' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '0' },       { label: 'Tackles', value: '15' }
-        ]
-      },
-      edgar: {
-        name: 'Edgar', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Quick recovery defender. Fitness fanatic — runs marathons post-match.',
-        stats: [
-          { label: 'Games Played', value: '10' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '1' },        { label: 'Tackles', value: '24' }
-        ]
-      },
-      mlei: {
-        name: 'Mlei', position: 'Defenders', role: 'Defender',
-        image: '',
-        bio: 'Left-back dynamo. Crosses are pure gold.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '13' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '4' },        { label: 'Tackles', value: '29' }
-        ]
-      },
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-      /* ── Midfielders ── */
-      gerry: {
-        name: 'Gerry', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Engine in midfield. Dictates tempo like a maestro.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '14' }, { label: 'Goals', value: '3' },
-          { label: 'Assists', value: '5' },        { label: 'Pass Accuracy', value: '85%' }
-        ]
-      },
-      dickens: {
-        name: 'Dickens', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Visionary passer. Assists are his art form.',
-        stats: [
-          { label: 'Games Played', value: '9' }, { label: 'Goals', value: '2' },
-          { label: 'Assists', value: '4' },       { label: 'Pass Accuracy', value: '82%' }
-        ]
-      },
-      hillary: {
-        name: 'Hillary', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Box-to-box warrior. Covers every blade of grass.',
-        stats: [
-          { label: 'Games Played', value: '11' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '3' },        { label: 'Pass Accuracy', value: '78%' }
-        ]
-      },
-      nico: {
-        name: 'Nico', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Creative spark. Free-kick specialist.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '13' }, { label: 'Goals', value: '4' },
-          { label: 'Assists', value: '6' },        { label: 'Pass Accuracy', value: '79%' }
-        ]
-      },
-      castro: {
-        name: 'Castro', position: 'Midfielders', role: 'Midfielder / Asst. Captain',
-        officialRole: 'Assistant Captain', image: '',
-        bio: 'Dynamic leader and assistant captain. Rallies the team in crunch time.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '16' }, { label: 'Goals', value: '5' },
-          { label: 'Assists', value: '7' },        { label: 'Pass Accuracy', value: '82%' }
-        ]
-      },
-      jemmo: {
-        name: 'Jemmo', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Tough tackler with silky touches.',
-        stats: [
-          { label: 'Games Played', value: '8' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '2' },       { label: 'Pass Accuracy', value: '76%' }
-        ]
-      },
-      malcom: {
-        name: 'Malcom', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Ball-winning mid. Turns defence into attack in seconds.',
-        stats: [
-          { label: 'Games Played', value: '10' }, { label: 'Goals', value: '2' },
-          { label: 'Assists', value: '3' },        { label: 'Pass Accuracy', value: '80%' }
-        ]
-      },
-      bella: {
-        name: 'Bella', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Graceful controller. Keeps possession like glue.',
-        stats: [
-          { label: 'Games Played', value: '7' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '1' },       { label: 'Pass Accuracy', value: '84%' }
-        ]
-      },
-      dominic: {
-        name: 'Dominic', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Long-range threat from deep. Set-piece wizard.',
-        stats: [
-          { label: 'Games Played', value: '9' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '2' },       { label: 'Pass Accuracy', value: '77%' }
-        ]
-      },
-      kylloh: {
-        name: 'Kylloh', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Energetic runner. Covers for everyone.',
-        stats: [
-          { label: 'Games Played', value: '6' }, { label: 'Goals', value: '0' },
-          { label: 'Assists', value: '1' },       { label: 'Pass Accuracy', value: '75%' }
-        ]
-      },
-      rapho: {
-        name: 'Rapho', position: 'Midfielders', role: 'Midfielder',
-        image: '',
-        bio: 'Technical gem. Dribbles past defenders for fun.',
-        stats: [
-          { label: 'Games Played', value: '8' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '3' },       { label: 'Pass Accuracy', value: '81%' }
-        ]
-      },
-
-      /* ── Forwards ── */
-      felix: {
-        name: 'Felix', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Poacher supreme. Sniffs out goals like a pro.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '14' }, { label: 'Goals', value: '7' },
-          { label: 'Assists', value: '3' },        { label: 'Shots on Target', value: '18' }
-        ]
-      },
-      davy: {
-        name: 'Davy', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Pacey winger. Burns full-backs for breakfast.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '15' }, { label: 'Goals', value: '6' },
-          { label: 'Assists', value: '8' },        { label: 'Shots on Target', value: '22' }
-        ]
-      },
-      rigan: {
-        name: 'Rigan', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Clinical finisher. One-touch wonders.',
-        stats: [
-          { label: 'Games Played', value: '11' }, { label: 'Goals', value: '4' },
-          { label: 'Assists', value: '2' },        { label: 'Shots on Target', value: '15' }
-        ]
-      },
-      brayo: {
-        name: 'Brayo', position: 'Forwards', role: 'Forward / Captain',
-        officialRole: 'Captain', image: '',
-        bio: 'Club captain and goal machine. Leads by example on the pitch every single match.',
-        firstEleven: true,
-        stats: [
-          { label: 'Games Played', value: '18' }, { label: 'Goals', value: '12' },
-          { label: 'Assists', value: '5' },        { label: 'Shots on Target', value: '35' }
-        ]
-      },
-      julius: {
-        name: 'Julius', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Target man. Holds up play and brings others in.',
-        stats: [
-          { label: 'Games Played', value: '10' }, { label: 'Goals', value: '3' },
-          { label: 'Assists', value: '4' },        { label: 'Shots on Target', value: '12' }
-        ]
-      },
-      masinde: {
-        name: 'Masinde', position: 'Forwards', role: 'Forward',
-        image: 'masinde.png', /* ← real photo already supplied */
-        bio: "Lightning forward and founding member. Scored CCFC's first ever goal — pure fire!",
-        stats: [
-          { label: 'Games Played', value: '14' }, { label: 'Goals', value: '8' },
-          { label: 'Assists', value: '4' },        { label: 'Shots on Target', value: '26' }
-        ]
-      },
-      franco: {
-        name: 'Franco', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Tricky dribbler. Loves a nutmeg.',
-        stats: [
-          { label: 'Games Played', value: '9' }, { label: 'Goals', value: '2' },
-          { label: 'Assists', value: '3' },       { label: 'Shots on Target', value: '10' }
-        ]
-      },
-      ben: {
-        name: 'Ben', position: 'Forwards', role: 'Forward',
-        image: '',
-        bio: 'Super sub. Changes games off the bench.',
-        stats: [
-          { label: 'Games Played', value: '7' }, { label: 'Goals', value: '1' },
-          { label: 'Assists', value: '2' },       { label: 'Shots on Target', value: '8' }
-        ]
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.color = Math.random() > 0.5 ? 'rgba(247,183,49,' : 'rgba(214,40,40,';
+        this.opacity = Math.random() * 0.5 + 0.1;
       }
-    };
-
-    /* ─── Column order ─── */
-    const columns = ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards'];
-
-    /* ─── First Eleven order ─── */
-    const firstElevenOrder = [
-      'richie','amoh','collo','arthur','mlei',
-      'castro','gerry','nico',
-      'davy','brayo','felix'
-    ];
-
-    /* ─────────────────────────────────────────────────────────────
-       HELPERS
-    ───────────────────────────────────────────────────────────── */
-    function getInitials(name) {
-      return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (mouse.x != null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 150) {
+            this.x -= dx * 0.01;
+            this.y -= dy * 0.01;
+          }
+        }
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = this.color + this.opacity + ')';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
-    /* FIX: renders avatar with real image + onerror initials fallback */
-    function buildAvatarEl(playerId, size = 52) {
-      const p = players[playerId];
-      const wrap = document.createElement('div');
-      wrap.className = 'avatar';
-      wrap.style.width = size + 'px';
-      wrap.style.height = size + 'px';
-      wrap.style.fontSize = (size * 0.35) + 'px';
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 80; i++) particles.push(new Particle());
+    }
+    initParticles();
 
-      const initials = document.createTextNode(getInitials(p.name));
-      wrap.appendChild(initials);
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 100) {
+            ctx.strokeStyle = 'rgba(247,183,49,' + (0.1 - dist/1000) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
 
-      if (p.image) {
-        const img = document.createElement('img');
-        img.src = p.image;
-        img.alt = p.name + ' photo';
-        img.loading = 'lazy';
-        img.addEventListener('error', () => img.remove()); /* FIX: remove on broken src */
+    canvas.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+    /* ── HEADER SCROLL EFFECT ── */
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    /* ── PLAYER DATA ── */
+    const players = {
+      richie: { name: 'Richie', position: 'Goalkeepers', role: 'Goalkeeper', number: '1', image: '', bio: 'Veteran GK with lightning reflexes. Joined the founding year — saved us in the debut match!', firstEleven: true, stats: { 'Games': 12, 'Clean Sheets': 4, 'Saves': 28, 'Conceded': 15 } },
+      giddy: { name: 'Giddy', position: 'Goalkeepers', role: 'Goalkeeper', number: '22', image: '', bio: 'Rising star between the posts. Fun fact: collects vintage gloves from 80s legends.', stats: { 'Games': 5, 'Clean Sheets': 2, 'Saves': 12, 'Conceded': 7 } },
+
+      arthur: { name: 'Arthur', position: 'Defenders', role: 'Defender / Treasurer', officialRole: 'Treasurer', number: '6', image: '', bio: 'Solid defender and club treasurer. Off-pitch he manages finances like he shuts down attacks.', firstEleven: true, stats: { 'Games': 15, 'Goals': 2, 'Assists': 3, 'Tackles': 42 } },
+      chaloh: { name: 'Chaloh', position: 'Defenders', role: 'Defender', number: '14', image: '', bio: 'Tough tackler with heart. Babadogo local — always first to training.', stats: { 'Games': 10, 'Goals': 1, 'Assists': 2, 'Tackles': 25 } },
+      collo: { name: 'Collo', position: 'Defenders', role: 'Defender', number: '5', image: '', bio: 'Wall of steel in the backline. Motto: "No way through!"', firstEleven: true, stats: { 'Games': 14, 'Goals': 1, 'Assists': 2, 'Tackles': 38 } },
+      tom: { name: 'Tom', position: 'Defenders', role: 'Defender / Asst. Treasurer', officialRole: 'Asst. Treasurer', number: '16', image: '', bio: 'Versatile full-back and assistant treasurer. Balances books and clearances perfectly.', stats: { 'Games': 12, 'Goals': 0, 'Assists': 4, 'Tackles': 30 } },
+      ogola: { name: 'Ogola', position: 'Defenders', role: 'Defender', number: '19', image: '', bio: 'Speedy wing-back. Scored from his own half last season!', stats: { 'Games': 8, 'Goals': 0, 'Assists': 1, 'Tackles': 18 } },
+      yobra: { name: 'Yobra', position: 'Defenders', role: 'Defender', number: '24', image: '', bio: 'Aerial beast. Headers win games — his do too.', stats: { 'Games': 9, 'Goals': 0, 'Assists': 0, 'Tackles': 22 } },
+      timo: { name: 'Timo', position: 'Defenders', role: 'Defender', number: '17', image: '', bio: 'Calm under pressure. Reads the game like a book.', stats: { 'Games': 11, 'Goals': 0, 'Assists': 2, 'Tackles': 27 } },
+      amoh: { name: 'Amoh', position: 'Defenders', role: 'Defender', number: '2', image: '', bio: 'Aggressive marker. Passionate about youth development.', firstEleven: true, stats: { 'Games': 12, 'Goals': 0, 'Assists': 1, 'Tackles': 35 } },
+      ogwaro: { name: 'Ogwaro', position: 'Defenders', role: 'Defender', number: '20', image: '', bio: 'Club veteran. Mentors the young guns on and off pitch.', stats: { 'Games': 7, 'Goals': 0, 'Assists': 0, 'Tackles': 15 } },
+      edgar: { name: 'Edgar', position: 'Defenders', role: 'Defender', number: '21', image: '', bio: 'Quick recovery defender. Fitness fanatic — runs marathons post-match.', stats: { 'Games': 10, 'Goals': 0, 'Assists': 1, 'Tackles': 24 } },
+      mlei: { name: 'Mlei', position: 'Defenders', role: 'Defender', number: '3', image: '', bio: 'Left-back dynamo. Crosses are pure gold.', firstEleven: true, stats: { 'Games': 13, 'Goals': 1, 'Assists': 4, 'Tackles': 29 } },
+
+      gerry: { name: 'Gerry', position: 'Midfielders', role: 'Midfielder', number: '4', image: '', bio: 'Engine in midfield. Dictates tempo like a maestro.', firstEleven: true, stats: { 'Games': 14, 'Goals': 3, 'Assists': 5, 'Pass %': 85 } },
+      dickens: { name: 'Dickens', position: 'Midfielders', role: 'Midfielder', number: '15', image: '', bio: 'Visionary passer. Assists are his art form.', stats: { 'Games': 9, 'Goals': 2, 'Assists': 4, 'Pass %': 82 } },
+      hillary: { name: 'Hillary', position: 'Midfielders', role: 'Midfielder', number: '18', image: '', bio: 'Box-to-box warrior. Covers every blade of grass.', stats: { 'Games': 11, 'Goals': 1, 'Assists': 3, 'Pass %': 78 } },
+      nico: { name: 'Nico', position: 'Midfielders', role: 'Midfielder', number: '10', image: '', bio: 'Creative spark. Free-kick specialist.', firstEleven: true, stats: { 'Games': 13, 'Goals': 4, 'Assists': 6, 'Pass %': 79 } },
+      castro: { name: 'Castro', position: 'Midfielders', role: 'Midfielder / Asst. Captain', officialRole: 'Asst. Captain', number: '8', image: '', bio: 'Dynamic leader and assistant captain. Rallies the team in crunch time.', firstEleven: true, stats: { 'Games': 16, 'Goals': 5, 'Assists': 7, 'Pass %': 82 } },
+      jemmo: { name: 'Jemmo', position: 'Midfielders', role: 'Midfielder', number: '23', image: '', bio: 'Tough tackler with silky touches.', stats: { 'Games': 8, 'Goals': 1, 'Assists': 2, 'Pass %': 76 } },
+      malcom: { name: 'Malcom', position: 'Midfielders', role: 'Midfielder', number: '25', image: '', bio: 'Ball-winning mid. Turns defence into attack in seconds.', stats: { 'Games': 10, 'Goals': 2, 'Assists': 3, 'Pass %': 80 } },
+      bella: { name: 'Bella', position: 'Midfielders', role: 'Midfielder', number: '26', image: '', bio: 'Graceful controller. Keeps possession like glue.', stats: { 'Games': 7, 'Goals': 0, 'Assists': 1, 'Pass %': 84 } },
+      dominic: { name: 'Dominic', position: 'Midfielders', role: 'Midfielder', number: '27', image: '', bio: 'Long-range threat from deep. Set-piece wizard.', stats: { 'Games': 9, 'Goals': 1, 'Assists': 2, 'Pass %': 77 } },
+      kylloh: { name: 'Kylloh', position: 'Midfielders', role: 'Midfielder', number: '28', image: '', bio: 'Energetic runner. Covers for everyone.', stats: { 'Games': 6, 'Goals': 0, 'Assists': 1, 'Pass %': 75 } },
+      rapho: { name: 'Rapho', position: 'Midfielders', role: 'Midfielder', number: '29', image: '', bio: 'Technical gem. Dribbles past defenders for fun.', stats: { 'Games': 8, 'Goals': 1, 'Assists': 3, 'Pass %': 81 } },
+
+      felix: { name: 'Felix', position: 'Forwards', role: 'Forward', number: '11', image: '', bio: 'Poacher supreme. Sniffs out goals like a pro.', firstEleven: true, stats: { 'Games': 14, 'Goals': 7, 'Assists': 3, 'Shots': 18 } },
+      davy: { name: 'Davy', position: 'Forwards', role: 'Forward', number: '7', image: '', bio: 'Pacey winger. Burns full-backs for breakfast.', firstEleven: true, stats: { 'Games': 15, 'Goals': 6, 'Assists': 8, 'Shots': 22 } },
+      rigan: { name: 'Rigan', position: 'Forwards', role: 'Forward', number: '13', image: '', bio: 'Clinical finisher. One-touch wonders.', stats: { 'Games': 11, 'Goals': 4, 'Assists': 2, 'Shots': 15 } },
+      brayo: { name: 'Brayo', position: 'Forwards', role: 'Forward / Captain', officialRole: 'Captain', number: '9', image: '', bio: 'Club captain and goal machine. Leads by example on the pitch every single match.', firstEleven: true, stats: { 'Games': 18, 'Goals': 12, 'Assists': 5, 'Shots': 35 } },
+      julius: { name: 'Julius', position: 'Forwards', role: 'Forward', number: '12', image: '', bio: 'Target man. Holds up play and brings others in.', stats: { 'Games': 10, 'Goals': 3, 'Assists': 4, 'Shots': 12 } },
+      masinde: { name: 'Masinde', position: 'Forwards', role: 'Forward', number: '10', image: 'masinde.png', bio: "Lightning forward and founding member. Scored CCFC's first ever goal — pure fire!", stats: { 'Games': 14, 'Goals': 8, 'Assists': 4, 'Shots': 26 } },
+      franco: { name: 'Franco', position: 'Forwards', role: 'Forward', number: '30', image: '', bio: 'Tricky dribbler. Loves a nutmeg.', stats: { 'Games': 9, 'Goals': 2, 'Assists': 3, 'Shots': 10 } },
+      ben: { name: 'Ben', position: 'Forwards', role: 'Forward', number: '31', image: '', bio: 'Super sub. Changes games off the bench.', stats: { 'Games': 7, 'Goals': 1, 'Assists': 2, 'Shots': 8 } }
+    };
+
+    const columns = ['Goalkeepers','Defenders','Midfielders','Forwards'];
+    const firstElevenOrder = ['richie','amoh','collo','arthur','mlei','castro','gerry','nico','davy','brayo','felix'];
+
+    function getInitials(name){ return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+
+    function buildAvatarEl(playerId, size=52){
+      const p=players[playerId];
+      const wrap=document.createElement('div');
+      wrap.className='avatar';
+      wrap.style.width=size+'px'; wrap.style.height=size+'px'; wrap.style.fontSize=(size*0.35)+'px';
+      wrap.appendChild(document.createTextNode(getInitials(p.name)));
+      if(p.image){
+        const img=document.createElement('img');
+        img.src=p.image; img.alt=p.name+' photo'; img.loading='lazy';
+        img.addEventListener('error',()=>img.remove());
         wrap.appendChild(img);
       }
       return wrap;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       BUILD SQUAD COLUMNS
-    ───────────────────────────────────────────────────────────── */
-    function buildSquad() {
-      const grid = document.getElementById('squadGrid');
-      const groups = {};
-      columns.forEach(c => { groups[c] = []; });
-
-      Object.entries(players).forEach(([id, p]) => {
-        if (groups[p.position]) groups[p.position].push(id);
-      });
-
-      columns.forEach(colName => {
-        const col = document.createElement('div');
-        col.className = 'squad-column';
-
-        const title = document.createElement('h3');
-        title.className = 'column-title';
-        title.textContent = colName;
-        col.appendChild(title);
-
-        const ul = document.createElement('ul');
-        ul.className = 'player-list';
-
-        groups[colName].forEach(id => {
-          const p = players[id];
-          const li = document.createElement('li');
-          li.className = 'player-item';
-          li.setAttribute('data-player-id', id);
-          li.setAttribute('tabindex', '0');
-          li.setAttribute('role', 'button');
-          li.setAttribute('aria-label', 'View ' + p.name + ' profile');
-
-          li.appendChild(buildAvatarEl(id, 52));
-
-          const meta = document.createElement('div');
-          meta.className = 'player-meta';
-
-          const h4 = document.createElement('h4');
-          h4.textContent = p.name;
-          meta.appendChild(h4);
-
-          if (p.officialRole) {
-            const badge = document.createElement('span');
-            badge.className = 'role-badge';
-            badge.textContent = p.officialRole;
-            meta.appendChild(badge);
-          }
-
+    function buildSquad(){
+      const grid=document.getElementById('squadGrid');
+      const groups={}; columns.forEach(c=>groups[c]=[]);
+      Object.entries(players).forEach(([id,p])=>{ if(groups[p.position]) groups[p.position].push(id); });
+      columns.forEach((colName, idx)=>{
+        const col=document.createElement('div');
+        col.className='squad-column';
+        col.style.transitionDelay = (idx * 0.1) + 's';
+        const title=document.createElement('h3'); title.className='column-title'; title.textContent=colName; col.appendChild(title);
+        const ul=document.createElement('ul'); ul.className='player-list';
+        groups[colName].forEach((id, pIdx)=>{
+          const p=players[id];
+          const li=document.createElement('li'); li.className='player-item';
+          li.setAttribute('data-player-id',id); li.setAttribute('tabindex','0'); li.setAttribute('role','button'); li.setAttribute('aria-label','View '+p.name+' profile');
+          li.style.transitionDelay = (pIdx * 0.05) + 's';
+          li.appendChild(buildAvatarEl(id,48));
+          const meta=document.createElement('div'); meta.className='player-meta';
+          const h4=document.createElement('h4'); h4.textContent=p.name; meta.appendChild(h4);
+          if(p.officialRole){ const badge=document.createElement('span'); badge.className='role-badge'; badge.textContent=p.officialRole; meta.appendChild(badge); }
           li.appendChild(meta);
+          const num=document.createElement('span'); num.className='player-number'; num.textContent='#'+p.number; li.appendChild(num);
           ul.appendChild(li);
         });
-
-        col.appendChild(ul);
-        grid.appendChild(col);
+        col.appendChild(ul); grid.appendChild(col);
       });
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       BUILD FIRST ELEVEN
-    ───────────────────────────────────────────────────────────── */
-    function buildFirstEleven() {
-      const grid = document.getElementById('firstElevenGrid');
-
-      firstElevenOrder.forEach(id => {
-        const p = players[id];
-        if (!p) return;
-
-        const li = document.createElement('li');
-        li.className = 'eleven-card';
-        li.setAttribute('data-player-id', id);
-        li.setAttribute('tabindex', '0');
-        li.setAttribute('role', 'button');
-        li.setAttribute('aria-label', 'View ' + p.name + ' profile');
-
-        /* avatar */
-        const avatarWrap = document.createElement('div');
-        avatarWrap.className = 'eleven-avatar';
-        avatarWrap.setAttribute('aria-hidden', 'true');
-        avatarWrap.textContent = getInitials(p.name);
-
-        if (p.image) {
-          const img = document.createElement('img');
-          img.src = p.image;
-          img.alt = '';
-          img.loading = 'lazy';
-          img.addEventListener('error', () => img.remove());
-          avatarWrap.appendChild(img);
-        }
-
-        const h4 = document.createElement('h4');
-        h4.textContent = p.name;
-
-        const badge = document.createElement('span');
-        badge.className = 'role-badge';
-        badge.textContent = p.position.replace(/s$/, ''); // "Forwards" → "Forward"
-
-        li.appendChild(avatarWrap);
-        li.appendChild(h4);
-        li.appendChild(badge);
-        grid.appendChild(li);
+    function buildFirstEleven(){
+      const grid=document.getElementById('firstElevenGrid');
+      firstElevenOrder.forEach((id, idx)=>{
+        const p=players[id]; if(!p) return;
+        const li=document.createElement('li'); li.className='eleven-card';
+        li.setAttribute('data-number','#'+p.number);
+        li.setAttribute('data-player-id',id); li.setAttribute('tabindex','0'); li.setAttribute('role','button'); li.setAttribute('aria-label','View '+p.name+' profile');
+        li.style.transitionDelay = (idx * 0.08) + 's';
+        const avatarWrap=document.createElement('div'); avatarWrap.className='eleven-avatar'; avatarWrap.setAttribute('aria-hidden','true'); avatarWrap.textContent=getInitials(p.name);
+        if(p.image){ const img=document.createElement('img'); img.src=p.image; img.alt=''; img.loading='lazy'; img.addEventListener('error',()=>img.remove()); avatarWrap.appendChild(img); }
+        const h4=document.createElement('h4'); h4.textContent=p.name;
+        const badge=document.createElement('span'); badge.className='role-badge'; badge.textContent=p.position.replace(/s$/,'');
+        const overlay=document.createElement('div'); overlay.className='eleven-overlay'; overlay.innerHTML='<span>View Profile &rarr;</span>';
+        li.appendChild(avatarWrap); li.appendChild(h4); li.appendChild(badge); li.appendChild(overlay); grid.appendChild(li);
       });
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       MODAL
-    ───────────────────────────────────────────────────────────── */
-    let lastFocused = null;
+    let lastFocused=null;
+    function openModal(id){
+      const p=players[id]; if(!p) return; lastFocused=document.activeElement;
+      const avatarEl=document.getElementById('modalAvatar'); avatarEl.innerHTML=''; avatarEl.textContent=getInitials(p.name);
+      if(p.image){ const img=document.createElement('img'); img.src=p.image; img.alt=p.name+' photo'; img.addEventListener('error',()=>img.remove()); avatarEl.appendChild(img); }
+      document.getElementById('modalName').textContent=p.name;
+      document.getElementById('modalRole').textContent=p.role;
+      document.getElementById('modalBio').textContent=p.bio;
 
-    function openModal(id) {
-      const p = players[id];
-      if (!p) return;
-
-      lastFocused = document.activeElement;
-
-      /* populate avatar */
-      const avatarEl = document.getElementById('modalAvatar');
-      avatarEl.innerHTML = '';
-      avatarEl.textContent = getInitials(p.name);
-
-      if (p.image) {
-        const img = document.createElement('img');
-        img.src = p.image;
-        img.alt = p.name + ' photo';
-        img.addEventListener('error', () => img.remove());
-        avatarEl.appendChild(img);
-      }
-
-      document.getElementById('modalName').textContent = p.name;
-      document.getElementById('modalRole').textContent = p.role;
-      document.getElementById('modalBio').textContent = p.bio;
-
-      /* stats */
-      const statsGrid = document.getElementById('modalStats');
-      statsGrid.innerHTML = '';
-      p.stats.forEach(s => {
-        const div = document.createElement('div');
-        div.className = 'stat-item';
-        div.innerHTML = `<span class="stat-value">${s.value}</span><span class="stat-label">${s.label}</span>`;
-        statsGrid.appendChild(div);
+      const statsContainer=document.getElementById('modalStats'); statsContainer.innerHTML='';
+      const maxVal = Math.max(...Object.values(p.stats));
+      Object.entries(p.stats).forEach(([label, value], idx)=>{
+        const row=document.createElement('div'); row.className='stat-row';
+        const pct = (value / maxVal) * 100;
+        row.innerHTML = `
+          <span class="stat-label-text">${label}</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:0%" data-width="${pct}%"></div></div>
+          <span class="stat-value-text">${value}</span>
+        `;
+        statsContainer.appendChild(row);
+        setTimeout(()=>{ row.querySelector('.stat-bar-fill').style.width = pct+'%'; }, 100 + (idx * 100));
       });
 
-      const modal = document.getElementById('playerModal');
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-
-      /* move focus into modal */
+      const modal=document.getElementById('playerModal'); modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
       document.getElementById('modalClose').focus();
     }
 
-    function closeModal() {
-      const modal = document.getElementById('playerModal');
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      if (lastFocused) lastFocused.focus();
+    function closeModal(){
+      const modal=document.getElementById('playerModal'); modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+      if(lastFocused) lastFocused.focus();
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       EVENT DELEGATION  (FIX: replaces fragile inline onclick)
-    ───────────────────────────────────────────────────────────── */
-    function handlePlayerActivation(e) {
-      const target = e.target.closest('[data-player-id]');
-      if (!target) return;
-      if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
-      if (e.type === 'keydown') e.preventDefault();
+    function handlePlayerActivation(e){
+      const target=e.target.closest('[data-player-id]'); if(!target) return;
+      if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ') return;
+      if(e.type==='keydown') e.preventDefault();
       openModal(target.dataset.playerId);
     }
 
-    document.addEventListener('click',   handlePlayerActivation);
-    document.addEventListener('keydown', handlePlayerActivation);
+    document.addEventListener('click',handlePlayerActivation);
+    document.addEventListener('keydown',handlePlayerActivation);
+    document.getElementById('playerModal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    document.getElementById('modalClose').addEventListener('click',closeModal);
 
-    /* FIX: close modal on backdrop click (scoped, no window.onclick override) */
-    document.getElementById('playerModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-
-    /* FIX: close modal with Escape key */
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-
-    /* ─────────────────────────────────────────────────────────────
-       FORMATION SWITCHER  (FIX: display flex not block)
-    ───────────────────────────────────────────────────────────── */
-    document.querySelectorAll('.f-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = 'f-' + btn.dataset.f;
-
-        document.querySelectorAll('.f-btn').forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-
-        document.querySelectorAll('.formation').forEach(f => {
-          f.classList.remove('active');
-        });
-        /* FIX: toggling .active class, CSS handles flex vs none */
+    document.querySelectorAll('.f-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id='f-'+btn.dataset.f;
+        document.querySelectorAll('.f-btn').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+        btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+        document.querySelectorAll('.formation').forEach(f=>f.classList.remove('active'));
         document.getElementById(id).classList.add('active');
       });
     });
 
-    /* ─────────────────────────────────────────────────────────────
-       MOBILE NAV  (FIX: closes on link click too)
-    ───────────────────────────────────────────────────────────── */
-    const navToggle = document.getElementById('navToggle');
-    const mainNav   = document.getElementById('mainNav');
-
-    navToggle.addEventListener('click', () => {
-      const open = mainNav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open);
-      navToggle.textContent = open ? '✕' : '☰';
+    const hamburger=document.getElementById('hamburger');
+    const drawer=document.getElementById('nav-drawer');
+    hamburger.addEventListener('click',function(){
+      const isOpen=drawer.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded',isOpen);
+      hamburger.innerHTML=isOpen?'&times;':'&#9776;';
     });
-
-    /* FIX: close nav when any link is tapped */
-    mainNav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mainNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        navToggle.textContent = '☰';
+    drawer.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click',function(){
+        drawer.classList.remove('open');
+        hamburger.setAttribute('aria-expanded','false');
+        hamburger.innerHTML='&#9776;';
       });
     });
 
-    /* ─── Init ─── */
+    /* ── SCROLL REVEAL ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.section-title, .squad-column, .formation-section, .first-eleven-section').forEach(el => observer.observe(el));
+
+    /* ── COUNT UP STATS ── */
+    function animateValue(id, start, end, duration) {
+      const obj = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    setTimeout(() => {
+      animateValue('stat-players', 0, 30, 1500);
+      animateValue('stat-pos', 0, 4, 1200);
+      animateValue('stat-starters', 0, 11, 1400);
+      animateValue('stat-goals', 0, 26, 1800);
+    }, 800);
+
     buildSquad();
     buildFirstEleven();
   </script>
