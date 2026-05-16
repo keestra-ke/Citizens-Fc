@@ -3,410 +3,464 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chandaria Converting Football Club | Results & Fixtures</title>
+  <title>Chandaria Converting Football Club | Fixtures &amp; Results</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue: #0047AB;
-      --red: #D32F2F;
-      --gold: #FFD700;
-      --bg: #f4f5f7;
-      --white: #ffffff;
-      --dark: #111827;
-      --muted: #6b7280;
-      --radius: 14px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.07);
-      --shadow-hover: 0 10px 36px rgba(0,0,0,0.13);
-      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-      /* result colours */
-      --win-bg:       #f0fdf4;
-      --win-border:   #16a34a;
-      --win-score:    #15803d;
-      --loss-bg:      #fff5f5;
-      --loss-border:  #dc2626;
-      --loss-score:   #b91c1c;
-      --draw-bg:      #fffbeb;
-      --draw-border:  #d97706;
-      --draw-score:   #92400e;
-      --up-bg:        #eff6ff;
-      --up-border:    #3b82f6;
-      --up-score:     #1d4ed8;
+      --blue:   #0A2463;
+      --red:    #D62828;
+      --gold:   #F7B731;
+      --light:  #F4F3EE;
+      --dark:   #111111;
+      --card:   #ffffff;
+      --border: #E2DFD6;
+      --muted:  #6B6B6B;
+      --radius: 12px;
     }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
+      background: var(--light);
       color: var(--dark);
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* ── Header ── */
+    /* ── NAVIGATION ── */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: linear-gradient(135deg, var(--blue) 0%, #c62828 100%);
-      color: var(--white);
-      padding: 1rem 1.5rem;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      position: sticky; top: 0; z-index: 200;
+      background: var(--blue);
+      border-bottom: 3px solid var(--red);
     }
 
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.25rem; height: 56px;
+      max-width: 1100px; margin: 0 auto;
     }
 
-    header h1 {
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+    .nav-logo img {
+      width: 36px; height: 36px; border-radius: 50%;
+      object-fit: contain; border: 2px solid var(--red);
+    }
+
+    .nav-logo span {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.3rem, 4vw, 1.9rem);
-      letter-spacing: 1px;
+      font-size: 1.4rem; color: #fff; letter-spacing: 1px;
     }
 
-    .nav-toggle {
-      display: none;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--white);
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      cursor: pointer;
+    .hamburger {
+      background: none; border: none; color: #fff; font-size: 1.5rem;
+      cursor: pointer; padding: 8px; width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; transition: background 0.2s;
     }
 
-    nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .hamburger:hover, .hamburger:active { background: rgba(255,255,255,0.15); }
 
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      padding: 0.45rem 0.9rem;
-      border-radius: 50px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: var(--transition);
-      white-space: nowrap;
+    .nav-links-desktop { display: none; gap: 4px; }
+
+    .nav-links-desktop a {
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500; padding: 7px 12px;
+      border-radius: 6px; letter-spacing: 0.4px;
+      transition: all 0.2s; white-space: nowrap;
     }
 
-    nav a:hover, nav a.active {
-      background: rgba(255,255,255,0.25);
-      transform: translateY(-2px);
+    .nav-links-desktop a:hover,
+    .nav-links-desktop a.active { background: var(--red); color: #fff; }
+
+    .nav-drawer {
+      display: none; flex-direction: column;
+      background: var(--blue);
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* ── Hero ── */
+    .nav-drawer.open { display: flex; }
+
+    .nav-drawer a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 1rem; font-weight: 500; padding: 14px 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 12px;
+      transition: background 0.15s;
+    }
+
+    .nav-drawer a:hover, .nav-drawer a:active { background: var(--red); color: #fff; }
+    .nav-drawer a .nav-icon { font-size: 1rem; width: 22px; text-align: center; }
+
+    /* ── HERO ── */
     .hero {
-      height: 38vh;
-      min-height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(160deg, rgba(0,71,171,0.9) 0%, rgba(198,40,40,0.9) 100%);
-      color: var(--white);
-      padding: 2rem;
+      background: linear-gradient(145deg, var(--blue) 55%, #1a3a8f 100%);
+      padding: 2rem 1.25rem 1.75rem;
+      position: relative; overflow: hidden;
     }
 
-    .hero h2 {
+    .hero::before {
+      content: ''; position: absolute; right: -50px; top: -50px;
+      width: 220px; height: 220px;
+      border: 36px solid rgba(255,255,255,0.06);
+      border-radius: 50%; pointer-events: none;
+    }
+
+    .hero::after {
+      content: ''; position: absolute; right: 30px; bottom: -70px;
+      width: 160px; height: 160px;
+      border: 28px solid rgba(255,255,255,0.04);
+      border-radius: 50%; pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      position: relative; z-index: 1; text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block; background: var(--red); color: #fff;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 3px 10px;
+      border-radius: 4px; margin-bottom: 0.6rem;
+    }
+
+    .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.8rem, 9vw, 5rem);
-      letter-spacing: 4px;
-      margin-bottom: 0.4rem;
-      animation: fadeUp 0.8s ease both;
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      color: #fff; letter-spacing: 1.5px; line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
     .hero p {
-      font-size: 1rem;
-      font-weight: 300;
-      opacity: 0.85;
-      animation: fadeUp 0.8s ease 0.2s both;
+      font-size: 0.9rem; color: rgba(255,255,255,0.75);
+      max-width: 600px; margin: 0 auto;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── MAIN ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 2px; color: var(--blue);
+      margin: 2rem 0 1rem;
+      display: flex; align-items: center; gap: 10px;
     }
 
-    /* ── Container ── */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem;
+    .section-title::after {
+      content: ''; flex: 1; height: 2px;
+      background: var(--red); opacity: 0.2; border-radius: 1px;
     }
 
-    /* ── Stats Bar ── */
+    /* ── SEASON STATS ── */
     .stats-bar {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 2rem;
     }
 
     .stat-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 1.1rem 0.75rem;
-      text-align: center;
-      box-shadow: var(--shadow);
-      border-top: 3px solid var(--blue);
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); border-top: 3px solid var(--blue);
+      padding: 1rem 0.75rem; text-align: center;
     }
 
-    .stat-card.wins   { border-top-color: var(--win-border); }
-    .stat-card.losses { border-top-color: var(--loss-border); }
-    .stat-card.draws  { border-top-color: var(--draw-border); }
-    .stat-card.upcoming-stat { border-top-color: var(--up-border); }
+    .stat-card.wins     { border-top-color: #16a34a; }
+    .stat-card.draws    { border-top-color: #d97706; }
+    .stat-card.losses   { border-top-color: #dc2626; }
+    .stat-card.goals-for  { border-top-color: var(--gold); }
+    .stat-card.goals-ag   { border-top-color: var(--muted); }
 
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 1px;
-      color: var(--dark);
-      line-height: 1;
-      margin-bottom: 0.25rem;
+      font-size: 2rem; letter-spacing: 1px;
+      color: var(--dark); line-height: 1; margin-bottom: 0.2rem;
     }
 
-    .stat-card.wins   .stat-value { color: var(--win-border); }
-    .stat-card.losses .stat-value { color: var(--loss-border); }
-    .stat-card.draws  .stat-value { color: var(--draw-border); }
+    .stat-card.wins   .stat-value { color: #16a34a; }
+    .stat-card.draws  .stat-value { color: #d97706; }
+    .stat-card.losses .stat-value { color: #dc2626; }
+    .stat-card.goals-for .stat-value { color: #BA7517; }
 
     .stat-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
+      font-size: 0.67rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
     }
 
-    /* ── Section heading ── */
-    .section-heading {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: 2px;
-      color: var(--blue);
-      margin-bottom: 1rem;
-      padding-left: 0.75rem;
-      border-left: 4px solid var(--red);
-    }
-
-    /* ── Legend ── */
-    .legend {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.75rem;
-    }
+    /* ── LEGEND ── */
+    .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
 
     .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 500; color: var(--muted);
     }
 
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-dot.win  { background: #16a34a; }
+    .legend-dot.draw { background: #d97706; }
+    .legend-dot.loss { background: #dc2626; }
 
-    .legend-dot.win  { background: var(--win-border); }
-    .legend-dot.loss { background: var(--loss-border); }
-    .legend-dot.draw { background: var(--draw-border); }
-    .legend-dot.up   { background: var(--up-border); }
+    /* ── MATCH CARDS ── */
+    .matches-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 0.5rem; }
 
-    /* ── Matches List ── */
-    .matches-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 3rem;
-    }
-
-    /* ── Match Card ── */
     .match-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.25rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border-left: 5px solid var(--blue);
-      display: grid;
-      grid-template-columns: 90px 1fr auto 1fr auto;
-      align-items: center;
-      gap: 0.75rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .match-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
+    .match-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+    .match-card.win  { box-shadow: inset 4px 0 0 #16a34a; }
+    .match-card.loss { box-shadow: inset 4px 0 0 #dc2626; }
+    .match-card.draw { box-shadow: inset 4px 0 0 #d97706; }
+    .match-card.upcoming { box-shadow: inset 4px 0 0 var(--blue); }
+
+    .match-card.win:hover      { box-shadow: inset 4px 0 0 #16a34a, 0 6px 20px rgba(0,0,0,0.08); }
+    .match-card.loss:hover     { box-shadow: inset 4px 0 0 #dc2626, 0 6px 20px rgba(0,0,0,0.08); }
+    .match-card.draw:hover     { box-shadow: inset 4px 0 0 #d97706, 0 6px 20px rgba(0,0,0,0.08); }
+    .match-card.upcoming:hover { box-shadow: inset 4px 0 0 var(--blue), 0 6px 20px rgba(0,0,0,0.08); }
+
+    .card-head {
+      color: rgba(255,255,255,0.95); font-size: 0.67rem;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 14px;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .match-card.win      { border-left-color: var(--win-border);  background: var(--win-bg); }
-    .match-card.loss     { border-left-color: var(--loss-border); background: var(--loss-bg); }
-    .match-card.draw     { border-left-color: var(--draw-border); background: var(--draw-bg); }
-    .match-card.upcoming { border-left-color: var(--up-border);   background: var(--up-bg); }
+    .match-card.win      .card-head { background: #16a34a; }
+    .match-card.loss     .card-head { background: #dc2626; }
+    .match-card.draw     .card-head { background: #d97706; }
+    .match-card.upcoming .card-head { background: var(--blue); }
 
-    .match-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
+    .card-body {
+      padding: 12px 14px;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 8px;
     }
 
-    .match-num {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
+    .team-opp {
+      font-weight: 600; font-size: 0.9rem;
+      color: var(--muted); text-align: right;
     }
 
-    .match-date {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-style: italic;
-      white-space: nowrap;
-    }
+    .team-ccfc { font-weight: 700; font-size: 0.9rem; color: var(--blue); }
 
-    .team-name {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--dark);
-    }
-
-    .team-name.ccfc {
-      text-align: right;
-    }
-
-    /* FIX: score is always centred; colour reflects result */
-    .score-block {
-      text-align: center;
-      min-width: 90px;
-    }
+    .score-block { text-align: center; min-width: 80px; }
 
     .score {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 2px;
-      line-height: 1;
+      font-size: 1.8rem; letter-spacing: 2px; line-height: 1;
     }
 
-    .match-card.win      .score { color: var(--win-score); }
-    .match-card.loss     .score { color: var(--loss-score); }
-    .match-card.draw     .score { color: var(--draw-score); }
-    .match-card.upcoming .score { color: var(--up-score); }
+    .match-card.win      .score { color: #15803d; }
+    .match-card.loss     .score { color: #b91c1c; }
+    .match-card.draw     .score { color: #92400e; }
+    .match-card.upcoming .score { color: var(--blue); font-size: 1rem; letter-spacing: 1px; }
 
-    .score-venue {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-top: 0.1rem;
-    }
+    .venue-text { font-size: 0.67rem; color: var(--muted); text-align: center; margin-top: 2px; }
 
-    /* result badge */
+    .card-foot { padding: 5px 14px 10px; display: flex; justify-content: flex-end; }
+
     .result-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.25rem 0.65rem;
-      border-radius: 50px;
-      white-space: nowrap;
+      font-size: 0.62rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 12px;
+      text-transform: uppercase; letter-spacing: 0.8px;
     }
 
-    .match-card.win      .result-badge { background: var(--win-border);  color: #fff; }
-    .match-card.loss     .result-badge { background: var(--loss-border); color: #fff; }
-    .match-card.draw     .result-badge { background: var(--draw-border); color: #fff; }
-    .match-card.upcoming .result-badge { background: var(--up-border);   color: #fff; }
+    .match-card.win      .result-badge { background: #D4EDDA; color: #1B7F4A; }
+    .match-card.loss     .result-badge { background: #F8D7DA; color: #A32D2D; }
+    .match-card.draw     .result-badge { background: #FFF3CD; color: #856404; }
+    .match-card.upcoming .result-badge { background: #dbeafe; color: #1e3a8a; }
 
-    /* ── Upcoming Section ── */
-    .upcoming-section { margin-bottom: 3rem; }
+    /* ── INTERNAL WAR CARD ── */
+    .iw-card {
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #150000 0%, #0A2463 50%, #150000 100%);
+      border: 1.5px solid var(--red);
+      overflow: hidden; margin-bottom: 0.75rem;
+    }
 
-    /* ── Footer ── */
+    .iw-head {
+      background: var(--red); color: #fff;
+      font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .iw-body {
+      padding: 16px 14px;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 8px;
+    }
+
+    .iw-team {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 2px;
+    }
+
+    .iw-team.red  { color: #ff7070; text-align: right; }
+    .iw-team.blue { color: #7ab8ff; }
+
+    .iw-vs-block { text-align: center; }
+
+    .iw-vs-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--gold); line-height: 1;
+    }
+
+    .iw-fire { font-size: 1rem; display: block; }
+
+    .iw-foot { padding: 4px 14px 12px; text-align: center; }
+
+    .iw-sub {
+      font-size: 0.68rem; color: rgba(255,255,255,0.45);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* ── FITNESS BANNER ── */
+    .fitness-banner {
+      background: var(--gold); border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .fb-label {
+      font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: #633806; margin-bottom: 2px;
+    }
+
+    .fb-match { font-size: 0.95rem; font-weight: 700; color: var(--dark); }
+    .fb-match em { color: var(--blue); font-style: normal; }
+    .fb-venue { font-size: 0.75rem; color: #7a4403; margin-top: 2px; }
+
+    .fb-badge {
+      background: var(--blue); color: #fff;
+      font-size: 0.7rem; font-weight: 700;
+      padding: 6px 16px; border-radius: 20px;
+      letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
     footer {
-      background: linear-gradient(135deg, var(--blue), var(--red));
-      color: rgba(255,255,255,0.9);
-      text-align: center;
-      padding: 1.75rem;
-      font-size: 0.9rem;
-      font-weight: 300;
-      margin-top: 1rem;
+      background: var(--blue); color: rgba(255,255,255,0.7);
+      text-align: center; padding: 1.5rem 1.25rem;
+      font-size: 0.85rem; border-top: 3px solid var(--red);
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .nav-toggle { display: block; }
-      nav { display: none; flex-direction: column; width: 100%; padding-top: 0.75rem; gap: 0.4rem; }
-      nav.open { display: flex; }
-      nav a { width: 100%; text-align: center; }
-      .header-inner { flex-direction: column; align-items: flex-start; }
+    footer strong { color: var(--gold); }
 
-      .match-card {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
+    /* ── BOTTOM TAB BAR ── */
+    .tab-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--blue); border-top: 2px solid var(--red);
+      display: flex; z-index: 200;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .tab-btn {
+      flex: 1; background: none; border: none;
+      color: rgba(255,255,255,0.55);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem; font-weight: 500;
+      padding: 8px 2px 6px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 3px; letter-spacing: 0.3px; text-transform: uppercase;
+      text-decoration: none; min-width: 0; transition: color 0.15s;
+    }
+
+    .tab-btn .ti { font-size: 1.1rem; line-height: 1; }
+    .tab-btn.active, .tab-btn:hover { color: var(--gold); }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+      .nav-links-desktop { display: flex; }
+      .nav-drawer { display: none !important; }
+      .tab-bar { display: none; }
+      main { padding-bottom: 2rem; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .stats-bar { grid-template-columns: repeat(6, 1fr); }
+    }
+
+    /* ── DARK MODE ── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --light: #121212; --dark: #e8e8e8;
+        --card: #1e1e1e; --border: #2e2e2e; --muted: #888;
       }
 
-      .team-name.ccfc { text-align: left; }
-
-      .score-block { text-align: left; }
-
-      .result-badge { align-self: flex-start; }
+      .match-card.win  { background: #0a2015; }
+      .match-card.loss { background: #200a0a; }
+      .match-card.draw { background: #201a08; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1d27;
-        --white: #252836;
-        --dark: #f0f0f0;
-        --muted: #9ca3af;
-        --win-bg:  #0d2e1a;
-        --loss-bg: #2e0d0d;
-        --draw-bg: #2e240d;
-        --up-bg:   #0d1a2e;
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- ── HEADER / NAV ── -->
   <header>
-    <div class="header-inner">
-      <h1>Chandaria Converting F.C.</h1>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-      <nav id="mainNav" role="navigation" aria-label="Main navigation">
+    <div class="nav-top">
+      <a class="nav-logo" href="index.html">
+        <img src="logo.png" alt="CCFC Logo" onerror="this.style.display='none'">
+        <span>C.C.F.C</span>
+      </a>
+
+      <nav class="nav-links-desktop" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="team.html">Team</a>
         <a href="Gallery.html">Gallery</a>
         <a href="finance.html">Finance</a>
-        <a href="fixtures.html" class="active" aria-current="page">Fixtures &amp; Results</a>
+        <a href="fixtures.html" class="active">Fixtures</a>
         <a href="contact.html">Contact</a>
       </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     </div>
+
+    <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+      <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+      <a href="team.html"><span class="nav-icon">👥</span> Team</a>
+      <a href="Gallery.html"><span class="nav-icon">📸</span> Gallery</a>
+      <a href="finance.html"><span class="nav-icon">💰</span> Finance</a>
+      <a href="fixtures.html"><span class="nav-icon">📅</span> Fixtures &amp; Results</a>
+      <a href="contact.html"><span class="nav-icon">📞</span> Contact</a>
+    </nav>
   </header>
 
-  <div class="hero">
-    <h2>Fixtures &amp; Results</h2>
-    <p>2025 Season — Chandaria Converting FC</p>
-  </div>
+  <!-- ── HERO ── -->
+  <section class="hero" aria-label="Fixtures and results hero">
+    <div class="hero-inner">
+      <div class="hero-badge">2025 Season</div>
+      <h1>Fixtures &amp; Results</h1>
+      <p>Every match. Every result. The full story of Chandaria Converting FC.</p>
+    </div>
+  </section>
 
-  <div class="container">
+  <main>
 
-    <!-- ── Season Stats Bar ── -->
-    <div class="stats-bar" id="statsBar" aria-label="Season summary">
+    <!-- Season Stats -->
+    <h2 class="section-title">Season Summary</h2>
+
+    <div class="stats-bar" aria-label="Season summary">
       <div class="stat-card">
         <div class="stat-value" id="stat-played">0</div>
         <div class="stat-label">Played</div>
@@ -423,160 +477,180 @@
         <div class="stat-value" id="stat-losses">0</div>
         <div class="stat-label">Lost</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card goals-for">
         <div class="stat-value" id="stat-gf">0</div>
         <div class="stat-label">Goals For</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card goals-ag">
         <div class="stat-value" id="stat-ga">0</div>
         <div class="stat-label">Goals Against</div>
       </div>
-      <div class="stat-card upcoming-stat">
-        <div class="stat-value" id="stat-upcoming">0</div>
-        <div class="stat-label">Upcoming</div>
+    </div>
+
+    <!-- ── UPCOMING FIXTURES ── -->
+    <h2 class="section-title">Upcoming Fixtures</h2>
+
+    <!-- Internal War -->
+    <div class="iw-card" role="article" aria-label="Internal War: Team Red vs Team Blue">
+      <div class="iw-head">
+        <span>&#9876; Next Match &mdash; Internal War</span>
+        <span>C.C.F.C Internal</span>
+      </div>
+      <div class="iw-body">
+        <div class="iw-team red">Team Red</div>
+        <div class="iw-vs-block">
+          <div class="iw-vs-text">VS</div>
+          <span class="iw-fire">&#128293;</span>
+        </div>
+        <div class="iw-team blue">Team Blue</div>
+      </div>
+      <div class="iw-foot">
+        <div class="iw-sub">Converting FC &bull; Brothers vs Brothers &bull; Who survives?</div>
       </div>
     </div>
 
-    <!-- ── Past Results ── -->
-    <div class="section-heading">Past Results</div>
+    <!-- Fitness away fixture -->
+    <div class="fitness-banner" role="article" aria-label="Upcoming away fixture: Converting FC vs Fitness at Kinunga Complex, Nyeri">
+      <div>
+        <div class="fb-label">&#127967; Away Fixture &mdash; Upcoming</div>
+        <div class="fb-match">Converting FC <em>vs</em> Fitness</div>
+        <div class="fb-venue">&#128205; Kinunga Complex, Nyeri</div>
+      </div>
+      <div class="fb-badge">Upcoming</div>
+    </div>
+
+    <!-- Other upcoming fixtures (rendered by JS) -->
+    <div class="matches-list" id="upcomingList" aria-label="Further upcoming fixtures"></div>
+
+    <!-- ── PAST RESULTS ── -->
+    <h2 class="section-title">Past Results</h2>
 
     <div class="legend">
-      <div class="legend-item"><span class="legend-dot win"></span> Won</div>
+      <div class="legend-item"><span class="legend-dot win"></span> Win</div>
       <div class="legend-item"><span class="legend-dot draw"></span> Draw</div>
-      <div class="legend-item"><span class="legend-dot loss"></span> Lost</div>
-      <div class="legend-item"><span class="legend-dot up"></span> Upcoming</div>
+      <div class="legend-item"><span class="legend-dot loss"></span> Loss</div>
     </div>
 
     <div class="matches-list" id="resultsList" aria-label="Past results"></div>
 
-    <!-- ── Upcoming Fixtures ── -->
-    <div class="upcoming-section">
-      <div class="section-heading">Upcoming Fixtures</div>
-      <div class="matches-list" id="upcomingList" aria-label="Upcoming fixtures"></div>
-    </div>
+  </main>
 
-  </div>
-
+  <!-- ── FOOTER ── -->
   <footer>
-    &copy; 2025 Chandaria Converting Football Club &bull; Together as One
+    <p>&copy; <span id="currentYear"></span> <strong>Chandaria Converting Football Club</strong> &bull; Together as One &#128153;&#10084;&#65039;</p>
   </footer>
 
+  <!-- ── BOTTOM TAB BAR ── -->
+  <nav class="tab-bar" aria-label="Quick navigation">
+    <a class="tab-btn" href="index.html"><span class="ti">🏠</span>Home</a>
+    <a class="tab-btn active" href="fixtures.html"><span class="ti">📅</span>Fixtures</a>
+    <a class="tab-btn" href="team.html"><span class="ti">👥</span>Team</a>
+    <a class="tab-btn" href="Gallery.html"><span class="ti">📸</span>Gallery</a>
+    <a class="tab-btn" href="finance.html"><span class="ti">💰</span>Finance</a>
+    <a class="tab-btn" href="contact.html"><span class="ti">📞</span>Contact</a>
+  </nav>
+
   <script>
-    /* ─────────────────────────────────────────────────────────────
+    /* ─────────────────────────────────────────────
        MATCH DATA
-       result: 'win' | 'loss' | 'draw' | 'upcoming'
-       homeScore / awayScore: numbers (leave null for upcoming)
-       Note: Converting FC is always the AWAY team in this data
-             (listed on the right). Adjust per match if needed.
-    ───────────────────────────────────────────────────────────── */
+       opp       = opponent name
+       ccfcScore = CCFC goals  (null if upcoming)
+       oppScore  = opponent goals (null if upcoming)
+       result    = 'win' | 'loss' | 'draw' | 'upcoming'
+       Opponent is always listed on the LEFT (home side).
+       C.C.F.C is always on the RIGHT.
+    ───────────────────────────────────────────── */
     const matches = [
-      { num: 1,  home: 'Transport FC',       homeScore: 1, awayScore: 3, result: 'win',      date: 'Past',                   venue: '' },
-      { num: 2,  home: 'Ngomongo FC',        homeScore: 1, awayScore: 4, result: 'win',      date: 'Past',                   venue: '' },
-      { num: 3,  home: 'Transport FC',       homeScore: 1, awayScore: 0, result: 'loss',     date: 'Past',                   venue: '' },
-      { num: 4,  home: 'NYS Engineers',      homeScore: 5, awayScore: 0, result: 'loss',     date: 'Past',                   venue: '' },
-      { num: 5,  home: 'Dispatch FC',        homeScore: 6, awayScore: 4, result: 'loss',     date: 'Past',                   venue: '' },
-      { num: 6,  home: 'Chandaria Juniors',  homeScore: 1, awayScore: 4, result: 'win',      date: 'Past',                   venue: '' },
-      { num: 7,  home: 'Catholic FC',        homeScore: 1, awayScore: 6, result: 'win',      date: 'Past',                   venue: '' },
-      { num: 8,  home: 'NYS Engineers (2)',  homeScore: 2, awayScore: 1, result: 'loss',     date: 'Past',                   venue: '' },
-      { num: 9,  home: 'KMTC FC',            homeScore: 5, awayScore: 2, result: 'loss',     date: 'Sun 12th Oct 2025',      venue: '' },
-      { num: 10, home: 'Raiders FC',         homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
-      { num: 11, home: 'Lucky Summer FC',    homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
-      { num: 12, home: 'City Foxes',         homeScore: null, awayScore: null, result: 'upcoming', date: 'Upcoming',         venue: '' },
+      { num:  1, opp: 'Transport FC',      ccfcScore: 3,    oppScore: 1,    result: 'win',      date: 'Past',            venue: '' },
+      { num:  2, opp: 'Ngomongo FC',        ccfcScore: 4,    oppScore: 1,    result: 'win',      date: 'Past',            venue: '' },
+      { num:  3, opp: 'Transport FC',       ccfcScore: 0,    oppScore: 1,    result: 'loss',     date: 'Past',            venue: '' },
+      { num:  4, opp: 'NYS Engineers',      ccfcScore: 0,    oppScore: 5,    result: 'loss',     date: 'Past',            venue: 'NYS Grounds' },
+      { num:  5, opp: 'Dispatch FC',        ccfcScore: 4,    oppScore: 6,    result: 'loss',     date: 'Past',            venue: '' },
+      { num:  6, opp: 'Chandaria Juniors',  ccfcScore: 4,    oppScore: 1,    result: 'win',      date: 'Past',            venue: '' },
+      { num:  7, opp: 'Catholic FC',        ccfcScore: 6,    oppScore: 1,    result: 'win',      date: 'Past',            venue: '' },
+      { num:  8, opp: 'NYS Engineers',      ccfcScore: 1,    oppScore: 2,    result: 'loss',     date: 'Past',            venue: 'NYS Grounds' },
+      { num:  9, opp: 'KMTC FC',            ccfcScore: 2,    oppScore: 5,    result: 'loss',     date: 'Sun 12 Oct 2025', venue: '' },
+      { num: 10, opp: 'Raiders FC',         ccfcScore: null, oppScore: null, result: 'upcoming', date: 'TBA',             venue: '' },
+      { num: 11, opp: 'Lucky Summer FC',    ccfcScore: null, oppScore: null, result: 'upcoming', date: 'TBA',             venue: '' },
+      { num: 12, opp: 'City Foxes',         ccfcScore: null, oppScore: null, result: 'upcoming', date: 'TBA',             venue: '' },
     ];
 
-    /* ─────────────────────────────────────────────────────────────
-       BUILD CARD
-    ───────────────────────────────────────────────────────────── */
-    function buildCard(m, idx) {
-      const isUpcoming = m.result === 'upcoming';
-
-      const scoreText = isUpcoming
-        ? '— vs —'
-        : `${m.homeScore} – ${m.awayScore}`;
-
-      const badgeText = {
-        win: 'Win', loss: 'Loss', draw: 'Draw', upcoming: 'Upcoming'
-      }[m.result];
+    function buildCard(m) {
+      const isUp  = m.result === 'upcoming';
+      const badge = { win: 'Win', loss: 'Loss', draw: 'Draw', upcoming: 'Upcoming' }[m.result];
+      const scoreHTML = isUp ? '<span>TBA</span>' : `${m.oppScore}&nbsp;&ndash;&nbsp;${m.ccfcScore}`;
 
       const card = document.createElement('div');
-      card.className = `match-card ${m.result}`;
+      card.className = 'match-card ' + m.result;
       card.setAttribute('role', 'article');
-      card.setAttribute('aria-label', `Match ${m.num}: ${m.home} vs Converting FC — ${badgeText}`);
+      card.setAttribute('aria-label', `Match ${m.num}: ${m.opp} vs C.C.F.C — ${badge}`);
 
-      card.innerHTML = `
-        <div class="match-meta">
-          <span class="match-num">Match ${m.num}</span>
-          <span class="match-date">${m.date}</span>
+      card.innerHTML =
+        `<div class="card-head">
+          <span>Match ${m.num}</span>
+          <span>${m.date}</span>
         </div>
-        <div class="team-name">${m.home}</div>
-        <div class="score-block">
-          <div class="score">${scoreText}</div>
-          ${m.venue ? `<div class="score-venue">${m.venue}</div>` : ''}
+        <div class="card-body">
+          <div class="team-opp">${m.opp}</div>
+          <div class="score-block">
+            <div class="score">${scoreHTML}</div>
+            ${m.venue ? `<div class="venue-text">&#128205; ${m.venue}</div>` : ''}
+          </div>
+          <div class="team-ccfc">C.C.F.C</div>
         </div>
-        <div class="team-name ccfc">Converting FC</div>
-        <span class="result-badge">${badgeText}</span>
-      `;
+        <div class="card-foot">
+          <span class="result-badge">${badge}</span>
+        </div>`;
 
       return card;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       RENDER + STATS
-    ───────────────────────────────────────────────────────────── */
     function render() {
-      const resultsList   = document.getElementById('resultsList');
-      const upcomingList  = document.getElementById('upcomingList');
+      const resultsList  = document.getElementById('resultsList');
+      const upcomingList = document.getElementById('upcomingList');
+      let played = 0, wins = 0, draws = 0, losses = 0, gf = 0, ga = 0;
 
-      let played = 0, wins = 0, draws = 0, losses = 0, gf = 0, ga = 0, upcoming = 0;
-
-      matches.forEach((m, i) => {
-        const card = buildCard(m, i);
-
+      matches.forEach(m => {
         if (m.result === 'upcoming') {
-          upcoming++;
-          upcomingList.appendChild(card);
+          upcomingList.appendChild(buildCard(m));
         } else {
           played++;
           if (m.result === 'win')  wins++;
           if (m.result === 'draw') draws++;
           if (m.result === 'loss') losses++;
-          gf += m.awayScore;  /* Converting FC is away */
-          ga += m.homeScore;
-          resultsList.appendChild(card);
+          gf += m.ccfcScore;
+          ga += m.oppScore;
+          resultsList.appendChild(buildCard(m));
         }
       });
 
-      /* update stats bar */
-      document.getElementById('stat-played').textContent   = played;
-      document.getElementById('stat-wins').textContent     = wins;
-      document.getElementById('stat-draws').textContent    = draws;
-      document.getElementById('stat-losses').textContent   = losses;
-      document.getElementById('stat-gf').textContent       = gf;
-      document.getElementById('stat-ga').textContent       = ga;
-      document.getElementById('stat-upcoming').textContent = upcoming;
+      document.getElementById('stat-played').textContent = played;
+      document.getElementById('stat-wins').textContent   = wins;
+      document.getElementById('stat-draws').textContent  = draws;
+      document.getElementById('stat-losses').textContent = losses;
+      document.getElementById('stat-gf').textContent     = gf;
+      document.getElementById('stat-ga').textContent     = ga;
     }
 
-    /* ─────────────────────────────────────────────────────────────
-       MOBILE NAV
-    ───────────────────────────────────────────────────────────── */
-    const navToggle = document.getElementById('navToggle');
-    const mainNav   = document.getElementById('mainNav');
+    /* ── Hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('nav-drawer');
 
-    navToggle.addEventListener('click', () => {
-      const open = mainNav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open);
-      navToggle.textContent = open ? '✕' : '☰';
+    hamburger.addEventListener('click', function () {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      hamburger.innerHTML = isOpen ? '&times;' : '&#9776;';
     });
 
-    mainNav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mainNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        navToggle.textContent = '☰';
+    drawer.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        drawer.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.innerHTML = '&#9776;';
       });
     });
 
-    /* ─── Init ─── */
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
     render();
   </script>
 </body>
