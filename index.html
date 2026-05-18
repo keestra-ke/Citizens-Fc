@@ -6,6 +6,7 @@
   <title>Chandaria Converting Football Club | Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* (your existing CSS – unchanged) */
     :root {
       --blue: #0A2463;
       --red: #D62828;
@@ -1084,9 +1085,9 @@
 
   </main>
 
-  <!-- ── FOOTER ── -->
+  <!-- ── FOOTER with dynamic copyright year ── -->
   <footer>
-    <p>&copy; 2025 <strong>Chandaria Converting Football Club</strong> &bull; Together as One 💙❤️</p>
+    <p>&copy; <span id="currentYear"></span> <strong>Chandaria Converting Football Club</strong> &bull; Together as One 💙❤️</p>
   </footer>
 
   <!-- ── BOTTOM TAB BAR (mobile) ── -->
@@ -1100,6 +1101,9 @@
   </nav>
 
   <script>
+    // Set dynamic copyright year
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+
     // Hamburger toggle
     const hamburger = document.getElementById('hamburger');
     const drawer    = document.getElementById('nav-drawer');
