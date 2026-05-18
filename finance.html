@@ -1,99 +1,482 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>C.C.F.C | Club Contributions & Finances</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chandaria Converting FC | Club Finances</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--blue:#0047AB;--red:#D32F2F;--muted:#9ca3af;}
-    body{
-      margin:0;
-      font-family:'Montserrat',sans-serif;
-      background:linear-gradient(180deg,#0f1724,#091025);
-      color:#e6eef8;
+    :root {
+      --blue: #0A2463;
+      --red: #D62828;
+      --gold: #F7B731;
+      --light: #F4F3EE;
+      --dark: #111111;
+      --card: #ffffff;
+      --border: #E2DFD6;
+      --muted: #6B6B6B;
+      --green: #1B7F4A;
+      --radius: 12px;
     }
-    header{
-      background:linear-gradient(90deg,rgba(0,71,171,0.95),rgba(211,47,47,0.92));
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      gap:12px;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
-    header img{width:48px;height:48px;border-radius:50%;}
-    header h1{margin:0;font-size:18px;font-weight:800;}
-    nav{margin-left:auto;display:flex;gap:10px;}
-    nav a{
-      color:white;text-decoration:none;font-weight:600;
-      padding:8px 12px;border-radius:10px;
+
+    html {
+      scroll-behavior: smooth;
     }
-    nav a:hover{background:rgba(255,255,255,0.08);}
-    main{
-      max-width:800px;
-      margin:40px auto;
-      padding:20px;
-      background:rgba(255,255,255,0.03);
-      border-radius:14px;
-      text-align:center;
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    h2{margin-top:0;color:#fff;border-bottom:2px solid var(--blue);padding-bottom:4px;}
-    p{color:#cfd8e3;}
-    a.button{
-      display:inline-block;
-      background:var(--blue);
-      color:white;
-      padding:12px 28px;
-      border-radius:10px;
-      font-weight:700;
-      text-decoration:none;
-      transition:background .2s;
-      margin-top:20px;
+
+    /* ── NAVIGATION (EXACT MATCH) ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--blue);
+      border-bottom: 3px solid var(--red);
     }
-    a.button:hover{background:var(--red);}
-    footer{
-      text-align:center;
-      padding:20px;
-      color:var(--muted);
-      font-size:14px;
+
+    .nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+      height: 56px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-    iframe{
-      width:100%;
-      height:600px;
-      border:none;
-      border-radius:10px;
-      margin-top:20px;
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: contain;
+      border: 2px solid var(--red);
+    }
+
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .hamburger:hover,
+    .hamburger:active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Desktop nav links */
+    .nav-links-desktop {
+      display: none;
+      gap: 4px;
+    }
+
+    .nav-links-desktop a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 7px 12px;
+      border-radius: 6px;
+      letter-spacing: 0.4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links-desktop a:hover,
+    .nav-links-desktop a.active {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      flex-direction: column;
+      background: var(--blue);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-drawer.open {
+      display: flex;
+    }
+
+    .nav-drawer a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+
+    .nav-drawer a:hover,
+    .nav-drawer a:active {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .nav-drawer a .nav-icon {
+      font-size: 1rem;
+      width: 22px;
+      text-align: center;
+    }
+
+    /* ── HERO (SAME STYLE) ── */
+    .hero {
+      background: linear-gradient(145deg, var(--blue) 55%, #1a3a8f 100%);
+      padding: 2rem 1.25rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      right: -50px;
+      top: -50px;
+      width: 220px;
+      height: 220px;
+      border: 36px solid rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: 30px;
+      bottom: -70px;
+      width: 160px;
+      height: 160px;
+      border: 28px solid rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      color: #fff;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--blue);
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--red);
+      opacity: 0.2;
+      border-radius: 1px;
+    }
+
+    /* Financial card */
+    .finance-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .finance-card p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .finance-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .finance-btn:hover {
+      background: var(--red);
+      transform: translateY(-2px);
+    }
+
+    .iframe-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--blue);
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      padding: 1.5rem 1.25rem;
+      font-size: 0.85rem;
+      border-top: 3px solid var(--red);
+    }
+
+    footer strong {
+      color: var(--gold);
+    }
+
+    /* Bottom tab bar (mobile) */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--blue);
+      border-top: 2px solid var(--red);
+      display: flex;
+      z-index: 200;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.55);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      padding: 8px 2px 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .tab-btn .ti {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      color: var(--gold);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+      .nav-links-desktop { display: flex; }
+      .nav-drawer { display: none !important; }
+      .tab-bar { display: none; }
+      main {
+        padding-bottom: 2rem;
+      }
+      .hero {
+        padding: 3rem 1.25rem 2.5rem;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --light: #121212;
+        --dark: #e8e8e8;
+        --card: #1e1e1e;
+        --border: #2e2e2e;
+        --muted: #888;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <img src="logo.png" alt="CCFC logo">
-  <h1>Citizens Concerting FC</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="team.html">Team</a>
-    <a href="fixtures.html">Fixtures</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="finance.html">Finances</a>
-    <a href="contact.html">Contact</a>
+  <!-- HEADER (IDENTICAL TO HOME) -->
+  <header>
+    <div class="nav-top">
+      <a class="nav-logo" href="index.html">
+        <img src="logo.png" alt="CCFC Logo" onerror="this.style.display='none'">
+        <span>C.C.F.C</span>
+      </a>
+      <nav class="nav-links-desktop" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="team.html">Team</a>
+        <a href="Gallery.html">Gallery</a>
+        <a href="finance.html" class="active">Finance</a>
+        <a href="fixtures.html">Fixtures</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    </div>
+    <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+      <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+      <a href="team.html"><span class="nav-icon">👥</span> Team</a>
+      <a href="Gallery.html"><span class="nav-icon">📸</span> Gallery</a>
+      <a href="finance.html"><span class="nav-icon">💰</span> Finance</a>
+      <a href="fixtures.html"><span class="nav-icon">📅</span> Fixtures &amp; Results</a>
+      <a href="contact.html"><span class="nav-icon">📞</span> Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO (SAME STYLE) -->
+  <section class="hero" aria-label="Finance hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Transparency & Trust</div>
+      <h1>Club Finances</h1>
+      <p>Contributions, expenses, and financial records — open for all members.</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="finance-card">
+      <div class="section-title" style="margin-top:0;">📊 Live Financial Statement</div>
+      <p>View our latest contribution records and club expenditures. All data is updated in real time.</p>
+      <a href="https://1drv.ms/x/c/160f203f19bf812a/EcbKm5v_Py5NuTxQmE7IqeEBnB-38EREcJsS4QCiKf2nMg" target="_blank" class="finance-btn">
+        💰 Open in OneDrive
+      </a>
+      <div class="iframe-container">
+        <iframe src="https://1drv.ms/x/c/160f203f19bf812a/EcbKm5v_Py5NuTxQmE7IqeEBnB-38EREcJsS4QCiKf2nMg" title="CCFC Financial Records" allowfullscreen></iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <span id="currentYear"></span> <strong>Chandaria Converting Football Club</strong> &bull; Together as One 💙❤️</p>
+  </footer>
+
+  <!-- BOTTOM TAB BAR (mobile) -->
+  <nav class="tab-bar" aria-label="Quick navigation">
+    <a class="tab-btn" href="index.html"><span class="ti">🏠</span>Home</a>
+    <a class="tab-btn" href="fixtures.html"><span class="ti">📅</span>Fixtures</a>
+    <a class="tab-btn" href="team.html"><span class="ti">👥</span>Team</a>
+    <a class="tab-btn" href="Gallery.html"><span class="ti">📸</span>Gallery</a>
+    <a class="tab-btn active" href="finance.html"><span class="ti">💰</span>Finance</a>
+    <a class="tab-btn" href="contact.html"><span class="ti">📞</span>Contact</a>
   </nav>
-</header>
 
-<main>
-  <h2>Club Contributions & Finances</h2>
-  <p>Click below to view our live financial statement and contribution records.</p>
+  <script>
+    // Dynamic copyright year
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-  <a href="https://1drv.ms/x/c/160f203f19bf812a/EcbKm5v_Py5NuTxQmE7IqeEBnB-38EREcJsS4QCiKf2nMg" target="_blank" class="button">
-    💰 Open Financial Records
-  </a>
-
-  <iframe src="https://1drv.ms/x/c/160f203f19bf812a/EcbKm5v_Py5NuTxQmE7IqeEBnB-38EREcJsS4QCiKf2nMg" allowfullscreen></iframe>
-</main>
-
-<footer>
-  © 2025 Citizens Concerting Football Club • Unity in Action 💙❤️
-</footer>
-
+    // Hamburger toggle (identical to home)
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('nav-drawer');
+    if (hamburger && drawer) {
+      hamburger.addEventListener('click', function () {
+        const isOpen = drawer.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        hamburger.innerHTML = isOpen ? '&times;' : '&#9776;';
+      });
+      drawer.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          drawer.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.innerHTML = '&#9776;';
+        });
+      });
+    }
+  </script>
 </body>
 </html>
