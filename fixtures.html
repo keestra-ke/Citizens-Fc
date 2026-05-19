@@ -1,515 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chandaria Converting Football Club | Results & Fixtures</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-blue: #0047AB;
-      --primary-red: #D32F2F;
-      --accent-gold: #FFD700;
-      --light-bg: #f8f9fa;
-      --white: #ffffff;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --text-dark: #1a1a1a;
-      --text-light: #6c757d;
-      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
-      --border-radius: 24px;
-      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --win-bg: linear-gradient(135deg, #d4edda, #c3e6cb);
-      --loss-bg: linear-gradient(135deg, #f8d7da, #f5c6cb);
-      --upcoming-bg: linear-gradient(135deg, #fff3cd, #ffeaa7);
-      --win-green: #28a745; /* Very green for wins */
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandaria Converting FC | Fixtures & Results</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:  #05112A;
+    --navy2: #0A1E3F;
+    --red:   #D62828;
+    --red2:  #FF3333;
+    --gold:  #F7B731;
+    --light: #F4F3EE;
+    --dark:  #111111;
+    --card:  #ffffff;
+    --border:#E2DFD6;
+    --muted: #6B6B6B;
+    --win:   #16A34A;
+    --loss:  #DC2626;
+    --draw:  #D97706;
+    --r:     12px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:#F0EDE6;color:var(--dark);overflow-x:hidden;line-height:1.5}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  /* ── NAV ── */
+  header{position:sticky;top:0;z-index:300;background:var(--navy);border-bottom:3px solid var(--red)}
+  .nav-inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;height:60px}
+  .logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-crest{width:38px;height:38px;border-radius:50%;background:var(--red);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:10px;color:#fff;letter-spacing:0.5px;flex-shrink:0}
+  .logo-name{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;color:#fff;letter-spacing:1.5px}
+  .nav-links{display:none;gap:4px}
+  .nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 12px;border-radius:6px;letter-spacing:0.4px;transition:all 0.2s;white-space:nowrap}
+  .nav-links a:hover,.nav-links a.active{background:var(--red);color:#fff}
+  .hamburger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:8px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:background 0.2s}
+  .hamburger:hover{background:rgba(255,255,255,0.15)}
+  .drawer{display:none;flex-direction:column;background:var(--navy2);border-top:1px solid rgba(255,255,255,0.08)}
+  .drawer.open{display:flex}
+  .drawer a{color:rgba(255,255,255,0.85);text-decoration:none;font-size:1rem;font-weight:500;padding:14px 1.5rem;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px;transition:background 0.15s}
+  .drawer a:hover{background:var(--red);color:#fff}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--light-bg);
-      color: var(--text-dark);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+  /* ── HERO ── */
+  .hero{background:var(--navy);position:relative;overflow:hidden}
+  .hero-pitch{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.025) 0px,rgba(255,255,255,0.025) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.025) 0px,rgba(255,255,255,0.025) 1px,transparent 1px,transparent 80px)}
+  .hero-arc{position:absolute;width:600px;height:600px;border:80px solid rgba(255,255,255,0.03);border-radius:50%;bottom:-300px;right:-100px;pointer-events:none}
+  .hero-arc2{position:absolute;width:360px;height:360px;border:50px solid rgba(247,183,49,0.06);border-radius:50%;top:-160px;left:-80px;pointer-events:none}
+  .hero-content{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:3rem 1.25rem 2.75rem;display:flex;flex-direction:column;gap:0.9rem}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;width:fit-content}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,9vw,5.5rem);color:#fff;line-height:0.95;letter-spacing:3px}
+  .hero-title span{color:var(--gold)}
+  .hero-sub{font-size:0.88rem;color:rgba(255,255,255,0.5);max-width:480px}
 
-    /* Header */
-    header {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
-      padding: 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
+  /* ── SCOREBOARD ── */
+  .scoreboard{background:var(--red);border-bottom:4px solid var(--gold)}
+  .sb-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+  .sb-cell{padding:1rem 0.5rem;text-align:center;border-right:1px solid rgba(255,255,255,0.15)}
+  .sb-cell:last-child{border-right:none}
+  .sb-val{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:#fff;line-height:1;letter-spacing:1px}
+  .sb-lbl{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.62);margin-top:3px}
+  .sb-cell.hl .sb-val{color:var(--gold)}
 
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
+  /* ── MAIN ── */
+  main{max-width:1140px;margin:0 auto;padding:2.5rem 1.25rem 6rem}
 
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+  /* ── SECTION HEADER ── */
+  .sec-hd{display:flex;align-items:center;gap:14px;margin-bottom:1.1rem}
+  .sec-pill{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--navy);white-space:nowrap}
+  .sec-line{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+  .sec-count{font-size:0.68rem;font-weight:600;color:#999;letter-spacing:1px;white-space:nowrap}
 
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 400;
-      margin: 0;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      position: relative;
-      z-index: 1;
-    }
+  /* ── INTERNAL WAR CARD (from index.html style) ── */
+  .iwar{
+    position:relative;
+    background:linear-gradient(135deg,#1a0000 0%,#0A2463 40%,#1a0000 100%);
+    border-radius:var(--r);overflow:hidden;margin-bottom:0.9rem;
+    border-top:3px solid var(--red);border-bottom:3px solid var(--red);
+  }
+  .iw-particles span{position:absolute;width:4px;height:4px;border-radius:50%;animation:iwFloat 3s infinite ease-in-out;opacity:0.6}
+  .iw-particles span:nth-child(1){background:#D62828;top:15%;left:8%;animation-delay:0s;animation-duration:2.8s}
+  .iw-particles span:nth-child(2){background:#F7B731;top:70%;left:15%;animation-delay:0.4s;animation-duration:3.2s}
+  .iw-particles span:nth-child(3){background:#D62828;top:30%;left:80%;animation-delay:0.8s;animation-duration:2.5s}
+  .iw-particles span:nth-child(4){background:#fff;top:80%;left:75%;animation-delay:1.2s;animation-duration:3.5s}
+  .iw-particles span:nth-child(5){background:#F7B731;top:50%;left:50%;animation-delay:0.3s;animation-duration:2.9s;width:6px;height:6px}
+  .iw-particles span:nth-child(6){background:#D62828;top:10%;left:45%;animation-delay:1.5s;animation-duration:3.1s}
+  .iw-particles span:nth-child(7){background:#fff;top:85%;left:35%;animation-delay:0.6s;animation-duration:2.7s}
+  .iw-particles span:nth-child(8){background:#F7B731;top:20%;left:62%;animation-delay:1.0s;animation-duration:3.4s;width:5px;height:5px}
+  @keyframes iwFloat{0%,100%{transform:translateY(0) scale(1);opacity:0.6}50%{transform:translateY(-12px) scale(1.4);opacity:1}}
+  .iw-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:1.25rem}
+  .iw-label{font-size:0.65rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);animation:iwPulseLabel 2s infinite}
+  @keyframes iwPulseLabel{0%,100%{opacity:1}50%{opacity:0.65}}
+  .iw-clash{display:flex;align-items:center;gap:16px;width:100%;justify-content:center}
+  .iw-team{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;max-width:130px}
+  .iw-team-badge{font-size:2rem;filter:drop-shadow(0 0 8px rgba(255,255,255,0.4));animation:iwBadgePulse 1.8s infinite ease-in-out}
+  .iw-red .iw-team-badge{animation-delay:0s}
+  .iw-blue .iw-team-badge{animation-delay:0.9s}
+  @keyframes iwBadgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+  .iw-team-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:#fff}
+  .iw-red .iw-team-name{color:#ff6b6b;text-shadow:0 0 14px rgba(214,40,40,0.9)}
+  .iw-blue .iw-team-name{color:#6bb3ff;text-shadow:0 0 14px rgba(30,80,200,0.9)}
+  .iw-vs{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0}
+  .iw-vs-text{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--gold);line-height:1;text-shadow:0 0 18px rgba(247,183,49,0.9);animation:iwVsPulse 1.2s infinite alternate}
+  @keyframes iwVsPulse{from{transform:scale(1)}to{transform:scale(1.14)}}
+  .iw-vs-fire{font-size:1.2rem;animation:iwFireWiggle 0.6s infinite alternate}
+  @keyframes iwFireWiggle{from{transform:rotate(-8deg) scale(1)}to{transform:rotate(8deg) scale(1.2)}}
+  .iw-sub{font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
 
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
+  /* ── NYERI AWAY FIXTURE (with poster from index) ── */
+  .nyeri-card{
+    background:var(--gold);border-radius:var(--r);overflow:hidden;
+    margin-bottom:0.9rem;cursor:pointer;
+    transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .nyeri-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.12)}
+  .nyeri-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.25rem;position:relative;overflow:hidden}
+  .nyeri-top::before{content:'AWAY';position:absolute;right:-8px;top:50%;transform:translateY(-50%) rotate(90deg);font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(0,0,0,0.07);letter-spacing:4px;pointer-events:none}
+  .nyeri-tag{font-size:0.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#7A4403;margin-bottom:4px}
+  .nyeri-match{font-size:1rem;font-weight:700;color:#111}
+  .nyeri-match em{color:var(--navy);font-style:normal}
+  .nyeri-venue{font-size:0.75rem;color:#7A4403;margin-top:3px}
+  .nyeri-btn{background:var(--navy);color:#fff;font-size:0.68rem;font-weight:700;padding:8px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;transition:background 0.2s}
+  .nyeri-card:hover .nyeri-btn{background:var(--red)}
+  /* Poster expand */
+  .nyeri-poster-wrap{display:none;padding:0 1.25rem 1.25rem}
+  .nyeri-poster-wrap.open{display:block}
+  .nyeri-poster-wrap img{width:100%;border-radius:8px;display:block}
+  .poster-hint{font-size:0.68rem;font-weight:600;color:#7A4403;margin-top:6px;text-align:center}
 
-    /* Legend */
-    .legend {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
+  /* ── UPCOMING PLAIN CARD ── */
+  .upcoming-card{background:var(--card);border:1.5px solid rgba(10,30,63,0.1);border-radius:var(--r);overflow:hidden;margin-bottom:0.65rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;transition:transform 0.2s,box-shadow 0.2s}
+  .upcoming-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+  .uc-team{padding:1rem 1.1rem;font-weight:600;font-size:0.88rem;color:#333}
+  .uc-team.opp{text-align:right;color:var(--navy)}
+  .uc-team.us{color:var(--red)}
+  .uc-mid{padding:0.7rem 1rem;text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border);min-width:86px}
+  .uc-tba{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--navy);letter-spacing:2px}
+  .uc-date{font-size:0.62rem;color:#aaa;font-weight:500;margin-top:2px}
 
-    .legend span {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-light);
-    }
+  /* ── RESULT CARDS ── */
+  .results-stack{display:flex;flex-direction:column;gap:0.6rem}
+  .res-card{background:var(--card);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:5px 1fr;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
+  .res-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+  .res-bar{width:5px}
+  .res-bar.win{background:var(--win)}
+  .res-bar.loss{background:var(--loss)}
+  .res-bar.draw{background:var(--draw)}
+  .res-inner{padding:0.85rem 1.1rem;display:grid;grid-template-columns:1fr auto 1fr auto;align-items:center;gap:10px}
+  .res-opp{font-weight:600;font-size:0.88rem;color:#222;text-align:right}
+  .res-score-wrap{text-align:center;min-width:76px}
+  .res-score{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:3px;line-height:1}
+  .res-score.win{color:var(--win)}
+  .res-score.loss{color:var(--loss)}
+  .res-score.draw{color:var(--draw)}
+  .res-venue{font-size:0.6rem;color:#bbb;text-align:center;margin-top:1px}
+  .res-date{font-size:0.6rem;color:#bbb;text-align:center}
+  .res-us{font-weight:700;font-size:0.88rem;color:var(--red)}
+  .res-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  .res-badge{font-size:0.58rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+  .res-badge.win{background:#DCFCE7;color:#15803D}
+  .res-badge.loss{background:#FEE2E2;color:#B91C1C}
+  .res-badge.draw{background:#FEF3C7;color:#92400E}
+  .res-num{font-size:0.6rem;color:#ccc;font-weight:500}
 
-    .legend .dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid var(--text-light);
-    }
+  /* ── GALLERY LINK HINT ── */
+  .gallery-hint{
+    display:flex;align-items:center;gap:8px;
+    font-size:0.7rem;font-weight:600;color:var(--navy);
+    margin-top:5px;opacity:0.7;
+  }
+  .gallery-hint .gh-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
 
-    .legend .dot.win {
-      background: var(--win-bg);
-      border-color: var(--win-green);
-    }
+  /* ── GALLERY PREVIEW DRAWER ── */
+  .gallery-drawer{
+    display:none;border-top:1px solid var(--border);
+    padding:10px 14px 14px;
+    background:#FAFAF8;
+  }
+  .gallery-drawer.open{display:block}
+  .gd-label{font-size:0.65rem;font-weight:700;color:#999;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+  .gd-photos{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+  .gd-photos::-webkit-scrollbar{height:4px}
+  .gd-photos::-webkit-scrollbar-track{background:#eee;border-radius:2px}
+  .gd-photos::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px}
+  .gd-thumb{
+    flex-shrink:0;width:80px;height:60px;border-radius:6px;
+    object-fit:cover;border:2px solid transparent;cursor:pointer;
+    transition:border-color 0.2s,transform 0.2s;
+  }
+  .gd-thumb:hover{border-color:var(--red);transform:scale(1.04)}
+  .gd-view-all{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:10px;
+    font-size:0.72rem;font-weight:700;color:var(--navy);
+    text-decoration:none;padding:6px 14px;
+    border:1.5px solid var(--navy);border-radius:20px;
+    transition:all 0.2s;
+  }
+  .gd-view-all:hover{background:var(--navy);color:#fff}
 
-    .legend .dot.loss {
-      background: var(--loss-bg);
-      border-color: #dc3545;
-    }
+  /* ── LEGEND ── */
+  .legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:1rem}
+  .leg-item{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:#666;font-weight:500}
+  .leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .leg-dot.win{background:var(--win)}.leg-dot.draw{background:var(--draw)}.leg-dot.loss{background:var(--loss)}
 
-    .legend .dot.upcoming {
-      background: var(--upcoming-bg);
-      border-color: #ffc107;
-    }
+  /* ── FOOTER ── */
+  footer{background:var(--navy);color:rgba(255,255,255,0.55);text-align:center;padding:2rem 1.25rem;font-size:0.83rem;border-top:3px solid var(--red)}
+  footer strong{color:var(--gold)}
 
-    /* Matches List - Modern Card Layout */
-    .matches-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+  /* ── TAB BAR ── */
+  .tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--navy);border-top:2px solid var(--red);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+  .tab-btn{flex:1;background:none;border:none;color:rgba(255,255,255,0.45);font-family:'Inter',sans-serif;font-size:0.55rem;font-weight:600;padding:9px 2px 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;letter-spacing:0.5px;text-transform:uppercase;text-decoration:none;transition:color 0.15s}
+  .tab-btn .ti{font-size:1.1rem;line-height:1}
+  .tab-btn.active,.tab-btn:hover{color:var(--gold)}
 
-    .match-card {
-      background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow-soft);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      border-left: 5px solid var(--primary-blue);
-    }
+  /* ── DESKTOP ── */
+  @media(min-width:768px){
+    .hamburger{display:none}.nav-links{display:flex}.drawer{display:none!important}
+    .tab-bar{display:none}
+    main{padding-bottom:3rem}
+  }
 
-    .match-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-hover);
-    }
+  /* ── DARK MODE ── */
+  @media(prefers-color-scheme:dark){
+    body{background:#0D1117}
+    :root{--card:#161B26;--border:rgba(255,255,255,0.06);--light:#161B26}
+    .res-opp,.res-us,.uc-team{color:#ddd}
+    .uc-team.us{color:#FF6B6B}
+    .upcoming-card{border-color:rgba(255,255,255,0.06)}
+    .uc-mid{border-color:rgba(255,255,255,0.06)}
+    .res-badge.win{background:#052e16;color:#4ade80}
+    .res-badge.loss{background:#2d0505;color:#f87171}
+    .res-badge.draw{background:#2d1f00;color:#fbbf24}
+    .gallery-drawer{background:#111827}
+    .nyeri-card{background:#a37a00}
+    .nyeri-match{color:#eee}
+    .nyeri-tag,.nyeri-venue,.poster-hint{color:#f0c040}
+    .nyeri-top::before{color:rgba(255,255,255,0.05)}
+  }
 
-    .match-card.win {
-      border-left-color: var(--win-green);
-      background: var(--win-bg);
-    }
-
-    .match-card.loss {
-      border-left-color: #dc3545;
-      background: var(--loss-bg);
-    }
-
-    .match-card.upcoming {
-      border-left-color: #ffc107;
-      background: var(--upcoming-bg);
-    }
-
-    .match-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .match-number {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-light);
-    }
-
-    .match-date {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      font-style: italic;
-    }
-
-    .match-teams {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    .team-name {
-      font-size: 1.1rem;
-      color: var(--text-dark);
-    }
-
-    .score {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      min-width: 80px;
-      text-align: center;
-    }
-
-    .match-card.win .score {
-      color: var(--win-green); /* Very green for wins */
-    }
-
-    .match-card.loss .score {
-      color: #dc3545; /* Red for losses */
-    }
-
-    .match-card.upcoming .score {
-      color: var(--primary-red);
-    }
-
-    .result {
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: center;
-      margin-top: 0.5rem;
-      opacity: 0.8;
-    }
-
-    /* Footer */
-    footer {
-      background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      color: var(--white);
-      text-align: center;
-      padding: 2rem;
-      font-weight: 300;
-      border-radius: var(--border-radius);
-      margin-top: 3rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
-
-      .legend {
-        gap: 1rem;
-        justify-content: center;
-      }
-
-      .match-teams {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
-      }
-
-      .score {
-        align-self: center;
-      }
-
-      .hero {
-        height: 50vh;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Dark Mode */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #121212;
-        color: #e0e0e0;
-      }
-
-      .match-card {
-        background: #1e1e1e;
-      }
-
-      .match-card.win {
-        background: linear-gradient(135deg, #2d5a3a, #1e4028);
-      }
-
-      .match-card.loss {
-        background: linear-gradient(135deg, #5a2d2d, #401e1e);
-      }
-
-      .match-card.upcoming {
-        background: linear-gradient(135deg, #5a4d2d, #40381e);
-      }
-
-      .match-card.win .score {
-        color: #4caf50; /* Lighter green for dark mode wins */
-      }
-    }
-  </style>
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Results & Fixtures</h1>
-  </header>
 
-  <div class="container">
-    <div class="legend">
-      <span><span class="dot win"></span> Won</span>
-      <span><span class="dot loss"></span> Lost</span>
-      <span><span class="dot upcoming"></span> Upcoming</span>
+<!-- NAV -->
+<header>
+  <div class="nav-inner">
+    <a class="logo-wrap" href="index.html">
+      <div class="logo-crest">CCFC</div>
+      <span class="logo-name">C.C.F.C</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="team.html">Team</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="finance.html">Finance</a>
+      <a href="fixtures.html" class="active">Fixtures</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  </div>
+  <nav class="drawer" id="drawer" aria-label="Mobile navigation">
+    <a href="index.html">🏠 Home</a>
+    <a href="team.html">👥 Team</a>
+    <a href="Gallery.html">📸 Gallery</a>
+    <a href="finance.html">💰 Finance</a>
+    <a href="fixtures.html">📅 Fixtures &amp; Results</a>
+    <a href="contact.html">📞 Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" aria-label="Fixtures hero">
+  <div class="hero-pitch"></div>
+  <div class="hero-arc"></div>
+  <div class="hero-arc2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">⚽ 2025 Season</div>
+    <h1 class="hero-title">FIXTURES<br>&amp; <span>RESULTS</span></h1>
+    <p class="hero-sub">Every match. Every result. The full story of Chandaria Converting FC.</p>
+  </div>
+</section>
+
+<!-- SCOREBOARD -->
+<div class="scoreboard" aria-label="Season summary">
+  <div class="sb-inner">
+    <div class="sb-cell"><div class="sb-val" id="s-played">0</div><div class="sb-lbl">Played</div></div>
+    <div class="sb-cell hl"><div class="sb-val" id="s-wins">0</div><div class="sb-lbl">Won</div></div>
+    <div class="sb-cell"><div class="sb-val" id="s-draws">0</div><div class="sb-lbl">Drawn</div></div>
+    <div class="sb-cell"><div class="sb-val" id="s-losses">0</div><div class="sb-lbl">Lost</div></div>
+    <div class="sb-cell hl"><div class="sb-val" id="s-gf">0</div><div class="sb-lbl">Goals For</div></div>
+    <div class="sb-cell"><div class="sb-val" id="s-ga">0</div><div class="sb-lbl">Goals Against</div></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- UPCOMING -->
+  <div class="sec-hd" style="margin-top:2rem">
+    <div class="sec-pill">UPCOMING FIXTURES</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Internal War (identical animated card from index.html) -->
+  <div class="iwar" role="article" aria-label="Next match: Internal War">
+    <div class="iw-particles">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
     </div>
-
-    <div class="matches-list">
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 1</div>
-          <div class="match-date">Past</div>
+    <div class="iw-inner">
+      <div class="iw-label">⚔ NEXT MATCH — INTERNAL WAR ⚔</div>
+      <div class="iw-clash">
+        <div class="iw-team iw-red">
+          <div class="iw-team-badge">🔴</div>
+          <div class="iw-team-name">Team Red</div>
         </div>
-        <div class="match-teams">
-          <div class="team-name">Transport FC</div>
-          <div class="score">1 - 3</div>
-          <div class="team-name">Converting FC</div>
+        <div class="iw-vs">
+          <span class="iw-vs-text">VS</span>
+          <div class="iw-vs-fire">🔥</div>
         </div>
-        <div class="result">Win</div>
+        <div class="iw-team iw-blue">
+          <div class="iw-team-badge">🔵</div>
+          <div class="iw-team-name">Team Blue</div>
+        </div>
       </div>
-
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 2</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Ngomongo FC</div>
-          <div class="score">1 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
-
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 3</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Transport FC</div>
-          <div class="score">1 - 0</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
-
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 4</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">NYS Engineers</div>
-          <div class="score">5 - 0</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
-
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 5</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Dispatch FC</div>
-          <div class="score">6 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
-
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 6</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Chandaria Juniors</div>
-          <div class="score">1 - 4</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
-
-      <div class="match-card win">
-        <div class="match-header">
-          <div class="match-number">Match 7</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Catholic FC</div>
-          <div class="score">1 - 6</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Win</div>
-      </div>
-
-      <div class="match-card loss">
-        <div class="match-header">
-          <div class="match-number">Match 8</div>
-          <div class="match-date">Past</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">NYS Engineers (2)</div>
-          <div class="score">2 - 1</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 9</div>
-          <div class="match-date">Sun 12th October 2025</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">KMTC FC</div>
-          <div class="score">5 vs 2</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Loss</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 10</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Raiders FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 11</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Lucky Summer FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 12</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">City Foxes</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 13</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">NYS HQ FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 14</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">Mr Green FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
-
-      <div class="match-card upcoming">
-        <div class="match-header">
-          <div class="match-number">Match 15</div>
-          <div class="match-date">Upcoming</div>
-        </div>
-        <div class="match-teams">
-          <div class="team-name">GSU FC</div>
-          <div class="score">— vs —</div>
-          <div class="team-name">Converting FC</div>
-        </div>
-        <div class="result">Upcoming</div>
-      </div>
+      <div class="iw-sub">Converting FC · Brothers vs Brothers · Who survives?</div>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 Chandaria Converting Football Club • Together as One
-  </footer>
+  <!-- Nyeri Away Fixture — click to reveal poster (from index fan zone) -->
+  <div class="nyeri-card" role="article" aria-label="Away fixture: Fitness at Kinunga Complex, Nyeri" onclick="toggleNyeri(this)">
+    <div class="nyeri-top">
+      <div>
+        <div class="nyeri-tag">🏟 Away Fixture — Upcoming</div>
+        <div class="nyeri-match">Converting FC <em>vs</em> Fitness</div>
+        <div class="nyeri-venue">📍 Kinunga Complex, Nyeri</div>
+      </div>
+      <div class="nyeri-btn" id="nyeri-btn-label">View Poster ↓</div>
+    </div>
+    <div class="nyeri-poster-wrap" id="nyeriPoster">
+      <img src="nyeri-poster1-1.png" alt="Nyeri Match Poster — Converting FC vs Fitness" onerror="this.alt='Poster image not found';this.style.opacity='0.3'">
+      <div class="poster-hint">Tap to open full size &rarr; <a href="nyeri-poster1-1.png" target="_blank" onclick="event.stopPropagation()" style="color:var(--navy);font-weight:700;text-decoration:underline">Open</a></div>
+    </div>
+  </div>
+
+  <!-- Other upcoming (JS rendered) -->
+  <div id="upcomingList"></div>
+
+  <!-- PAST RESULTS -->
+  <div class="sec-hd" style="margin-top:2.5rem">
+    <div class="sec-pill">PAST RESULTS</div>
+    <div class="sec-line"></div>
+    <div class="sec-count" id="result-count"></div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><span class="leg-dot win"></span> Win</div>
+    <div class="leg-item"><span class="leg-dot draw"></span> Draw</div>
+    <div class="leg-item"><span class="leg-dot loss"></span> Loss</div>
+    <div class="leg-item" style="margin-left:auto;font-size:0.7rem;color:#999">📸 = gallery photos available — tap to view</div>
+  </div>
+
+  <div class="results-stack" id="resultsList"></div>
+
+</main>
+
+<footer>
+  <p>&copy; <span id="yr"></span> <strong>Chandaria Converting Football Club</strong> &bull; Together as One 💙❤️</p>
+</footer>
+
+<!-- TAB BAR -->
+<nav class="tab-bar" aria-label="Quick navigation">
+  <a class="tab-btn" href="index.html"><span class="ti">🏠</span>Home</a>
+  <a class="tab-btn active" href="fixtures.html"><span class="ti">📅</span>Fixtures</a>
+  <a class="tab-btn" href="team.html"><span class="ti">👥</span>Team</a>
+  <a class="tab-btn" href="Gallery.html"><span class="ti">📸</span>Gallery</a>
+  <a class="tab-btn" href="finance.html"><span class="ti">💰</span>Finance</a>
+  <a class="tab-btn" href="contact.html"><span class="ti">📞</span>Contact</a>
+</nav>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// GALLERY PHOTOS — keyed to opponent names matching Gallery.html
+// Pulled from galleryData in Gallery.html with matching tags
+// ─────────────────────────────────────────────────────────────
+const galleryByOpponent = {
+  'Transport FC': [
+    { src: 'IMG-20250713-WA0126.jpg', title: 'Transport vs Converting — Vurugu Kickoff' },
+    { src: 'IMG-20250713-WA0127.jpg', title: 'Transport vs Converting — Vurugu Standoff War' },
+    { src: 'IMG-20250713-WA0161.jpg', title: 'The coming of the Citizens kit 😀' },
+  ],
+  'NYS Engineers': [
+    { src: 'IMG-20250921-WA0174.jpg', title: 'Starting XI — NYS Shamba la Mawe Derby' },
+    { src: 'IMG-20250720-WA0085.jpg', title: 'Converting group photo at NYS' },
+    { src: 'IMG-20250720-WA0087.jpg', title: 'Converting group photo at NYS — Kameramani hoyee 🎶' },
+    { src: 'IMG-20250720-WA0090.jpg', title: 'Group photo at NYS before losing massively' },
+    { src: 'IMG-20250629-WA0096.jpg', title: 'NYS Sitdown Session' },
+  ],
+  'Chandaria Juniors': [
+    { src: 'IMG-20250720-WA0085.jpg', title: 'Converting group photo — CCFC' },
+    { src: 'IMG-20250713-WA0161.jpg', title: 'Citizens kit reveal — Smile Mamuu! 😀' },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+// MATCH DATA
+// ─────────────────────────────────────────────────────────────
+const matches = [
+  { num:1,  opp:'Transport FC',      ccfc:3, opp_s:1, result:'win',      date:'Past',            venue:'' },
+  { num:2,  opp:'Ngomongo FC',       ccfc:4, opp_s:1, result:'win',      date:'Past',            venue:'' },
+  { num:3,  opp:'Transport FC',      ccfc:0, opp_s:1, result:'loss',     date:'Past',            venue:'' },
+  { num:4,  opp:'NYS Engineers',     ccfc:0, opp_s:5, result:'loss',     date:'Past',            venue:'NYS Grounds' },
+  { num:5,  opp:'Dispatch FC',       ccfc:4, opp_s:6, result:'loss',     date:'Past',            venue:'' },
+  { num:6,  opp:'Chandaria Juniors', ccfc:4, opp_s:1, result:'win',      date:'Past',            venue:'' },
+  { num:7,  opp:'Catholic FC',       ccfc:6, opp_s:1, result:'win',      date:'Past',            venue:'' },
+  { num:8,  opp:'NYS Engineers',     ccfc:1, opp_s:2, result:'loss',     date:'Past',            venue:'NYS Grounds' },
+  { num:9,  opp:'KMTC FC',           ccfc:2, opp_s:5, result:'loss',     date:'Sun 12 Oct 2025', venue:'' },
+  { num:10, opp:'Raiders FC',        ccfc:null, opp_s:null, result:'upcoming', date:'TBA', venue:'' },
+  { num:11, opp:'Lucky Summer FC',   ccfc:null, opp_s:null, result:'upcoming', date:'TBA', venue:'' },
+  { num:12, opp:'City Foxes',        ccfc:null, opp_s:null, result:'upcoming', date:'TBA', venue:'' },
+];
+
+// ─────────────────────────────────────────────────────────────
+// BUILD UPCOMING CARD
+// ─────────────────────────────────────────────────────────────
+function buildUpcoming(m) {
+  const d = document.createElement('div');
+  d.className = 'upcoming-card';
+  d.setAttribute('role','article');
+  d.innerHTML = `
+    <div class="uc-team opp">${m.opp}</div>
+    <div class="uc-mid">
+      <div class="uc-tba">TBA</div>
+      <div class="uc-date">Match ${m.num}</div>
+    </div>
+    <div class="uc-team us">C.C.F.C</div>
+  `;
+  return d;
+}
+
+// ─────────────────────────────────────────────────────────────
+// BUILD RESULT CARD (with gallery drawer if photos exist)
+// ─────────────────────────────────────────────────────────────
+function buildResult(m) {
+  const photos = galleryByOpponent[m.opp] || [];
+  const hasPhotos = photos.length > 0;
+
+  // Gallery filter param — match to gallery category tags
+  const galleryFilter = m.opp === 'Transport FC' ? 'matches'
+                      : m.opp === 'NYS Engineers' ? 'matches'
+                      : 'all';
+  const galleryLink = `Gallery.html?filter=${galleryFilter}`;
+
+  const d = document.createElement('div');
+  d.className = 'res-card';
+  d.setAttribute('role', 'article');
+  if (hasPhotos) d.setAttribute('aria-expanded', 'false');
+
+  const thumbsHTML = photos.map(p =>
+    `<img class="gd-thumb" src="${p.src}" alt="${p.title}" title="${p.title}" loading="lazy"
+          onclick="event.stopPropagation(); window.location.href='Gallery.html'"
+          onerror="this.style.opacity='0.2';this.onerror=null;">`
+  ).join('');
+
+  const galleryDrawerHTML = hasPhotos ? `
+    <div class="gallery-drawer" id="gd-${m.num}">
+      <div class="gd-label">📸 Match Photos</div>
+      <div class="gd-photos">${thumbsHTML}</div>
+      <a class="gd-view-all" href="${galleryLink}">View all in Gallery →</a>
+    </div>
+  ` : '';
+
+  const galleryHintHTML = hasPhotos ? `
+    <div class="gallery-hint" style="grid-column:1/-1;margin-top:2px">
+      <span class="gh-dot"></span>
+      <span>Tap card to see match photos</span>
+    </div>
+  ` : '';
+
+  d.innerHTML = `
+    <div class="res-bar ${m.result}"></div>
+    <div>
+      <div class="res-inner">
+        <div class="res-opp">${m.opp}</div>
+        <div class="res-score-wrap">
+          <div class="res-score ${m.result}">${m.opp_s} – ${m.ccfc}</div>
+          ${m.venue ? `<div class="res-venue">📍 ${m.venue}</div>` : ''}
+          ${m.date !== 'Past' ? `<div class="res-date">${m.date}</div>` : ''}
+        </div>
+        <div class="res-us">C.C.F.C</div>
+        <div class="res-meta">
+          <span class="res-badge ${m.result}">${m.result.toUpperCase()}</span>
+          <span class="res-num">Match ${m.num}</span>
+        </div>
+        ${galleryHintHTML}
+      </div>
+      ${galleryDrawerHTML}
+    </div>
+  `;
+
+  // Click to toggle gallery drawer
+  if (hasPhotos) {
+    d.addEventListener('click', () => {
+      const drawer = document.getElementById(`gd-${m.num}`);
+      if (!drawer) return;
+      const isOpen = drawer.classList.toggle('open');
+      d.setAttribute('aria-expanded', isOpen);
+    });
+  }
+
+  return d;
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────
+function render() {
+  const rList = document.getElementById('resultsList');
+  const uList = document.getElementById('upcomingList');
+  let played=0,wins=0,draws=0,losses=0,gf=0,ga=0,rCount=0;
+
+  matches.forEach(m => {
+    if (m.result === 'upcoming') {
+      uList.appendChild(buildUpcoming(m));
+    } else {
+      played++; rCount++;
+      if (m.result==='win')  wins++;
+      if (m.result==='draw') draws++;
+      if (m.result==='loss') losses++;
+      gf += m.ccfc; ga += m.opp_s;
+      rList.appendChild(buildResult(m));
+    }
+  });
+
+  document.getElementById('s-played').textContent = played;
+  document.getElementById('s-wins').textContent   = wins;
+  document.getElementById('s-draws').textContent  = draws;
+  document.getElementById('s-losses').textContent = losses;
+  document.getElementById('s-gf').textContent     = gf;
+  document.getElementById('s-ga').textContent     = ga;
+  document.getElementById('result-count').textContent = rCount + ' matches';
+}
+
+// ─────────────────────────────────────────────────────────────
+// NYERI POSTER TOGGLE
+// ─────────────────────────────────────────────────────────────
+function toggleNyeri(card) {
+  const wrap = document.getElementById('nyeriPoster');
+  const btn  = document.getElementById('nyeri-btn-label');
+  const isOpen = wrap.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide Poster ↑' : 'View Poster ↓';
+}
+
+// ─────────────────────────────────────────────────────────────
+// HAMBURGER
+// ─────────────────────────────────────────────────────────────
+const ham = document.getElementById('hamburger');
+const drw = document.getElementById('drawer');
+ham.addEventListener('click', () => {
+  const open = drw.classList.toggle('open');
+  ham.setAttribute('aria-expanded', open);
+  ham.innerHTML = open ? '&times;' : '&#9776;';
+});
+drw.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  drw.classList.remove('open');
+  ham.setAttribute('aria-expanded','false');
+  ham.innerHTML = '&#9776;';
+}));
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+render();
+</script>
 </body>
 </html>
